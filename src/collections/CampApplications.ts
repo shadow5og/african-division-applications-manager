@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload/types";
-import { nationality } from "./nationality";
-import { media } from "./media";
+import { nationality } from "../fields/nationality";
+import { media } from "../fields/media";
 
 export const CampApplications: CollectionConfig = {
   slug: "campApplications",

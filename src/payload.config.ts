@@ -8,7 +8,7 @@ import { buildConfig } from 'payload/config'
 
 import Users from './collections/Users'
 import { Media } from './collections/Media'
-import { CampApplications } from './fields/camp-applications'
+import { CampApplications } from './collections/CampApplications'
 
 export default buildConfig({
   admin: {

@@ -26,6 +26,7 @@ type User {
   role: User_role
   phoneNumber: String!
   gender: User_gender!
+  application: CampApplication
   updatedAt: DateTime
   createdAt: DateTime
   email: EmailAddress!
@@ -48,10 +49,275 @@ enum User_gender {
   male
 }
 
+type CampApplication {
+  id: Int
+  targetGroup: CampApplication_targetGroup!
+  nationality: CampApplication_nationality!
+  churchOrganisationName: String!
+  churchLocation: String!
+  otherDenomination: String!
+  howDidYouLearnAboutUs: CampApplication_howDidYouLearnAboutUs!
+  expetationsFromConference: String!
+  additionalInformation: String!
+  arrivalDate: DateTime!
+  departureDate: DateTime!
+  participatesInSinging: CampApplication_participatesInSinging!
+  typeOfGroup: CampApplication_typeOfGroup
+  preferredComunication: CampApplication_preferredComunication
+  proofOfPayment: Media
+  validAppication: Boolean
+  invalidApplicationReason: String
+  user: User
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum CampApplication_targetGroup {
+  child
+  _12_25
+  _26_35
+  _36_45
+  _46_55
+  _56_65
+  _65_
+}
+
+enum CampApplication_nationality {
+  AF
+  AL
+  DZ
+  AD
+  AO
+  AG
+  AR
+  AM
+  AU
+  AT
+  AZ
+  BS
+  BH
+  BD
+  BB
+  BY
+  BE
+  BZ
+  BJ
+  BT
+  BO
+  BA
+  BW
+  BR
+  BN
+  BG
+  BF
+  BI
+  KH
+  CM
+  CA
+  CF
+  TD
+  CL
+  CN
+  CO
+  KM
+  CG
+  CR
+  CI
+  HR
+  CU
+  CY
+  CZ
+  DK
+  DJ
+  DM
+  DO
+  EC
+  EG
+  SV
+  GQ
+  ER
+  EE
+  ET
+  FJ
+  FI
+  FR
+  GA
+  GM
+  GE
+  DE
+  GH
+  GR
+  GD
+  GT
+  GN
+  GW
+  GY
+  HT
+  HN
+  HU
+  IS
+  IN
+  ID
+  IR
+  IQ
+  IE
+  IL
+  IT
+  JM
+  JP
+  JO
+  KZ
+  KE
+  KI
+  KP
+  KR
+  KW
+  KG
+  LA
+  LV
+  LB
+  LS
+  LR
+  LY
+  LI
+  LT
+  LU
+  MK
+  MG
+  MW
+  MY
+  MV
+  ML
+  MT
+  MH
+  MR
+  MU
+  MX
+  FM
+  MD
+  MC
+  MN
+  ME
+  MA
+  MZ
+  MM
+  NA
+  NR
+  NP
+  NL
+  NZ
+  NI
+  NE
+  NG
+  NO
+  OM
+  PK
+  PW
+  PA
+  PG
+  PY
+  PE
+  PH
+  PL
+  PT
+  QA
+  RO
+  RU
+  RW
+  KN
+  LC
+  VC
+  WS
+  SM
+  ST
+  SA
+  SN
+  RS
+  SC
+  SL
+  SG
+  SX
+  SK
+  SI
+  SB
+  SO
+  ZA
+  SS
+  ES
+  LK
+  SD
+  SR
+  SZ
+  SE
+  CH
+  SY
+  TJ
+  TZ
+  TH
+  TL
+  TG
+  TO
+  TT
+  TN
+  TR
+  TM
+  TV
+  UG
+  UA
+  AE
+  GB
+  US
+  UY
+  UZ
+  VU
+  VA
+  VE
+  VN
+  YE
+  ZM
+  ZW
+}
+
+enum CampApplication_howDidYouLearnAboutUs {
+  referral
+  socialmedia
+  churchannouncements
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+enum CampApplication_participatesInSinging {
+  Yes
+  No
+}
+
+enum CampApplication_typeOfGroup {
+  Soloperformance
+  Groupperformance
+}
+
+enum CampApplication_preferredComunication {
+  WhatsApp
+  Email
+}
+
+type Media {
+  id: Int
+  alt: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  focalX: Float
+  focalY: Float
+}
 
 """
 A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
@@ -77,6 +343,7 @@ input User_where {
   role: User_role_operator
   phoneNumber: User_phoneNumber_operator
   gender: User_gender_operator
+  application: User_application_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -131,6 +398,20 @@ enum User_gender_Input {
   male
 }
 
+input User_application_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 input User_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -178,6 +459,7 @@ input User_where_and {
   role: User_role_operator
   phoneNumber: User_phoneNumber_operator
   gender: User_gender_operator
+  application: User_application_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -191,6 +473,7 @@ input User_where_or {
   role: User_role_operator
   phoneNumber: User_phoneNumber_operator
   gender: User_gender_operator
+  application: User_application_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -217,6 +500,7 @@ type UsersDocAccessFields {
   role: UsersDocAccessFields_role
   phoneNumber: UsersDocAccessFields_phoneNumber
   gender: UsersDocAccessFields_gender
+  application: UsersDocAccessFields_application
   updatedAt: UsersDocAccessFields_updatedAt
   createdAt: UsersDocAccessFields_createdAt
   email: UsersDocAccessFields_email
@@ -312,6 +596,29 @@ type UsersDocAccessFields_gender_Update {
 }
 
 type UsersDocAccessFields_gender_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_application {
+  create: UsersDocAccessFields_application_Create
+  read: UsersDocAccessFields_application_Read
+  update: UsersDocAccessFields_application_Update
+  delete: UsersDocAccessFields_application_Delete
+}
+
+type UsersDocAccessFields_application_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_application_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_application_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_application_Delete {
   permission: Boolean!
 }
 
@@ -443,21 +750,6 @@ type usersMe {
   strategy: String
   token: String
   user: User
-}
-
-type Media {
-  id: Int
-  alt: String
-  updatedAt: DateTime
-  createdAt: DateTime
-  url: String
-  filename: String
-  mimeType: String
-  filesize: Float
-  width: Float
-  height: Float
-  focalX: Float
-  focalY: Float
 }
 
 type allMedia {
@@ -950,256 +1242,6 @@ type MediaDeleteDocAccess {
   where: JSONObject
 }
 
-type CampApplication {
-  id: Int
-  targetGroup: CampApplication_targetGroup!
-  nationality: CampApplication_nationality!
-  churchOrganisationName: String!
-  churchLocation: String!
-  otherDenomination: String!
-  howDidYouLearnAboutUs: CampApplication_howDidYouLearnAboutUs!
-  expetationsFromConference: String!
-  additionalInformation: String!
-  arrivalDate: DateTime!
-  departureDate: DateTime!
-  participatesInSinging: CampApplication_participatesInSinging!
-  typeOfGroup: CampApplication_typeOfGroup
-  preferredComunication: CampApplication_preferredComunication
-  proofOfPayment: Media
-  validAppication: Boolean
-  invalidApplicationReason: String
-  user: User
-  updatedAt: DateTime
-  createdAt: DateTime
-}
-
-enum CampApplication_targetGroup {
-  child
-  _12_25
-  _26_35
-  _36_45
-  _46_55
-  _56_65
-  _65_
-}
-
-enum CampApplication_nationality {
-  AF
-  AL
-  DZ
-  AD
-  AO
-  AG
-  AR
-  AM
-  AU
-  AT
-  AZ
-  BS
-  BH
-  BD
-  BB
-  BY
-  BE
-  BZ
-  BJ
-  BT
-  BO
-  BA
-  BW
-  BR
-  BN
-  BG
-  BF
-  BI
-  KH
-  CM
-  CA
-  CF
-  TD
-  CL
-  CN
-  CO
-  KM
-  CG
-  CR
-  CI
-  HR
-  CU
-  CY
-  CZ
-  DK
-  DJ
-  DM
-  DO
-  EC
-  EG
-  SV
-  GQ
-  ER
-  EE
-  ET
-  FJ
-  FI
-  FR
-  GA
-  GM
-  GE
-  DE
-  GH
-  GR
-  GD
-  GT
-  GN
-  GW
-  GY
-  HT
-  HN
-  HU
-  IS
-  IN
-  ID
-  IR
-  IQ
-  IE
-  IL
-  IT
-  JM
-  JP
-  JO
-  KZ
-  KE
-  KI
-  KP
-  KR
-  KW
-  KG
-  LA
-  LV
-  LB
-  LS
-  LR
-  LY
-  LI
-  LT
-  LU
-  MK
-  MG
-  MW
-  MY
-  MV
-  ML
-  MT
-  MH
-  MR
-  MU
-  MX
-  FM
-  MD
-  MC
-  MN
-  ME
-  MA
-  MZ
-  MM
-  NA
-  NR
-  NP
-  NL
-  NZ
-  NI
-  NE
-  NG
-  NO
-  OM
-  PK
-  PW
-  PA
-  PG
-  PY
-  PE
-  PH
-  PL
-  PT
-  QA
-  RO
-  RU
-  RW
-  KN
-  LC
-  VC
-  WS
-  SM
-  ST
-  SA
-  SN
-  RS
-  SC
-  SL
-  SG
-  SX
-  SK
-  SI
-  SB
-  SO
-  ZA
-  SS
-  ES
-  LK
-  SD
-  SR
-  SZ
-  SE
-  CH
-  SY
-  TJ
-  TZ
-  TH
-  TL
-  TG
-  TO
-  TT
-  TN
-  TR
-  TM
-  TV
-  UG
-  UA
-  AE
-  GB
-  US
-  UY
-  UZ
-  VU
-  VA
-  VE
-  VN
-  YE
-  ZM
-  ZW
-}
-
-enum CampApplication_howDidYouLearnAboutUs {
-  referral
-  socialmedia
-  churchannouncements
-}
-
-enum CampApplication_participatesInSinging {
-  Yes
-  No
-}
-
-enum CampApplication_typeOfGroup {
-  Soloperformance
-  Groupperformance
-}
-
-enum CampApplication_preferredComunication {
-  WhatsApp
-  Email
-}
-
 type CampApplications {
   docs: [CampApplication]
   hasNextPage: Boolean
@@ -1585,11 +1627,6 @@ input CampApplication_proofOfPayment_operator {
   all: [JSON]
   exists: Boolean
 }
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
 
 input CampApplication_validAppication_operator {
   equals: Boolean
@@ -2493,6 +2530,7 @@ type UsersFields {
   role: UsersFields_role
   phoneNumber: UsersFields_phoneNumber
   gender: UsersFields_gender
+  application: UsersFields_application
   updatedAt: UsersFields_updatedAt
   createdAt: UsersFields_createdAt
   email: UsersFields_email
@@ -2588,6 +2626,29 @@ type UsersFields_gender_Update {
 }
 
 type UsersFields_gender_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_application {
+  create: UsersFields_application_Create
+  read: UsersFields_application_Read
+  update: UsersFields_application_Update
+  delete: UsersFields_application_Delete
+}
+
+type UsersFields_application_Create {
+  permission: Boolean!
+}
+
+type UsersFields_application_Read {
+  permission: Boolean!
+}
+
+type UsersFields_application_Update {
+  permission: Boolean!
+}
+
+type UsersFields_application_Delete {
   permission: Boolean!
 }
 
@@ -3668,6 +3729,7 @@ input mutationUserInput {
   role: String
   phoneNumber: String!
   gender: User_gender_MutationInput!
+  application: Int
   updatedAt: String
   createdAt: String
   email: String!
@@ -3690,6 +3752,7 @@ input mutationUserUpdateInput {
   role: String
   phoneNumber: String
   gender: UserUpdate_gender_MutationInput
+  application: Int
   updatedAt: String
   createdAt: String
   email: String

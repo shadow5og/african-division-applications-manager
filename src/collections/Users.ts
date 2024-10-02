@@ -32,6 +32,12 @@ const Users: CollectionConfig = {
         { label: "Male", value: "male" },
       ],
     },
+    {
+      name: "application",
+      type: "relationship",
+      relationTo: "campApplications",
+      admin: { position: "sidebar" },
+    },
   ],
 };
 
