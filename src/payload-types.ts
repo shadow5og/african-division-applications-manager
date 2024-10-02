@@ -9,7 +9,7 @@
 export interface Config {
   collections: {
     users: User;
-    media: Media;
+    proofOfPayment: ProofOfPayment;
     campApplications: CampApplication;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -250,7 +250,7 @@ export interface CampApplication {
   participatesInSinging: 'Yes' | 'No';
   typeOfGroup?: ('Solo performance' | 'Group performance') | null;
   preferredComunication?: ('WhatsApp' | 'Email') | null;
-  proofOfPayment?: (number | null) | Media;
+  proofPayment?: (number | null) | ProofOfPayment;
   validAppication?: boolean | null;
   invalidApplicationReason?: string | null;
   user?: (number | null) | User;
@@ -259,9 +259,9 @@ export interface CampApplication {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "proofOfPayment".
  */
-export interface Media {
+export interface ProofOfPayment {
   id: number;
   alt?: string | null;
   updatedAt: string;

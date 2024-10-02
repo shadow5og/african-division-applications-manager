@@ -5,10 +5,10 @@ type Query {
   docAccessUser(id: Int!): usersDocAccess
   meUser: usersMe
   initializedUser: Boolean
-  Media(id: Int!): Media
-  allMedia(where: Media_where, limit: Int, page: Int, sort: String): allMedia
-  countallMedia(where: Media_where): countallMedia
-  docAccessMedia(id: Int!): mediaDocAccess
+  ProofOfPayment(id: Int!): ProofOfPayment
+  ProofOfPayments(where: ProofOfPayment_where, limit: Int, page: Int, sort: String): ProofOfPayments
+  countProofOfPayments(where: ProofOfPayment_where): countProofOfPayments
+  docAccessProofOfPayment(id: Int!): proofOfPaymentDocAccess
   CampApplication(id: Int!): CampApplication
   CampApplications(where: CampApplication_where, limit: Int, page: Int, sort: String): CampApplications
   countCampApplications(where: CampApplication_where): countCampApplications
@@ -64,7 +64,7 @@ type CampApplication {
   participatesInSinging: CampApplication_participatesInSinging!
   typeOfGroup: CampApplication_typeOfGroup
   preferredComunication: CampApplication_preferredComunication
-  proofOfPayment: Media
+  proofPayment: ProofOfPayment
   validAppication: Boolean
   invalidApplicationReason: String
   user: User
@@ -304,7 +304,7 @@ enum CampApplication_preferredComunication {
   Email
 }
 
-type Media {
+type ProofOfPayment {
   id: Int
   alt: String
   updatedAt: DateTime
@@ -752,8 +752,8 @@ type usersMe {
   user: User
 }
 
-type allMedia {
-  docs: [Media]
+type ProofOfPayments {
+  docs: [ProofOfPayment]
   hasNextPage: Boolean
   hasPrevPage: Boolean
   limit: Int
@@ -766,24 +766,24 @@ type allMedia {
   totalPages: Int
 }
 
-input Media_where {
-  alt: Media_alt_operator
-  updatedAt: Media_updatedAt_operator
-  createdAt: Media_createdAt_operator
-  url: Media_url_operator
-  filename: Media_filename_operator
-  mimeType: Media_mimeType_operator
-  filesize: Media_filesize_operator
-  width: Media_width_operator
-  height: Media_height_operator
-  focalX: Media_focalX_operator
-  focalY: Media_focalY_operator
-  id: Media_id_operator
-  AND: [Media_where_and]
-  OR: [Media_where_or]
+input ProofOfPayment_where {
+  alt: ProofOfPayment_alt_operator
+  updatedAt: ProofOfPayment_updatedAt_operator
+  createdAt: ProofOfPayment_createdAt_operator
+  url: ProofOfPayment_url_operator
+  filename: ProofOfPayment_filename_operator
+  mimeType: ProofOfPayment_mimeType_operator
+  filesize: ProofOfPayment_filesize_operator
+  width: ProofOfPayment_width_operator
+  height: ProofOfPayment_height_operator
+  focalX: ProofOfPayment_focalX_operator
+  focalY: ProofOfPayment_focalY_operator
+  id: ProofOfPayment_id_operator
+  AND: [ProofOfPayment_where_and]
+  OR: [ProofOfPayment_where_or]
 }
 
-input Media_alt_operator {
+input ProofOfPayment_alt_operator {
   equals: String
   not_equals: String
   like: String
@@ -794,7 +794,7 @@ input Media_alt_operator {
   exists: Boolean
 }
 
-input Media_updatedAt_operator {
+input ProofOfPayment_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -805,7 +805,7 @@ input Media_updatedAt_operator {
   exists: Boolean
 }
 
-input Media_createdAt_operator {
+input ProofOfPayment_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -816,7 +816,7 @@ input Media_createdAt_operator {
   exists: Boolean
 }
 
-input Media_url_operator {
+input ProofOfPayment_url_operator {
   equals: String
   not_equals: String
   like: String
@@ -827,7 +827,7 @@ input Media_url_operator {
   exists: Boolean
 }
 
-input Media_filename_operator {
+input ProofOfPayment_filename_operator {
   equals: String
   not_equals: String
   like: String
@@ -838,7 +838,7 @@ input Media_filename_operator {
   exists: Boolean
 }
 
-input Media_mimeType_operator {
+input ProofOfPayment_mimeType_operator {
   equals: String
   not_equals: String
   like: String
@@ -849,7 +849,7 @@ input Media_mimeType_operator {
   exists: Boolean
 }
 
-input Media_filesize_operator {
+input ProofOfPayment_filesize_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -859,7 +859,7 @@ input Media_filesize_operator {
   exists: Boolean
 }
 
-input Media_width_operator {
+input ProofOfPayment_width_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -869,7 +869,7 @@ input Media_width_operator {
   exists: Boolean
 }
 
-input Media_height_operator {
+input ProofOfPayment_height_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -879,7 +879,7 @@ input Media_height_operator {
   exists: Boolean
 }
 
-input Media_focalX_operator {
+input ProofOfPayment_focalX_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -889,7 +889,7 @@ input Media_focalX_operator {
   exists: Boolean
 }
 
-input Media_focalY_operator {
+input ProofOfPayment_focalY_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -899,7 +899,7 @@ input Media_focalY_operator {
   exists: Boolean
 }
 
-input Media_id_operator {
+input ProofOfPayment_id_operator {
   equals: Int
   not_equals: Int
   greater_than_equal: Int
@@ -909,335 +909,335 @@ input Media_id_operator {
   exists: Boolean
 }
 
-input Media_where_and {
-  alt: Media_alt_operator
-  updatedAt: Media_updatedAt_operator
-  createdAt: Media_createdAt_operator
-  url: Media_url_operator
-  filename: Media_filename_operator
-  mimeType: Media_mimeType_operator
-  filesize: Media_filesize_operator
-  width: Media_width_operator
-  height: Media_height_operator
-  focalX: Media_focalX_operator
-  focalY: Media_focalY_operator
-  id: Media_id_operator
-  AND: [Media_where_and]
-  OR: [Media_where_or]
+input ProofOfPayment_where_and {
+  alt: ProofOfPayment_alt_operator
+  updatedAt: ProofOfPayment_updatedAt_operator
+  createdAt: ProofOfPayment_createdAt_operator
+  url: ProofOfPayment_url_operator
+  filename: ProofOfPayment_filename_operator
+  mimeType: ProofOfPayment_mimeType_operator
+  filesize: ProofOfPayment_filesize_operator
+  width: ProofOfPayment_width_operator
+  height: ProofOfPayment_height_operator
+  focalX: ProofOfPayment_focalX_operator
+  focalY: ProofOfPayment_focalY_operator
+  id: ProofOfPayment_id_operator
+  AND: [ProofOfPayment_where_and]
+  OR: [ProofOfPayment_where_or]
 }
 
-input Media_where_or {
-  alt: Media_alt_operator
-  updatedAt: Media_updatedAt_operator
-  createdAt: Media_createdAt_operator
-  url: Media_url_operator
-  filename: Media_filename_operator
-  mimeType: Media_mimeType_operator
-  filesize: Media_filesize_operator
-  width: Media_width_operator
-  height: Media_height_operator
-  focalX: Media_focalX_operator
-  focalY: Media_focalY_operator
-  id: Media_id_operator
-  AND: [Media_where_and]
-  OR: [Media_where_or]
+input ProofOfPayment_where_or {
+  alt: ProofOfPayment_alt_operator
+  updatedAt: ProofOfPayment_updatedAt_operator
+  createdAt: ProofOfPayment_createdAt_operator
+  url: ProofOfPayment_url_operator
+  filename: ProofOfPayment_filename_operator
+  mimeType: ProofOfPayment_mimeType_operator
+  filesize: ProofOfPayment_filesize_operator
+  width: ProofOfPayment_width_operator
+  height: ProofOfPayment_height_operator
+  focalX: ProofOfPayment_focalX_operator
+  focalY: ProofOfPayment_focalY_operator
+  id: ProofOfPayment_id_operator
+  AND: [ProofOfPayment_where_and]
+  OR: [ProofOfPayment_where_or]
 }
 
-type countallMedia {
+type countProofOfPayments {
   totalDocs: Int
 }
 
-type mediaDocAccess {
-  fields: MediaDocAccessFields
-  create: MediaCreateDocAccess
-  read: MediaReadDocAccess
-  update: MediaUpdateDocAccess
-  delete: MediaDeleteDocAccess
+type proofOfPaymentDocAccess {
+  fields: ProofOfPaymentDocAccessFields
+  create: ProofOfPaymentCreateDocAccess
+  read: ProofOfPaymentReadDocAccess
+  update: ProofOfPaymentUpdateDocAccess
+  delete: ProofOfPaymentDeleteDocAccess
 }
 
-type MediaDocAccessFields {
-  alt: MediaDocAccessFields_alt
-  updatedAt: MediaDocAccessFields_updatedAt
-  createdAt: MediaDocAccessFields_createdAt
-  url: MediaDocAccessFields_url
-  filename: MediaDocAccessFields_filename
-  mimeType: MediaDocAccessFields_mimeType
-  filesize: MediaDocAccessFields_filesize
-  width: MediaDocAccessFields_width
-  height: MediaDocAccessFields_height
-  focalX: MediaDocAccessFields_focalX
-  focalY: MediaDocAccessFields_focalY
+type ProofOfPaymentDocAccessFields {
+  alt: ProofOfPaymentDocAccessFields_alt
+  updatedAt: ProofOfPaymentDocAccessFields_updatedAt
+  createdAt: ProofOfPaymentDocAccessFields_createdAt
+  url: ProofOfPaymentDocAccessFields_url
+  filename: ProofOfPaymentDocAccessFields_filename
+  mimeType: ProofOfPaymentDocAccessFields_mimeType
+  filesize: ProofOfPaymentDocAccessFields_filesize
+  width: ProofOfPaymentDocAccessFields_width
+  height: ProofOfPaymentDocAccessFields_height
+  focalX: ProofOfPaymentDocAccessFields_focalX
+  focalY: ProofOfPaymentDocAccessFields_focalY
 }
 
-type MediaDocAccessFields_alt {
-  create: MediaDocAccessFields_alt_Create
-  read: MediaDocAccessFields_alt_Read
-  update: MediaDocAccessFields_alt_Update
-  delete: MediaDocAccessFields_alt_Delete
+type ProofOfPaymentDocAccessFields_alt {
+  create: ProofOfPaymentDocAccessFields_alt_Create
+  read: ProofOfPaymentDocAccessFields_alt_Read
+  update: ProofOfPaymentDocAccessFields_alt_Update
+  delete: ProofOfPaymentDocAccessFields_alt_Delete
 }
 
-type MediaDocAccessFields_alt_Create {
+type ProofOfPaymentDocAccessFields_alt_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_alt_Read {
+type ProofOfPaymentDocAccessFields_alt_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_alt_Update {
+type ProofOfPaymentDocAccessFields_alt_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_alt_Delete {
+type ProofOfPaymentDocAccessFields_alt_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_updatedAt {
-  create: MediaDocAccessFields_updatedAt_Create
-  read: MediaDocAccessFields_updatedAt_Read
-  update: MediaDocAccessFields_updatedAt_Update
-  delete: MediaDocAccessFields_updatedAt_Delete
+type ProofOfPaymentDocAccessFields_updatedAt {
+  create: ProofOfPaymentDocAccessFields_updatedAt_Create
+  read: ProofOfPaymentDocAccessFields_updatedAt_Read
+  update: ProofOfPaymentDocAccessFields_updatedAt_Update
+  delete: ProofOfPaymentDocAccessFields_updatedAt_Delete
 }
 
-type MediaDocAccessFields_updatedAt_Create {
+type ProofOfPaymentDocAccessFields_updatedAt_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_updatedAt_Read {
+type ProofOfPaymentDocAccessFields_updatedAt_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_updatedAt_Update {
+type ProofOfPaymentDocAccessFields_updatedAt_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_updatedAt_Delete {
+type ProofOfPaymentDocAccessFields_updatedAt_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_createdAt {
-  create: MediaDocAccessFields_createdAt_Create
-  read: MediaDocAccessFields_createdAt_Read
-  update: MediaDocAccessFields_createdAt_Update
-  delete: MediaDocAccessFields_createdAt_Delete
+type ProofOfPaymentDocAccessFields_createdAt {
+  create: ProofOfPaymentDocAccessFields_createdAt_Create
+  read: ProofOfPaymentDocAccessFields_createdAt_Read
+  update: ProofOfPaymentDocAccessFields_createdAt_Update
+  delete: ProofOfPaymentDocAccessFields_createdAt_Delete
 }
 
-type MediaDocAccessFields_createdAt_Create {
+type ProofOfPaymentDocAccessFields_createdAt_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_createdAt_Read {
+type ProofOfPaymentDocAccessFields_createdAt_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_createdAt_Update {
+type ProofOfPaymentDocAccessFields_createdAt_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_createdAt_Delete {
+type ProofOfPaymentDocAccessFields_createdAt_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_url {
-  create: MediaDocAccessFields_url_Create
-  read: MediaDocAccessFields_url_Read
-  update: MediaDocAccessFields_url_Update
-  delete: MediaDocAccessFields_url_Delete
+type ProofOfPaymentDocAccessFields_url {
+  create: ProofOfPaymentDocAccessFields_url_Create
+  read: ProofOfPaymentDocAccessFields_url_Read
+  update: ProofOfPaymentDocAccessFields_url_Update
+  delete: ProofOfPaymentDocAccessFields_url_Delete
 }
 
-type MediaDocAccessFields_url_Create {
+type ProofOfPaymentDocAccessFields_url_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_url_Read {
+type ProofOfPaymentDocAccessFields_url_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_url_Update {
+type ProofOfPaymentDocAccessFields_url_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_url_Delete {
+type ProofOfPaymentDocAccessFields_url_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filename {
-  create: MediaDocAccessFields_filename_Create
-  read: MediaDocAccessFields_filename_Read
-  update: MediaDocAccessFields_filename_Update
-  delete: MediaDocAccessFields_filename_Delete
+type ProofOfPaymentDocAccessFields_filename {
+  create: ProofOfPaymentDocAccessFields_filename_Create
+  read: ProofOfPaymentDocAccessFields_filename_Read
+  update: ProofOfPaymentDocAccessFields_filename_Update
+  delete: ProofOfPaymentDocAccessFields_filename_Delete
 }
 
-type MediaDocAccessFields_filename_Create {
+type ProofOfPaymentDocAccessFields_filename_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filename_Read {
+type ProofOfPaymentDocAccessFields_filename_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filename_Update {
+type ProofOfPaymentDocAccessFields_filename_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filename_Delete {
+type ProofOfPaymentDocAccessFields_filename_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_mimeType {
-  create: MediaDocAccessFields_mimeType_Create
-  read: MediaDocAccessFields_mimeType_Read
-  update: MediaDocAccessFields_mimeType_Update
-  delete: MediaDocAccessFields_mimeType_Delete
+type ProofOfPaymentDocAccessFields_mimeType {
+  create: ProofOfPaymentDocAccessFields_mimeType_Create
+  read: ProofOfPaymentDocAccessFields_mimeType_Read
+  update: ProofOfPaymentDocAccessFields_mimeType_Update
+  delete: ProofOfPaymentDocAccessFields_mimeType_Delete
 }
 
-type MediaDocAccessFields_mimeType_Create {
+type ProofOfPaymentDocAccessFields_mimeType_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_mimeType_Read {
+type ProofOfPaymentDocAccessFields_mimeType_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_mimeType_Update {
+type ProofOfPaymentDocAccessFields_mimeType_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_mimeType_Delete {
+type ProofOfPaymentDocAccessFields_mimeType_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filesize {
-  create: MediaDocAccessFields_filesize_Create
-  read: MediaDocAccessFields_filesize_Read
-  update: MediaDocAccessFields_filesize_Update
-  delete: MediaDocAccessFields_filesize_Delete
+type ProofOfPaymentDocAccessFields_filesize {
+  create: ProofOfPaymentDocAccessFields_filesize_Create
+  read: ProofOfPaymentDocAccessFields_filesize_Read
+  update: ProofOfPaymentDocAccessFields_filesize_Update
+  delete: ProofOfPaymentDocAccessFields_filesize_Delete
 }
 
-type MediaDocAccessFields_filesize_Create {
+type ProofOfPaymentDocAccessFields_filesize_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filesize_Read {
+type ProofOfPaymentDocAccessFields_filesize_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filesize_Update {
+type ProofOfPaymentDocAccessFields_filesize_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_filesize_Delete {
+type ProofOfPaymentDocAccessFields_filesize_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_width {
-  create: MediaDocAccessFields_width_Create
-  read: MediaDocAccessFields_width_Read
-  update: MediaDocAccessFields_width_Update
-  delete: MediaDocAccessFields_width_Delete
+type ProofOfPaymentDocAccessFields_width {
+  create: ProofOfPaymentDocAccessFields_width_Create
+  read: ProofOfPaymentDocAccessFields_width_Read
+  update: ProofOfPaymentDocAccessFields_width_Update
+  delete: ProofOfPaymentDocAccessFields_width_Delete
 }
 
-type MediaDocAccessFields_width_Create {
+type ProofOfPaymentDocAccessFields_width_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_width_Read {
+type ProofOfPaymentDocAccessFields_width_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_width_Update {
+type ProofOfPaymentDocAccessFields_width_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_width_Delete {
+type ProofOfPaymentDocAccessFields_width_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_height {
-  create: MediaDocAccessFields_height_Create
-  read: MediaDocAccessFields_height_Read
-  update: MediaDocAccessFields_height_Update
-  delete: MediaDocAccessFields_height_Delete
+type ProofOfPaymentDocAccessFields_height {
+  create: ProofOfPaymentDocAccessFields_height_Create
+  read: ProofOfPaymentDocAccessFields_height_Read
+  update: ProofOfPaymentDocAccessFields_height_Update
+  delete: ProofOfPaymentDocAccessFields_height_Delete
 }
 
-type MediaDocAccessFields_height_Create {
+type ProofOfPaymentDocAccessFields_height_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_height_Read {
+type ProofOfPaymentDocAccessFields_height_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_height_Update {
+type ProofOfPaymentDocAccessFields_height_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_height_Delete {
+type ProofOfPaymentDocAccessFields_height_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalX {
-  create: MediaDocAccessFields_focalX_Create
-  read: MediaDocAccessFields_focalX_Read
-  update: MediaDocAccessFields_focalX_Update
-  delete: MediaDocAccessFields_focalX_Delete
+type ProofOfPaymentDocAccessFields_focalX {
+  create: ProofOfPaymentDocAccessFields_focalX_Create
+  read: ProofOfPaymentDocAccessFields_focalX_Read
+  update: ProofOfPaymentDocAccessFields_focalX_Update
+  delete: ProofOfPaymentDocAccessFields_focalX_Delete
 }
 
-type MediaDocAccessFields_focalX_Create {
+type ProofOfPaymentDocAccessFields_focalX_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalX_Read {
+type ProofOfPaymentDocAccessFields_focalX_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalX_Update {
+type ProofOfPaymentDocAccessFields_focalX_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalX_Delete {
+type ProofOfPaymentDocAccessFields_focalX_Delete {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalY {
-  create: MediaDocAccessFields_focalY_Create
-  read: MediaDocAccessFields_focalY_Read
-  update: MediaDocAccessFields_focalY_Update
-  delete: MediaDocAccessFields_focalY_Delete
+type ProofOfPaymentDocAccessFields_focalY {
+  create: ProofOfPaymentDocAccessFields_focalY_Create
+  read: ProofOfPaymentDocAccessFields_focalY_Read
+  update: ProofOfPaymentDocAccessFields_focalY_Update
+  delete: ProofOfPaymentDocAccessFields_focalY_Delete
 }
 
-type MediaDocAccessFields_focalY_Create {
+type ProofOfPaymentDocAccessFields_focalY_Create {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalY_Read {
+type ProofOfPaymentDocAccessFields_focalY_Read {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalY_Update {
+type ProofOfPaymentDocAccessFields_focalY_Update {
   permission: Boolean!
 }
 
-type MediaDocAccessFields_focalY_Delete {
+type ProofOfPaymentDocAccessFields_focalY_Delete {
   permission: Boolean!
 }
 
-type MediaCreateDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type MediaReadDocAccess {
+type ProofOfPaymentCreateDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type MediaUpdateDocAccess {
+type ProofOfPaymentReadDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type MediaDeleteDocAccess {
+type ProofOfPaymentUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ProofOfPaymentDeleteDocAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -1270,7 +1270,7 @@ input CampApplication_where {
   participatesInSinging: CampApplication_participatesInSinging_operator
   typeOfGroup: CampApplication_typeOfGroup_operator
   preferredComunication: CampApplication_preferredComunication_operator
-  proofOfPayment: CampApplication_proofOfPayment_operator
+  proofPayment: CampApplication_proofPayment_operator
   validAppication: CampApplication_validAppication_operator
   invalidApplicationReason: CampApplication_invalidApplicationReason_operator
   user: CampApplication_user_operator
@@ -1619,7 +1619,7 @@ enum CampApplication_preferredComunication_Input {
   Email
 }
 
-input CampApplication_proofOfPayment_operator {
+input CampApplication_proofPayment_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -1697,7 +1697,7 @@ input CampApplication_where_and {
   participatesInSinging: CampApplication_participatesInSinging_operator
   typeOfGroup: CampApplication_typeOfGroup_operator
   preferredComunication: CampApplication_preferredComunication_operator
-  proofOfPayment: CampApplication_proofOfPayment_operator
+  proofPayment: CampApplication_proofPayment_operator
   validAppication: CampApplication_validAppication_operator
   invalidApplicationReason: CampApplication_invalidApplicationReason_operator
   user: CampApplication_user_operator
@@ -1722,7 +1722,7 @@ input CampApplication_where_or {
   participatesInSinging: CampApplication_participatesInSinging_operator
   typeOfGroup: CampApplication_typeOfGroup_operator
   preferredComunication: CampApplication_preferredComunication_operator
-  proofOfPayment: CampApplication_proofOfPayment_operator
+  proofPayment: CampApplication_proofPayment_operator
   validAppication: CampApplication_validAppication_operator
   invalidApplicationReason: CampApplication_invalidApplicationReason_operator
   user: CampApplication_user_operator
@@ -1759,7 +1759,7 @@ type CampApplicationsDocAccessFields {
   participatesInSinging: CampApplicationsDocAccessFields_participatesInSinging
   typeOfGroup: CampApplicationsDocAccessFields_typeOfGroup
   preferredComunication: CampApplicationsDocAccessFields_preferredComunication
-  proofOfPayment: CampApplicationsDocAccessFields_proofOfPayment
+  proofPayment: CampApplicationsDocAccessFields_proofPayment
   validAppication: CampApplicationsDocAccessFields_validAppication
   invalidApplicationReason: CampApplicationsDocAccessFields_invalidApplicationReason
   user: CampApplicationsDocAccessFields_user
@@ -2066,26 +2066,26 @@ type CampApplicationsDocAccessFields_preferredComunication_Delete {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofOfPayment {
-  create: CampApplicationsDocAccessFields_proofOfPayment_Create
-  read: CampApplicationsDocAccessFields_proofOfPayment_Read
-  update: CampApplicationsDocAccessFields_proofOfPayment_Update
-  delete: CampApplicationsDocAccessFields_proofOfPayment_Delete
+type CampApplicationsDocAccessFields_proofPayment {
+  create: CampApplicationsDocAccessFields_proofPayment_Create
+  read: CampApplicationsDocAccessFields_proofPayment_Read
+  update: CampApplicationsDocAccessFields_proofPayment_Update
+  delete: CampApplicationsDocAccessFields_proofPayment_Delete
 }
 
-type CampApplicationsDocAccessFields_proofOfPayment_Create {
+type CampApplicationsDocAccessFields_proofPayment_Create {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofOfPayment_Read {
+type CampApplicationsDocAccessFields_proofPayment_Read {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofOfPayment_Update {
+type CampApplicationsDocAccessFields_proofPayment_Update {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofOfPayment_Delete {
+type CampApplicationsDocAccessFields_proofPayment_Delete {
   permission: Boolean!
 }
 
@@ -2511,7 +2511,7 @@ type PayloadPreferencesDeleteDocAccess {
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
-  media: mediaAccess
+  proofOfPayment: proofOfPaymentAccess
   campApplications: campApplicationsAccess
   payload_preferences: payload_preferencesAccess
 }
@@ -2769,297 +2769,297 @@ type UsersUnlockAccess {
   where: JSONObject
 }
 
-type mediaAccess {
-  fields: MediaFields
-  create: MediaCreateAccess
-  read: MediaReadAccess
-  update: MediaUpdateAccess
-  delete: MediaDeleteAccess
+type proofOfPaymentAccess {
+  fields: ProofOfPaymentFields
+  create: ProofOfPaymentCreateAccess
+  read: ProofOfPaymentReadAccess
+  update: ProofOfPaymentUpdateAccess
+  delete: ProofOfPaymentDeleteAccess
 }
 
-type MediaFields {
-  alt: MediaFields_alt
-  updatedAt: MediaFields_updatedAt
-  createdAt: MediaFields_createdAt
-  url: MediaFields_url
-  filename: MediaFields_filename
-  mimeType: MediaFields_mimeType
-  filesize: MediaFields_filesize
-  width: MediaFields_width
-  height: MediaFields_height
-  focalX: MediaFields_focalX
-  focalY: MediaFields_focalY
+type ProofOfPaymentFields {
+  alt: ProofOfPaymentFields_alt
+  updatedAt: ProofOfPaymentFields_updatedAt
+  createdAt: ProofOfPaymentFields_createdAt
+  url: ProofOfPaymentFields_url
+  filename: ProofOfPaymentFields_filename
+  mimeType: ProofOfPaymentFields_mimeType
+  filesize: ProofOfPaymentFields_filesize
+  width: ProofOfPaymentFields_width
+  height: ProofOfPaymentFields_height
+  focalX: ProofOfPaymentFields_focalX
+  focalY: ProofOfPaymentFields_focalY
 }
 
-type MediaFields_alt {
-  create: MediaFields_alt_Create
-  read: MediaFields_alt_Read
-  update: MediaFields_alt_Update
-  delete: MediaFields_alt_Delete
+type ProofOfPaymentFields_alt {
+  create: ProofOfPaymentFields_alt_Create
+  read: ProofOfPaymentFields_alt_Read
+  update: ProofOfPaymentFields_alt_Update
+  delete: ProofOfPaymentFields_alt_Delete
 }
 
-type MediaFields_alt_Create {
+type ProofOfPaymentFields_alt_Create {
   permission: Boolean!
 }
 
-type MediaFields_alt_Read {
+type ProofOfPaymentFields_alt_Read {
   permission: Boolean!
 }
 
-type MediaFields_alt_Update {
+type ProofOfPaymentFields_alt_Update {
   permission: Boolean!
 }
 
-type MediaFields_alt_Delete {
+type ProofOfPaymentFields_alt_Delete {
   permission: Boolean!
 }
 
-type MediaFields_updatedAt {
-  create: MediaFields_updatedAt_Create
-  read: MediaFields_updatedAt_Read
-  update: MediaFields_updatedAt_Update
-  delete: MediaFields_updatedAt_Delete
+type ProofOfPaymentFields_updatedAt {
+  create: ProofOfPaymentFields_updatedAt_Create
+  read: ProofOfPaymentFields_updatedAt_Read
+  update: ProofOfPaymentFields_updatedAt_Update
+  delete: ProofOfPaymentFields_updatedAt_Delete
 }
 
-type MediaFields_updatedAt_Create {
+type ProofOfPaymentFields_updatedAt_Create {
   permission: Boolean!
 }
 
-type MediaFields_updatedAt_Read {
+type ProofOfPaymentFields_updatedAt_Read {
   permission: Boolean!
 }
 
-type MediaFields_updatedAt_Update {
+type ProofOfPaymentFields_updatedAt_Update {
   permission: Boolean!
 }
 
-type MediaFields_updatedAt_Delete {
+type ProofOfPaymentFields_updatedAt_Delete {
   permission: Boolean!
 }
 
-type MediaFields_createdAt {
-  create: MediaFields_createdAt_Create
-  read: MediaFields_createdAt_Read
-  update: MediaFields_createdAt_Update
-  delete: MediaFields_createdAt_Delete
+type ProofOfPaymentFields_createdAt {
+  create: ProofOfPaymentFields_createdAt_Create
+  read: ProofOfPaymentFields_createdAt_Read
+  update: ProofOfPaymentFields_createdAt_Update
+  delete: ProofOfPaymentFields_createdAt_Delete
 }
 
-type MediaFields_createdAt_Create {
+type ProofOfPaymentFields_createdAt_Create {
   permission: Boolean!
 }
 
-type MediaFields_createdAt_Read {
+type ProofOfPaymentFields_createdAt_Read {
   permission: Boolean!
 }
 
-type MediaFields_createdAt_Update {
+type ProofOfPaymentFields_createdAt_Update {
   permission: Boolean!
 }
 
-type MediaFields_createdAt_Delete {
+type ProofOfPaymentFields_createdAt_Delete {
   permission: Boolean!
 }
 
-type MediaFields_url {
-  create: MediaFields_url_Create
-  read: MediaFields_url_Read
-  update: MediaFields_url_Update
-  delete: MediaFields_url_Delete
+type ProofOfPaymentFields_url {
+  create: ProofOfPaymentFields_url_Create
+  read: ProofOfPaymentFields_url_Read
+  update: ProofOfPaymentFields_url_Update
+  delete: ProofOfPaymentFields_url_Delete
 }
 
-type MediaFields_url_Create {
+type ProofOfPaymentFields_url_Create {
   permission: Boolean!
 }
 
-type MediaFields_url_Read {
+type ProofOfPaymentFields_url_Read {
   permission: Boolean!
 }
 
-type MediaFields_url_Update {
+type ProofOfPaymentFields_url_Update {
   permission: Boolean!
 }
 
-type MediaFields_url_Delete {
+type ProofOfPaymentFields_url_Delete {
   permission: Boolean!
 }
 
-type MediaFields_filename {
-  create: MediaFields_filename_Create
-  read: MediaFields_filename_Read
-  update: MediaFields_filename_Update
-  delete: MediaFields_filename_Delete
+type ProofOfPaymentFields_filename {
+  create: ProofOfPaymentFields_filename_Create
+  read: ProofOfPaymentFields_filename_Read
+  update: ProofOfPaymentFields_filename_Update
+  delete: ProofOfPaymentFields_filename_Delete
 }
 
-type MediaFields_filename_Create {
+type ProofOfPaymentFields_filename_Create {
   permission: Boolean!
 }
 
-type MediaFields_filename_Read {
+type ProofOfPaymentFields_filename_Read {
   permission: Boolean!
 }
 
-type MediaFields_filename_Update {
+type ProofOfPaymentFields_filename_Update {
   permission: Boolean!
 }
 
-type MediaFields_filename_Delete {
+type ProofOfPaymentFields_filename_Delete {
   permission: Boolean!
 }
 
-type MediaFields_mimeType {
-  create: MediaFields_mimeType_Create
-  read: MediaFields_mimeType_Read
-  update: MediaFields_mimeType_Update
-  delete: MediaFields_mimeType_Delete
+type ProofOfPaymentFields_mimeType {
+  create: ProofOfPaymentFields_mimeType_Create
+  read: ProofOfPaymentFields_mimeType_Read
+  update: ProofOfPaymentFields_mimeType_Update
+  delete: ProofOfPaymentFields_mimeType_Delete
 }
 
-type MediaFields_mimeType_Create {
+type ProofOfPaymentFields_mimeType_Create {
   permission: Boolean!
 }
 
-type MediaFields_mimeType_Read {
+type ProofOfPaymentFields_mimeType_Read {
   permission: Boolean!
 }
 
-type MediaFields_mimeType_Update {
+type ProofOfPaymentFields_mimeType_Update {
   permission: Boolean!
 }
 
-type MediaFields_mimeType_Delete {
+type ProofOfPaymentFields_mimeType_Delete {
   permission: Boolean!
 }
 
-type MediaFields_filesize {
-  create: MediaFields_filesize_Create
-  read: MediaFields_filesize_Read
-  update: MediaFields_filesize_Update
-  delete: MediaFields_filesize_Delete
+type ProofOfPaymentFields_filesize {
+  create: ProofOfPaymentFields_filesize_Create
+  read: ProofOfPaymentFields_filesize_Read
+  update: ProofOfPaymentFields_filesize_Update
+  delete: ProofOfPaymentFields_filesize_Delete
 }
 
-type MediaFields_filesize_Create {
+type ProofOfPaymentFields_filesize_Create {
   permission: Boolean!
 }
 
-type MediaFields_filesize_Read {
+type ProofOfPaymentFields_filesize_Read {
   permission: Boolean!
 }
 
-type MediaFields_filesize_Update {
+type ProofOfPaymentFields_filesize_Update {
   permission: Boolean!
 }
 
-type MediaFields_filesize_Delete {
+type ProofOfPaymentFields_filesize_Delete {
   permission: Boolean!
 }
 
-type MediaFields_width {
-  create: MediaFields_width_Create
-  read: MediaFields_width_Read
-  update: MediaFields_width_Update
-  delete: MediaFields_width_Delete
+type ProofOfPaymentFields_width {
+  create: ProofOfPaymentFields_width_Create
+  read: ProofOfPaymentFields_width_Read
+  update: ProofOfPaymentFields_width_Update
+  delete: ProofOfPaymentFields_width_Delete
 }
 
-type MediaFields_width_Create {
+type ProofOfPaymentFields_width_Create {
   permission: Boolean!
 }
 
-type MediaFields_width_Read {
+type ProofOfPaymentFields_width_Read {
   permission: Boolean!
 }
 
-type MediaFields_width_Update {
+type ProofOfPaymentFields_width_Update {
   permission: Boolean!
 }
 
-type MediaFields_width_Delete {
+type ProofOfPaymentFields_width_Delete {
   permission: Boolean!
 }
 
-type MediaFields_height {
-  create: MediaFields_height_Create
-  read: MediaFields_height_Read
-  update: MediaFields_height_Update
-  delete: MediaFields_height_Delete
+type ProofOfPaymentFields_height {
+  create: ProofOfPaymentFields_height_Create
+  read: ProofOfPaymentFields_height_Read
+  update: ProofOfPaymentFields_height_Update
+  delete: ProofOfPaymentFields_height_Delete
 }
 
-type MediaFields_height_Create {
+type ProofOfPaymentFields_height_Create {
   permission: Boolean!
 }
 
-type MediaFields_height_Read {
+type ProofOfPaymentFields_height_Read {
   permission: Boolean!
 }
 
-type MediaFields_height_Update {
+type ProofOfPaymentFields_height_Update {
   permission: Boolean!
 }
 
-type MediaFields_height_Delete {
+type ProofOfPaymentFields_height_Delete {
   permission: Boolean!
 }
 
-type MediaFields_focalX {
-  create: MediaFields_focalX_Create
-  read: MediaFields_focalX_Read
-  update: MediaFields_focalX_Update
-  delete: MediaFields_focalX_Delete
+type ProofOfPaymentFields_focalX {
+  create: ProofOfPaymentFields_focalX_Create
+  read: ProofOfPaymentFields_focalX_Read
+  update: ProofOfPaymentFields_focalX_Update
+  delete: ProofOfPaymentFields_focalX_Delete
 }
 
-type MediaFields_focalX_Create {
+type ProofOfPaymentFields_focalX_Create {
   permission: Boolean!
 }
 
-type MediaFields_focalX_Read {
+type ProofOfPaymentFields_focalX_Read {
   permission: Boolean!
 }
 
-type MediaFields_focalX_Update {
+type ProofOfPaymentFields_focalX_Update {
   permission: Boolean!
 }
 
-type MediaFields_focalX_Delete {
+type ProofOfPaymentFields_focalX_Delete {
   permission: Boolean!
 }
 
-type MediaFields_focalY {
-  create: MediaFields_focalY_Create
-  read: MediaFields_focalY_Read
-  update: MediaFields_focalY_Update
-  delete: MediaFields_focalY_Delete
+type ProofOfPaymentFields_focalY {
+  create: ProofOfPaymentFields_focalY_Create
+  read: ProofOfPaymentFields_focalY_Read
+  update: ProofOfPaymentFields_focalY_Update
+  delete: ProofOfPaymentFields_focalY_Delete
 }
 
-type MediaFields_focalY_Create {
+type ProofOfPaymentFields_focalY_Create {
   permission: Boolean!
 }
 
-type MediaFields_focalY_Read {
+type ProofOfPaymentFields_focalY_Read {
   permission: Boolean!
 }
 
-type MediaFields_focalY_Update {
+type ProofOfPaymentFields_focalY_Update {
   permission: Boolean!
 }
 
-type MediaFields_focalY_Delete {
+type ProofOfPaymentFields_focalY_Delete {
   permission: Boolean!
 }
 
-type MediaCreateAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type MediaReadAccess {
+type ProofOfPaymentCreateAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type MediaUpdateAccess {
+type ProofOfPaymentReadAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type MediaDeleteAccess {
+type ProofOfPaymentUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ProofOfPaymentDeleteAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -3086,7 +3086,7 @@ type CampApplicationsFields {
   participatesInSinging: CampApplicationsFields_participatesInSinging
   typeOfGroup: CampApplicationsFields_typeOfGroup
   preferredComunication: CampApplicationsFields_preferredComunication
-  proofOfPayment: CampApplicationsFields_proofOfPayment
+  proofPayment: CampApplicationsFields_proofPayment
   validAppication: CampApplicationsFields_validAppication
   invalidApplicationReason: CampApplicationsFields_invalidApplicationReason
   user: CampApplicationsFields_user
@@ -3393,26 +3393,26 @@ type CampApplicationsFields_preferredComunication_Delete {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofOfPayment {
-  create: CampApplicationsFields_proofOfPayment_Create
-  read: CampApplicationsFields_proofOfPayment_Read
-  update: CampApplicationsFields_proofOfPayment_Update
-  delete: CampApplicationsFields_proofOfPayment_Delete
+type CampApplicationsFields_proofPayment {
+  create: CampApplicationsFields_proofPayment_Create
+  read: CampApplicationsFields_proofPayment_Read
+  update: CampApplicationsFields_proofPayment_Update
+  delete: CampApplicationsFields_proofPayment_Delete
 }
 
-type CampApplicationsFields_proofOfPayment_Create {
+type CampApplicationsFields_proofPayment_Create {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofOfPayment_Read {
+type CampApplicationsFields_proofPayment_Read {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofOfPayment_Update {
+type CampApplicationsFields_proofPayment_Update {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofOfPayment_Delete {
+type CampApplicationsFields_proofPayment_Delete {
   permission: Boolean!
 }
 
@@ -3713,9 +3713,9 @@ type Mutation {
   forgotPasswordUser(disableEmail: Boolean, email: String!, expiration: Int): Boolean!
   resetPasswordUser(password: String, token: String): usersResetPassword
   verifyEmailUser(token: String): Boolean
-  createMedia(data: mutationMediaInput!): Media
-  updateMedia(id: Int!, autosave: Boolean, data: mutationMediaUpdateInput!): Media
-  deleteMedia(id: Int!): Media
+  createProofOfPayment(data: mutationProofOfPaymentInput!): ProofOfPayment
+  updateProofOfPayment(id: Int!, autosave: Boolean, data: mutationProofOfPaymentUpdateInput!): ProofOfPayment
+  deleteProofOfPayment(id: Int!): ProofOfPayment
   createCampApplication(data: mutationCampApplicationInput!): CampApplication
   updateCampApplication(id: Int!, autosave: Boolean, data: mutationCampApplicationUpdateInput!): CampApplication
   deleteCampApplication(id: Int!): CampApplication
@@ -3793,7 +3793,7 @@ type usersResetPassword {
   user: User
 }
 
-input mutationMediaInput {
+input mutationProofOfPaymentInput {
   alt: String
   updatedAt: String
   createdAt: String
@@ -3807,7 +3807,7 @@ input mutationMediaInput {
   focalY: Float
 }
 
-input mutationMediaUpdateInput {
+input mutationProofOfPaymentUpdateInput {
   alt: String
   updatedAt: String
   createdAt: String
@@ -3835,7 +3835,7 @@ input mutationCampApplicationInput {
   participatesInSinging: String!
   typeOfGroup: CampApplication_typeOfGroup_MutationInput
   preferredComunication: String
-  proofOfPayment: Int
+  proofPayment: Int
   validAppication: Boolean
   invalidApplicationReason: String
   user: Int
@@ -4068,7 +4068,7 @@ input mutationCampApplicationUpdateInput {
   participatesInSinging: String
   typeOfGroup: CampApplicationUpdate_typeOfGroup_MutationInput
   preferredComunication: String
-  proofOfPayment: Int
+  proofPayment: Int
   validAppication: Boolean
   invalidApplicationReason: String
   user: Int

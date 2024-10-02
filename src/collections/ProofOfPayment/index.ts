@@ -11,5 +11,6 @@ export const ProofOfPayment: CollectionConfig = {
       name: "alt",
       type: "text",
     },
+    { name: "user", type: "relationship", relationTo: "users" },
   ],
 };
