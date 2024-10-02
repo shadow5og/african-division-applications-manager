@@ -253,7 +253,7 @@ export interface CampApplication {
   proofPayment?: (number | null) | ProofOfPayment;
   validAppication?: boolean | null;
   invalidApplicationReason?: string | null;
-  user?: (number | null) | User;
+  user: number | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -264,7 +264,7 @@ export interface CampApplication {
 export interface ProofOfPayment {
   id: number;
   alt?: string | null;
-  user?: (number | null) | User;
+  user: number | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;

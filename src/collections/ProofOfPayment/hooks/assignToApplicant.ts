@@ -12,29 +12,29 @@ export const assignToApplicant: CollectionBeforeChangeHook<
   const newData = { ...data };
   let changed = false;
 
-  if (
-    operation === "create" &&
-    !data.filename.includes("/")
-  ) {
+  if (operation === "create" && !data.filename.includes("/")) {
+    const { fullName } = await payload.findByID({
+      collection: "users",
+      id: data.user as number,
+      depth: 0,
+      user,
+    });
+
+    const sluggifiedName = slugify(fullName);
+
     await payload.delete({
       collection: "proofOfPayment",
       where: {
-        or: [
-          { filename: { equals: data.filename } },
-          { user: { equals: data.id } },
-        ],
+        filename: { contains: sluggifiedName },
       },
-    });
-
-    const { email } = await payload.findByID({
-      collection: "users",
-      id: data.id,
       depth: 0,
     });
 
-    newData.filename = `${slugify(email)}/${newData.filename}`;
+    newData.filename = `${sluggifiedName}-${newData.filename}`;
     changed = true;
   }
+
+  console.log(newData);
 
   return changed ? newData : data; // Return data to either create or update a document with
 };

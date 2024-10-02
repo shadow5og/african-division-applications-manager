@@ -67,7 +67,7 @@ type CampApplication {
   proofPayment: ProofOfPayment
   validAppication: Boolean
   invalidApplicationReason: String
-  user: User
+  user: User!
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -307,7 +307,7 @@ enum CampApplication_preferredComunication {
 type ProofOfPayment {
   id: Int
   alt: String
-  user: User
+  user: User!
   updatedAt: DateTime
   createdAt: DateTime
   url: String
@@ -802,7 +802,6 @@ input ProofOfPayment_user_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
-  exists: Boolean
 }
 
 input ProofOfPayment_updatedAt_operator {
@@ -1685,7 +1684,6 @@ input CampApplication_user_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
-  exists: Boolean
 }
 
 input CampApplication_updatedAt_operator {
