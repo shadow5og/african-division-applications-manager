@@ -1,22 +1,26 @@
 import { CollectionConfig } from "payload/types";
 import { adminsAndApplicant } from "../Users/access/adminsAndApplicant";
+import { assignToApplicant } from "./hooks/assignToApplicant";
+import { user } from "../../fields/user";
 
 export const ProofOfPayment: CollectionConfig = {
   slug: "proofOfPayment",
   upload: {
     adminThumbnail: "thumbnail",
     staticDir: "media",
-  },access: {
+  },
+  access: {
     create: adminsAndApplicant,
     read: adminsAndApplicant,
     update: adminsAndApplicant,
     delete: adminsAndApplicant,
   },
+  hooks: { beforeChange: [assignToApplicant] },
   fields: [
     {
       name: "alt",
       type: "text",
     },
-    { name: "user", type: "relationship", relationTo: "users", admin: {position: "sidebar"} },
+    user,
   ],
 };

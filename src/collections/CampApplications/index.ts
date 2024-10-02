@@ -3,6 +3,7 @@ import { nationality } from "../../fields/nationality";
 import { proofOfPayment } from "../../fields/proof-of-payment";
 import { admins } from "../../access";
 import { adminsAndApplicant } from "../Users/access/adminsAndApplicant";
+import { user } from "../../fields/user";
 
 export const CampApplications: CollectionConfig = {
   slug: "campApplications",
@@ -77,11 +78,6 @@ export const CampApplications: CollectionConfig = {
     proofOfPayment,
     { name: "validAppication", type: "checkbox", defaultValue: "false" },
     { name: "invalidApplicationReason", type: "textarea" },
-    {
-      name: "user",
-      type: "relationship",
-      relationTo: "users",
-      admin: { position: "sidebar" },
-    },
+    user,
   ],
 };
