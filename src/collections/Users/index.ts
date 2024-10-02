@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import { adminsAndApplicant } from "./access/adminsAndApplicant";
+import { admins } from "../../access";
 
 const Users: CollectionConfig = {
   slug: "users",
@@ -8,7 +9,7 @@ const Users: CollectionConfig = {
     useAsTitle: "fullName",
   },
   access: {
-    create: () => false,
+    create: admins,
     read: adminsAndApplicant,
     update: adminsAndApplicant,
     delete: () => false,

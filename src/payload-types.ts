@@ -264,6 +264,7 @@ export interface CampApplication {
 export interface ProofOfPayment {
   id: number;
   alt?: string | null;
+  user?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;

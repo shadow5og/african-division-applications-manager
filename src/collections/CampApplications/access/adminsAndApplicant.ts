@@ -4,7 +4,6 @@ import { User } from "payload/generated-types";
 
 export const adminsAndApplicant: Access<any, User> = async ({
   req: { user },
-  id,
 }) => {
   if (isAdmin(user)) return true;
 

@@ -307,6 +307,7 @@ enum CampApplication_preferredComunication {
 type ProofOfPayment {
   id: Int
   alt: String
+  user: User
   updatedAt: DateTime
   createdAt: DateTime
   url: String
@@ -768,6 +769,7 @@ type ProofOfPayments {
 
 input ProofOfPayment_where {
   alt: ProofOfPayment_alt_operator
+  user: ProofOfPayment_user_operator
   updatedAt: ProofOfPayment_updatedAt_operator
   createdAt: ProofOfPayment_createdAt_operator
   url: ProofOfPayment_url_operator
@@ -791,6 +793,15 @@ input ProofOfPayment_alt_operator {
   in: [String]
   not_in: [String]
   all: [String]
+  exists: Boolean
+}
+
+input ProofOfPayment_user_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
   exists: Boolean
 }
 
@@ -911,6 +922,7 @@ input ProofOfPayment_id_operator {
 
 input ProofOfPayment_where_and {
   alt: ProofOfPayment_alt_operator
+  user: ProofOfPayment_user_operator
   updatedAt: ProofOfPayment_updatedAt_operator
   createdAt: ProofOfPayment_createdAt_operator
   url: ProofOfPayment_url_operator
@@ -928,6 +940,7 @@ input ProofOfPayment_where_and {
 
 input ProofOfPayment_where_or {
   alt: ProofOfPayment_alt_operator
+  user: ProofOfPayment_user_operator
   updatedAt: ProofOfPayment_updatedAt_operator
   createdAt: ProofOfPayment_createdAt_operator
   url: ProofOfPayment_url_operator
@@ -957,6 +970,7 @@ type proofOfPaymentDocAccess {
 
 type ProofOfPaymentDocAccessFields {
   alt: ProofOfPaymentDocAccessFields_alt
+  user: ProofOfPaymentDocAccessFields_user
   updatedAt: ProofOfPaymentDocAccessFields_updatedAt
   createdAt: ProofOfPaymentDocAccessFields_createdAt
   url: ProofOfPaymentDocAccessFields_url
@@ -989,6 +1003,29 @@ type ProofOfPaymentDocAccessFields_alt_Update {
 }
 
 type ProofOfPaymentDocAccessFields_alt_Delete {
+  permission: Boolean!
+}
+
+type ProofOfPaymentDocAccessFields_user {
+  create: ProofOfPaymentDocAccessFields_user_Create
+  read: ProofOfPaymentDocAccessFields_user_Read
+  update: ProofOfPaymentDocAccessFields_user_Update
+  delete: ProofOfPaymentDocAccessFields_user_Delete
+}
+
+type ProofOfPaymentDocAccessFields_user_Create {
+  permission: Boolean!
+}
+
+type ProofOfPaymentDocAccessFields_user_Read {
+  permission: Boolean!
+}
+
+type ProofOfPaymentDocAccessFields_user_Update {
+  permission: Boolean!
+}
+
+type ProofOfPaymentDocAccessFields_user_Delete {
   permission: Boolean!
 }
 
@@ -2779,6 +2816,7 @@ type proofOfPaymentAccess {
 
 type ProofOfPaymentFields {
   alt: ProofOfPaymentFields_alt
+  user: ProofOfPaymentFields_user
   updatedAt: ProofOfPaymentFields_updatedAt
   createdAt: ProofOfPaymentFields_createdAt
   url: ProofOfPaymentFields_url
@@ -2811,6 +2849,29 @@ type ProofOfPaymentFields_alt_Update {
 }
 
 type ProofOfPaymentFields_alt_Delete {
+  permission: Boolean!
+}
+
+type ProofOfPaymentFields_user {
+  create: ProofOfPaymentFields_user_Create
+  read: ProofOfPaymentFields_user_Read
+  update: ProofOfPaymentFields_user_Update
+  delete: ProofOfPaymentFields_user_Delete
+}
+
+type ProofOfPaymentFields_user_Create {
+  permission: Boolean!
+}
+
+type ProofOfPaymentFields_user_Read {
+  permission: Boolean!
+}
+
+type ProofOfPaymentFields_user_Update {
+  permission: Boolean!
+}
+
+type ProofOfPaymentFields_user_Delete {
   permission: Boolean!
 }
 
@@ -3795,6 +3856,7 @@ type usersResetPassword {
 
 input mutationProofOfPaymentInput {
   alt: String
+  user: Int
   updatedAt: String
   createdAt: String
   url: String
@@ -3809,6 +3871,7 @@ input mutationProofOfPaymentInput {
 
 input mutationProofOfPaymentUpdateInput {
   alt: String
+  user: Int
   updatedAt: String
   createdAt: String
   url: String
