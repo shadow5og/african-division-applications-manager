@@ -1,9 +1,17 @@
 import { CollectionConfig } from "payload/types";
-import { nationality } from "../fields/nationality";
-import { media } from "../fields/media";
+import { nationality } from "../../fields/nationality";
+import { proofOfPayment } from "../../fields/proof-of-payment";
+import { admins } from "../../access";
+import { adminsAndApplicant } from "../Users/access/adminsAndApplicant";
 
 export const CampApplications: CollectionConfig = {
   slug: "campApplications",
+  access: {
+    create: admins,
+    read: adminsAndApplicant,
+    update: adminsAndApplicant,
+    delete: () => false,
+  },
   fields: [
     {
       name: "targetGroup",
@@ -66,8 +74,7 @@ export const CampApplications: CollectionConfig = {
       defaultValue: "WhatsApp",
       options: ["WhatsApp", "Email"],
     },
-    // @ts-expect-error
-    { ...media, name: "proofOfPayment" },
+    proofOfPayment,
     { name: "validAppication", type: "checkbox", defaultValue: "false" },
     { name: "invalidApplicationReason", type: "textarea" },
     {

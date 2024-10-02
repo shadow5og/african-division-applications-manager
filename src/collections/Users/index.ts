@@ -1,5 +1,5 @@
-import { admins } from "../access/admins";
 import { CollectionConfig } from "payload/types";
+import { adminsAndApplicant } from "./access/adminsAndApplicant";
 
 const Users: CollectionConfig = {
   slug: "users",
@@ -9,8 +9,8 @@ const Users: CollectionConfig = {
   },
   access: {
     create: () => false,
-    read: admins,
-    update: admins,
+    read: adminsAndApplicant,
+    update: adminsAndApplicant,
     delete: () => false,
   },
   fields: [

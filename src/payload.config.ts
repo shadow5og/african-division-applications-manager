@@ -5,10 +5,9 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
-
-import Users from './collections/Users'
-import { Media } from './collections/Media'
+import { ProofOfPayment } from './collections/ProofOfPayment'
 import { CampApplications } from './collections/CampApplications'
+import Users from './collections/Users'
 
 export default buildConfig({
   admin: {
@@ -16,7 +15,7 @@ export default buildConfig({
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users, Media, CampApplications],
+  collections: [Users, ProofOfPayment, CampApplications],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
