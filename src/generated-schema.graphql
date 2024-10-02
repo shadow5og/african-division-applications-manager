@@ -1,0 +1,4259 @@
+type Query {
+  User(id: Int!): User
+  Users(where: User_where, limit: Int, page: Int, sort: String): Users
+  countUsers(where: User_where): countUsers
+  docAccessUser(id: Int!): usersDocAccess
+  meUser: usersMe
+  initializedUser: Boolean
+  Media(id: Int!): Media
+  allMedia(where: Media_where, limit: Int, page: Int, sort: String): allMedia
+  countallMedia(where: Media_where): countallMedia
+  docAccessMedia(id: Int!): mediaDocAccess
+  CampApplication(id: Int!): CampApplication
+  CampApplications(where: CampApplication_where, limit: Int, page: Int, sort: String): CampApplications
+  countCampApplications(where: CampApplication_where): countCampApplications
+  docAccessCampApplication(id: Int!): campApplicationsDocAccess
+  PayloadPreference(id: Int!): PayloadPreference
+  PayloadPreferences(where: PayloadPreference_where, limit: Int, page: Int, sort: String): PayloadPreferences
+  countPayloadPreferences(where: PayloadPreference_where): countPayloadPreferences
+  docAccessPayloadPreference(id: Int!): payload_preferencesDocAccess
+  Access: Access
+}
+
+type User {
+  id: Int
+  fullName: String!
+  role: User_role
+  phoneNumber: String!
+  gender: User_gender!
+  updatedAt: DateTime
+  createdAt: DateTime
+  email: EmailAddress!
+  resetPasswordToken: String
+  resetPasswordExpiration: DateTime
+  salt: String
+  hash: String
+  loginAttempts: Float
+  lockUntil: DateTime
+  password: String!
+}
+
+enum User_role {
+  admin
+  user
+}
+
+enum User_gender {
+  female
+  male
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+
+type Users {
+  docs: [User]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input User_where {
+  fullName: User_fullName_operator
+  role: User_role_operator
+  phoneNumber: User_phoneNumber_operator
+  gender: User_gender_operator
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+  AND: [User_where_and]
+  OR: [User_where_or]
+}
+
+input User_fullName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input User_role_operator {
+  equals: User_role_Input
+  not_equals: User_role_Input
+  like: User_role_Input
+  contains: User_role_Input
+  exists: Boolean
+}
+
+enum User_role_Input {
+  admin
+  user
+}
+
+input User_phoneNumber_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input User_gender_operator {
+  equals: User_gender_Input
+  not_equals: User_gender_Input
+  in: [User_gender_Input]
+  not_in: [User_gender_Input]
+  all: [User_gender_Input]
+}
+
+enum User_gender_Input {
+  female
+  male
+}
+
+input User_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+}
+
+input User_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input User_where_and {
+  fullName: User_fullName_operator
+  role: User_role_operator
+  phoneNumber: User_phoneNumber_operator
+  gender: User_gender_operator
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+  AND: [User_where_and]
+  OR: [User_where_or]
+}
+
+input User_where_or {
+  fullName: User_fullName_operator
+  role: User_role_operator
+  phoneNumber: User_phoneNumber_operator
+  gender: User_gender_operator
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+  AND: [User_where_and]
+  OR: [User_where_or]
+}
+
+type countUsers {
+  totalDocs: Int
+}
+
+type usersDocAccess {
+  fields: UsersDocAccessFields
+  create: UsersCreateDocAccess
+  read: UsersReadDocAccess
+  update: UsersUpdateDocAccess
+  delete: UsersDeleteDocAccess
+  unlock: UsersUnlockDocAccess
+}
+
+type UsersDocAccessFields {
+  fullName: UsersDocAccessFields_fullName
+  role: UsersDocAccessFields_role
+  phoneNumber: UsersDocAccessFields_phoneNumber
+  gender: UsersDocAccessFields_gender
+  updatedAt: UsersDocAccessFields_updatedAt
+  createdAt: UsersDocAccessFields_createdAt
+  email: UsersDocAccessFields_email
+  password: UsersDocAccessFields_password
+}
+
+type UsersDocAccessFields_fullName {
+  create: UsersDocAccessFields_fullName_Create
+  read: UsersDocAccessFields_fullName_Read
+  update: UsersDocAccessFields_fullName_Update
+  delete: UsersDocAccessFields_fullName_Delete
+}
+
+type UsersDocAccessFields_fullName_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_fullName_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_fullName_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_fullName_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_role {
+  create: UsersDocAccessFields_role_Create
+  read: UsersDocAccessFields_role_Read
+  update: UsersDocAccessFields_role_Update
+  delete: UsersDocAccessFields_role_Delete
+}
+
+type UsersDocAccessFields_role_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_role_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_role_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_role_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_phoneNumber {
+  create: UsersDocAccessFields_phoneNumber_Create
+  read: UsersDocAccessFields_phoneNumber_Read
+  update: UsersDocAccessFields_phoneNumber_Update
+  delete: UsersDocAccessFields_phoneNumber_Delete
+}
+
+type UsersDocAccessFields_phoneNumber_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_phoneNumber_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_phoneNumber_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_phoneNumber_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_gender {
+  create: UsersDocAccessFields_gender_Create
+  read: UsersDocAccessFields_gender_Read
+  update: UsersDocAccessFields_gender_Update
+  delete: UsersDocAccessFields_gender_Delete
+}
+
+type UsersDocAccessFields_gender_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_gender_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_gender_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_gender_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt {
+  create: UsersDocAccessFields_updatedAt_Create
+  read: UsersDocAccessFields_updatedAt_Read
+  update: UsersDocAccessFields_updatedAt_Update
+  delete: UsersDocAccessFields_updatedAt_Delete
+}
+
+type UsersDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt {
+  create: UsersDocAccessFields_createdAt_Create
+  read: UsersDocAccessFields_createdAt_Read
+  update: UsersDocAccessFields_createdAt_Update
+  delete: UsersDocAccessFields_createdAt_Delete
+}
+
+type UsersDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email {
+  create: UsersDocAccessFields_email_Create
+  read: UsersDocAccessFields_email_Read
+  update: UsersDocAccessFields_email_Update
+  delete: UsersDocAccessFields_email_Delete
+}
+
+type UsersDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password {
+  create: UsersDocAccessFields_password_Create
+  read: UsersDocAccessFields_password_Read
+  update: UsersDocAccessFields_password_Update
+  delete: UsersDocAccessFields_password_Delete
+}
+
+type UsersDocAccessFields_password_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsersCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type UsersReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUnlockDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type usersMe {
+  collection: String
+  exp: Int
+  strategy: String
+  token: String
+  user: User
+}
+
+type Media {
+  id: Int
+  alt: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  focalX: Float
+  focalY: Float
+}
+
+type allMedia {
+  docs: [Media]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input Media_where {
+  alt: Media_alt_operator
+  updatedAt: Media_updatedAt_operator
+  createdAt: Media_createdAt_operator
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  width: Media_width_operator
+  height: Media_height_operator
+  focalX: Media_focalX_operator
+  focalY: Media_focalY_operator
+  id: Media_id_operator
+  AND: [Media_where_and]
+  OR: [Media_where_or]
+}
+
+input Media_alt_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Media_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Media_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_focalX_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_focalY_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input Media_where_and {
+  alt: Media_alt_operator
+  updatedAt: Media_updatedAt_operator
+  createdAt: Media_createdAt_operator
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  width: Media_width_operator
+  height: Media_height_operator
+  focalX: Media_focalX_operator
+  focalY: Media_focalY_operator
+  id: Media_id_operator
+  AND: [Media_where_and]
+  OR: [Media_where_or]
+}
+
+input Media_where_or {
+  alt: Media_alt_operator
+  updatedAt: Media_updatedAt_operator
+  createdAt: Media_createdAt_operator
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  width: Media_width_operator
+  height: Media_height_operator
+  focalX: Media_focalX_operator
+  focalY: Media_focalY_operator
+  id: Media_id_operator
+  AND: [Media_where_and]
+  OR: [Media_where_or]
+}
+
+type countallMedia {
+  totalDocs: Int
+}
+
+type mediaDocAccess {
+  fields: MediaDocAccessFields
+  create: MediaCreateDocAccess
+  read: MediaReadDocAccess
+  update: MediaUpdateDocAccess
+  delete: MediaDeleteDocAccess
+}
+
+type MediaDocAccessFields {
+  alt: MediaDocAccessFields_alt
+  updatedAt: MediaDocAccessFields_updatedAt
+  createdAt: MediaDocAccessFields_createdAt
+  url: MediaDocAccessFields_url
+  filename: MediaDocAccessFields_filename
+  mimeType: MediaDocAccessFields_mimeType
+  filesize: MediaDocAccessFields_filesize
+  width: MediaDocAccessFields_width
+  height: MediaDocAccessFields_height
+  focalX: MediaDocAccessFields_focalX
+  focalY: MediaDocAccessFields_focalY
+}
+
+type MediaDocAccessFields_alt {
+  create: MediaDocAccessFields_alt_Create
+  read: MediaDocAccessFields_alt_Read
+  update: MediaDocAccessFields_alt_Update
+  delete: MediaDocAccessFields_alt_Delete
+}
+
+type MediaDocAccessFields_alt_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_alt_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_alt_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_alt_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_updatedAt {
+  create: MediaDocAccessFields_updatedAt_Create
+  read: MediaDocAccessFields_updatedAt_Read
+  update: MediaDocAccessFields_updatedAt_Update
+  delete: MediaDocAccessFields_updatedAt_Delete
+}
+
+type MediaDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_createdAt {
+  create: MediaDocAccessFields_createdAt_Create
+  read: MediaDocAccessFields_createdAt_Read
+  update: MediaDocAccessFields_createdAt_Update
+  delete: MediaDocAccessFields_createdAt_Delete
+}
+
+type MediaDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url {
+  create: MediaDocAccessFields_url_Create
+  read: MediaDocAccessFields_url_Read
+  update: MediaDocAccessFields_url_Update
+  delete: MediaDocAccessFields_url_Delete
+}
+
+type MediaDocAccessFields_url_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename {
+  create: MediaDocAccessFields_filename_Create
+  read: MediaDocAccessFields_filename_Read
+  update: MediaDocAccessFields_filename_Update
+  delete: MediaDocAccessFields_filename_Delete
+}
+
+type MediaDocAccessFields_filename_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType {
+  create: MediaDocAccessFields_mimeType_Create
+  read: MediaDocAccessFields_mimeType_Read
+  update: MediaDocAccessFields_mimeType_Update
+  delete: MediaDocAccessFields_mimeType_Delete
+}
+
+type MediaDocAccessFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize {
+  create: MediaDocAccessFields_filesize_Create
+  read: MediaDocAccessFields_filesize_Read
+  update: MediaDocAccessFields_filesize_Update
+  delete: MediaDocAccessFields_filesize_Delete
+}
+
+type MediaDocAccessFields_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width {
+  create: MediaDocAccessFields_width_Create
+  read: MediaDocAccessFields_width_Read
+  update: MediaDocAccessFields_width_Update
+  delete: MediaDocAccessFields_width_Delete
+}
+
+type MediaDocAccessFields_width_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height {
+  create: MediaDocAccessFields_height_Create
+  read: MediaDocAccessFields_height_Read
+  update: MediaDocAccessFields_height_Update
+  delete: MediaDocAccessFields_height_Delete
+}
+
+type MediaDocAccessFields_height_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalX {
+  create: MediaDocAccessFields_focalX_Create
+  read: MediaDocAccessFields_focalX_Read
+  update: MediaDocAccessFields_focalX_Update
+  delete: MediaDocAccessFields_focalX_Delete
+}
+
+type MediaDocAccessFields_focalX_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalX_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalX_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalX_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalY {
+  create: MediaDocAccessFields_focalY_Create
+  read: MediaDocAccessFields_focalY_Read
+  update: MediaDocAccessFields_focalY_Update
+  delete: MediaDocAccessFields_focalY_Delete
+}
+
+type MediaDocAccessFields_focalY_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalY_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalY_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_focalY_Delete {
+  permission: Boolean!
+}
+
+type MediaCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplication {
+  id: Int
+  targetGroup: CampApplication_targetGroup!
+  nationality: CampApplication_nationality!
+  churchOrganisationName: String!
+  churchLocation: String!
+  otherDenomination: String!
+  howDidYouLearnAboutUs: CampApplication_howDidYouLearnAboutUs!
+  expetationsFromConference: String!
+  additionalInformation: String!
+  arrivalDate: DateTime!
+  departureDate: DateTime!
+  participatesInSinging: CampApplication_participatesInSinging!
+  typeOfGroup: CampApplication_typeOfGroup
+  preferredComunication: CampApplication_preferredComunication
+  proofOfPayment: Media
+  validAppication: Boolean
+  invalidApplicationReason: String
+  user: User
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum CampApplication_targetGroup {
+  child
+  _12_25
+  _26_35
+  _36_45
+  _46_55
+  _56_65
+  _65_
+}
+
+enum CampApplication_nationality {
+  AF
+  AL
+  DZ
+  AD
+  AO
+  AG
+  AR
+  AM
+  AU
+  AT
+  AZ
+  BS
+  BH
+  BD
+  BB
+  BY
+  BE
+  BZ
+  BJ
+  BT
+  BO
+  BA
+  BW
+  BR
+  BN
+  BG
+  BF
+  BI
+  KH
+  CM
+  CA
+  CF
+  TD
+  CL
+  CN
+  CO
+  KM
+  CG
+  CR
+  CI
+  HR
+  CU
+  CY
+  CZ
+  DK
+  DJ
+  DM
+  DO
+  EC
+  EG
+  SV
+  GQ
+  ER
+  EE
+  ET
+  FJ
+  FI
+  FR
+  GA
+  GM
+  GE
+  DE
+  GH
+  GR
+  GD
+  GT
+  GN
+  GW
+  GY
+  HT
+  HN
+  HU
+  IS
+  IN
+  ID
+  IR
+  IQ
+  IE
+  IL
+  IT
+  JM
+  JP
+  JO
+  KZ
+  KE
+  KI
+  KP
+  KR
+  KW
+  KG
+  LA
+  LV
+  LB
+  LS
+  LR
+  LY
+  LI
+  LT
+  LU
+  MK
+  MG
+  MW
+  MY
+  MV
+  ML
+  MT
+  MH
+  MR
+  MU
+  MX
+  FM
+  MD
+  MC
+  MN
+  ME
+  MA
+  MZ
+  MM
+  NA
+  NR
+  NP
+  NL
+  NZ
+  NI
+  NE
+  NG
+  NO
+  OM
+  PK
+  PW
+  PA
+  PG
+  PY
+  PE
+  PH
+  PL
+  PT
+  QA
+  RO
+  RU
+  RW
+  KN
+  LC
+  VC
+  WS
+  SM
+  ST
+  SA
+  SN
+  RS
+  SC
+  SL
+  SG
+  SX
+  SK
+  SI
+  SB
+  SO
+  ZA
+  SS
+  ES
+  LK
+  SD
+  SR
+  SZ
+  SE
+  CH
+  SY
+  TJ
+  TZ
+  TH
+  TL
+  TG
+  TO
+  TT
+  TN
+  TR
+  TM
+  TV
+  UG
+  UA
+  AE
+  GB
+  US
+  UY
+  UZ
+  VU
+  VA
+  VE
+  VN
+  YE
+  ZM
+  ZW
+}
+
+enum CampApplication_howDidYouLearnAboutUs {
+  referral
+  socialmedia
+  churchannouncements
+}
+
+enum CampApplication_participatesInSinging {
+  Yes
+  No
+}
+
+enum CampApplication_typeOfGroup {
+  Soloperformance
+  Groupperformance
+}
+
+enum CampApplication_preferredComunication {
+  WhatsApp
+  Email
+}
+
+type CampApplications {
+  docs: [CampApplication]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input CampApplication_where {
+  targetGroup: CampApplication_targetGroup_operator
+  nationality: CampApplication_nationality_operator
+  churchOrganisationName: CampApplication_churchOrganisationName_operator
+  churchLocation: CampApplication_churchLocation_operator
+  otherDenomination: CampApplication_otherDenomination_operator
+  howDidYouLearnAboutUs: CampApplication_howDidYouLearnAboutUs_operator
+  expetationsFromConference: CampApplication_expetationsFromConference_operator
+  additionalInformation: CampApplication_additionalInformation_operator
+  arrivalDate: CampApplication_arrivalDate_operator
+  departureDate: CampApplication_departureDate_operator
+  participatesInSinging: CampApplication_participatesInSinging_operator
+  typeOfGroup: CampApplication_typeOfGroup_operator
+  preferredComunication: CampApplication_preferredComunication_operator
+  proofOfPayment: CampApplication_proofOfPayment_operator
+  validAppication: CampApplication_validAppication_operator
+  invalidApplicationReason: CampApplication_invalidApplicationReason_operator
+  user: CampApplication_user_operator
+  updatedAt: CampApplication_updatedAt_operator
+  createdAt: CampApplication_createdAt_operator
+  id: CampApplication_id_operator
+  AND: [CampApplication_where_and]
+  OR: [CampApplication_where_or]
+}
+
+input CampApplication_targetGroup_operator {
+  equals: CampApplication_targetGroup_Input
+  not_equals: CampApplication_targetGroup_Input
+  in: [CampApplication_targetGroup_Input]
+  not_in: [CampApplication_targetGroup_Input]
+  all: [CampApplication_targetGroup_Input]
+}
+
+enum CampApplication_targetGroup_Input {
+  child
+  _12_25
+  _26_35
+  _36_45
+  _46_55
+  _56_65
+  _65_
+}
+
+input CampApplication_nationality_operator {
+  equals: CampApplication_nationality_Input
+  not_equals: CampApplication_nationality_Input
+  in: [CampApplication_nationality_Input]
+  not_in: [CampApplication_nationality_Input]
+  all: [CampApplication_nationality_Input]
+}
+
+enum CampApplication_nationality_Input {
+  AF
+  AL
+  DZ
+  AD
+  AO
+  AG
+  AR
+  AM
+  AU
+  AT
+  AZ
+  BS
+  BH
+  BD
+  BB
+  BY
+  BE
+  BZ
+  BJ
+  BT
+  BO
+  BA
+  BW
+  BR
+  BN
+  BG
+  BF
+  BI
+  KH
+  CM
+  CA
+  CF
+  TD
+  CL
+  CN
+  CO
+  KM
+  CG
+  CR
+  CI
+  HR
+  CU
+  CY
+  CZ
+  DK
+  DJ
+  DM
+  DO
+  EC
+  EG
+  SV
+  GQ
+  ER
+  EE
+  ET
+  FJ
+  FI
+  FR
+  GA
+  GM
+  GE
+  DE
+  GH
+  GR
+  GD
+  GT
+  GN
+  GW
+  GY
+  HT
+  HN
+  HU
+  IS
+  IN
+  ID
+  IR
+  IQ
+  IE
+  IL
+  IT
+  JM
+  JP
+  JO
+  KZ
+  KE
+  KI
+  KP
+  KR
+  KW
+  KG
+  LA
+  LV
+  LB
+  LS
+  LR
+  LY
+  LI
+  LT
+  LU
+  MK
+  MG
+  MW
+  MY
+  MV
+  ML
+  MT
+  MH
+  MR
+  MU
+  MX
+  FM
+  MD
+  MC
+  MN
+  ME
+  MA
+  MZ
+  MM
+  NA
+  NR
+  NP
+  NL
+  NZ
+  NI
+  NE
+  NG
+  NO
+  OM
+  PK
+  PW
+  PA
+  PG
+  PY
+  PE
+  PH
+  PL
+  PT
+  QA
+  RO
+  RU
+  RW
+  KN
+  LC
+  VC
+  WS
+  SM
+  ST
+  SA
+  SN
+  RS
+  SC
+  SL
+  SG
+  SX
+  SK
+  SI
+  SB
+  SO
+  ZA
+  SS
+  ES
+  LK
+  SD
+  SR
+  SZ
+  SE
+  CH
+  SY
+  TJ
+  TZ
+  TH
+  TL
+  TG
+  TO
+  TT
+  TN
+  TR
+  TM
+  TV
+  UG
+  UA
+  AE
+  GB
+  US
+  UY
+  UZ
+  VU
+  VA
+  VE
+  VN
+  YE
+  ZM
+  ZW
+}
+
+input CampApplication_churchOrganisationName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CampApplication_churchLocation_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CampApplication_otherDenomination_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CampApplication_howDidYouLearnAboutUs_operator {
+  equals: CampApplication_howDidYouLearnAboutUs_Input
+  not_equals: CampApplication_howDidYouLearnAboutUs_Input
+  like: CampApplication_howDidYouLearnAboutUs_Input
+  contains: CampApplication_howDidYouLearnAboutUs_Input
+}
+
+enum CampApplication_howDidYouLearnAboutUs_Input {
+  referral
+  socialmedia
+  churchannouncements
+}
+
+input CampApplication_expetationsFromConference_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input CampApplication_additionalInformation_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input CampApplication_arrivalDate_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input CampApplication_departureDate_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input CampApplication_participatesInSinging_operator {
+  equals: CampApplication_participatesInSinging_Input
+  not_equals: CampApplication_participatesInSinging_Input
+  like: CampApplication_participatesInSinging_Input
+  contains: CampApplication_participatesInSinging_Input
+}
+
+enum CampApplication_participatesInSinging_Input {
+  Yes
+  No
+}
+
+input CampApplication_typeOfGroup_operator {
+  equals: CampApplication_typeOfGroup_Input
+  not_equals: CampApplication_typeOfGroup_Input
+  in: [CampApplication_typeOfGroup_Input]
+  not_in: [CampApplication_typeOfGroup_Input]
+  all: [CampApplication_typeOfGroup_Input]
+  exists: Boolean
+}
+
+enum CampApplication_typeOfGroup_Input {
+  Soloperformance
+  Groupperformance
+}
+
+input CampApplication_preferredComunication_operator {
+  equals: CampApplication_preferredComunication_Input
+  not_equals: CampApplication_preferredComunication_Input
+  like: CampApplication_preferredComunication_Input
+  contains: CampApplication_preferredComunication_Input
+  exists: Boolean
+}
+
+enum CampApplication_preferredComunication_Input {
+  WhatsApp
+  Email
+}
+
+input CampApplication_proofOfPayment_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+input CampApplication_validAppication_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input CampApplication_invalidApplicationReason_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input CampApplication_user_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input CampApplication_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CampApplication_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CampApplication_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input CampApplication_where_and {
+  targetGroup: CampApplication_targetGroup_operator
+  nationality: CampApplication_nationality_operator
+  churchOrganisationName: CampApplication_churchOrganisationName_operator
+  churchLocation: CampApplication_churchLocation_operator
+  otherDenomination: CampApplication_otherDenomination_operator
+  howDidYouLearnAboutUs: CampApplication_howDidYouLearnAboutUs_operator
+  expetationsFromConference: CampApplication_expetationsFromConference_operator
+  additionalInformation: CampApplication_additionalInformation_operator
+  arrivalDate: CampApplication_arrivalDate_operator
+  departureDate: CampApplication_departureDate_operator
+  participatesInSinging: CampApplication_participatesInSinging_operator
+  typeOfGroup: CampApplication_typeOfGroup_operator
+  preferredComunication: CampApplication_preferredComunication_operator
+  proofOfPayment: CampApplication_proofOfPayment_operator
+  validAppication: CampApplication_validAppication_operator
+  invalidApplicationReason: CampApplication_invalidApplicationReason_operator
+  user: CampApplication_user_operator
+  updatedAt: CampApplication_updatedAt_operator
+  createdAt: CampApplication_createdAt_operator
+  id: CampApplication_id_operator
+  AND: [CampApplication_where_and]
+  OR: [CampApplication_where_or]
+}
+
+input CampApplication_where_or {
+  targetGroup: CampApplication_targetGroup_operator
+  nationality: CampApplication_nationality_operator
+  churchOrganisationName: CampApplication_churchOrganisationName_operator
+  churchLocation: CampApplication_churchLocation_operator
+  otherDenomination: CampApplication_otherDenomination_operator
+  howDidYouLearnAboutUs: CampApplication_howDidYouLearnAboutUs_operator
+  expetationsFromConference: CampApplication_expetationsFromConference_operator
+  additionalInformation: CampApplication_additionalInformation_operator
+  arrivalDate: CampApplication_arrivalDate_operator
+  departureDate: CampApplication_departureDate_operator
+  participatesInSinging: CampApplication_participatesInSinging_operator
+  typeOfGroup: CampApplication_typeOfGroup_operator
+  preferredComunication: CampApplication_preferredComunication_operator
+  proofOfPayment: CampApplication_proofOfPayment_operator
+  validAppication: CampApplication_validAppication_operator
+  invalidApplicationReason: CampApplication_invalidApplicationReason_operator
+  user: CampApplication_user_operator
+  updatedAt: CampApplication_updatedAt_operator
+  createdAt: CampApplication_createdAt_operator
+  id: CampApplication_id_operator
+  AND: [CampApplication_where_and]
+  OR: [CampApplication_where_or]
+}
+
+type countCampApplications {
+  totalDocs: Int
+}
+
+type campApplicationsDocAccess {
+  fields: CampApplicationsDocAccessFields
+  create: CampApplicationsCreateDocAccess
+  read: CampApplicationsReadDocAccess
+  update: CampApplicationsUpdateDocAccess
+  delete: CampApplicationsDeleteDocAccess
+}
+
+type CampApplicationsDocAccessFields {
+  targetGroup: CampApplicationsDocAccessFields_targetGroup
+  nationality: CampApplicationsDocAccessFields_nationality
+  churchOrganisationName: CampApplicationsDocAccessFields_churchOrganisationName
+  churchLocation: CampApplicationsDocAccessFields_churchLocation
+  otherDenomination: CampApplicationsDocAccessFields_otherDenomination
+  howDidYouLearnAboutUs: CampApplicationsDocAccessFields_howDidYouLearnAboutUs
+  expetationsFromConference: CampApplicationsDocAccessFields_expetationsFromConference
+  additionalInformation: CampApplicationsDocAccessFields_additionalInformation
+  arrivalDate: CampApplicationsDocAccessFields_arrivalDate
+  departureDate: CampApplicationsDocAccessFields_departureDate
+  participatesInSinging: CampApplicationsDocAccessFields_participatesInSinging
+  typeOfGroup: CampApplicationsDocAccessFields_typeOfGroup
+  preferredComunication: CampApplicationsDocAccessFields_preferredComunication
+  proofOfPayment: CampApplicationsDocAccessFields_proofOfPayment
+  validAppication: CampApplicationsDocAccessFields_validAppication
+  invalidApplicationReason: CampApplicationsDocAccessFields_invalidApplicationReason
+  user: CampApplicationsDocAccessFields_user
+  updatedAt: CampApplicationsDocAccessFields_updatedAt
+  createdAt: CampApplicationsDocAccessFields_createdAt
+}
+
+type CampApplicationsDocAccessFields_targetGroup {
+  create: CampApplicationsDocAccessFields_targetGroup_Create
+  read: CampApplicationsDocAccessFields_targetGroup_Read
+  update: CampApplicationsDocAccessFields_targetGroup_Update
+  delete: CampApplicationsDocAccessFields_targetGroup_Delete
+}
+
+type CampApplicationsDocAccessFields_targetGroup_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_targetGroup_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_targetGroup_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_targetGroup_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_nationality {
+  create: CampApplicationsDocAccessFields_nationality_Create
+  read: CampApplicationsDocAccessFields_nationality_Read
+  update: CampApplicationsDocAccessFields_nationality_Update
+  delete: CampApplicationsDocAccessFields_nationality_Delete
+}
+
+type CampApplicationsDocAccessFields_nationality_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_nationality_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_nationality_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_nationality_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchOrganisationName {
+  create: CampApplicationsDocAccessFields_churchOrganisationName_Create
+  read: CampApplicationsDocAccessFields_churchOrganisationName_Read
+  update: CampApplicationsDocAccessFields_churchOrganisationName_Update
+  delete: CampApplicationsDocAccessFields_churchOrganisationName_Delete
+}
+
+type CampApplicationsDocAccessFields_churchOrganisationName_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchOrganisationName_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchOrganisationName_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchOrganisationName_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchLocation {
+  create: CampApplicationsDocAccessFields_churchLocation_Create
+  read: CampApplicationsDocAccessFields_churchLocation_Read
+  update: CampApplicationsDocAccessFields_churchLocation_Update
+  delete: CampApplicationsDocAccessFields_churchLocation_Delete
+}
+
+type CampApplicationsDocAccessFields_churchLocation_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchLocation_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchLocation_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_churchLocation_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_otherDenomination {
+  create: CampApplicationsDocAccessFields_otherDenomination_Create
+  read: CampApplicationsDocAccessFields_otherDenomination_Read
+  update: CampApplicationsDocAccessFields_otherDenomination_Update
+  delete: CampApplicationsDocAccessFields_otherDenomination_Delete
+}
+
+type CampApplicationsDocAccessFields_otherDenomination_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_otherDenomination_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_otherDenomination_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_otherDenomination_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_howDidYouLearnAboutUs {
+  create: CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Create
+  read: CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Read
+  update: CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Update
+  delete: CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Delete
+}
+
+type CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_howDidYouLearnAboutUs_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_expetationsFromConference {
+  create: CampApplicationsDocAccessFields_expetationsFromConference_Create
+  read: CampApplicationsDocAccessFields_expetationsFromConference_Read
+  update: CampApplicationsDocAccessFields_expetationsFromConference_Update
+  delete: CampApplicationsDocAccessFields_expetationsFromConference_Delete
+}
+
+type CampApplicationsDocAccessFields_expetationsFromConference_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_expetationsFromConference_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_expetationsFromConference_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_expetationsFromConference_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_additionalInformation {
+  create: CampApplicationsDocAccessFields_additionalInformation_Create
+  read: CampApplicationsDocAccessFields_additionalInformation_Read
+  update: CampApplicationsDocAccessFields_additionalInformation_Update
+  delete: CampApplicationsDocAccessFields_additionalInformation_Delete
+}
+
+type CampApplicationsDocAccessFields_additionalInformation_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_additionalInformation_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_additionalInformation_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_additionalInformation_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_arrivalDate {
+  create: CampApplicationsDocAccessFields_arrivalDate_Create
+  read: CampApplicationsDocAccessFields_arrivalDate_Read
+  update: CampApplicationsDocAccessFields_arrivalDate_Update
+  delete: CampApplicationsDocAccessFields_arrivalDate_Delete
+}
+
+type CampApplicationsDocAccessFields_arrivalDate_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_arrivalDate_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_arrivalDate_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_arrivalDate_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_departureDate {
+  create: CampApplicationsDocAccessFields_departureDate_Create
+  read: CampApplicationsDocAccessFields_departureDate_Read
+  update: CampApplicationsDocAccessFields_departureDate_Update
+  delete: CampApplicationsDocAccessFields_departureDate_Delete
+}
+
+type CampApplicationsDocAccessFields_departureDate_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_departureDate_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_departureDate_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_departureDate_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_participatesInSinging {
+  create: CampApplicationsDocAccessFields_participatesInSinging_Create
+  read: CampApplicationsDocAccessFields_participatesInSinging_Read
+  update: CampApplicationsDocAccessFields_participatesInSinging_Update
+  delete: CampApplicationsDocAccessFields_participatesInSinging_Delete
+}
+
+type CampApplicationsDocAccessFields_participatesInSinging_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_participatesInSinging_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_participatesInSinging_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_participatesInSinging_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_typeOfGroup {
+  create: CampApplicationsDocAccessFields_typeOfGroup_Create
+  read: CampApplicationsDocAccessFields_typeOfGroup_Read
+  update: CampApplicationsDocAccessFields_typeOfGroup_Update
+  delete: CampApplicationsDocAccessFields_typeOfGroup_Delete
+}
+
+type CampApplicationsDocAccessFields_typeOfGroup_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_typeOfGroup_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_typeOfGroup_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_typeOfGroup_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_preferredComunication {
+  create: CampApplicationsDocAccessFields_preferredComunication_Create
+  read: CampApplicationsDocAccessFields_preferredComunication_Read
+  update: CampApplicationsDocAccessFields_preferredComunication_Update
+  delete: CampApplicationsDocAccessFields_preferredComunication_Delete
+}
+
+type CampApplicationsDocAccessFields_preferredComunication_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_preferredComunication_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_preferredComunication_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_preferredComunication_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_proofOfPayment {
+  create: CampApplicationsDocAccessFields_proofOfPayment_Create
+  read: CampApplicationsDocAccessFields_proofOfPayment_Read
+  update: CampApplicationsDocAccessFields_proofOfPayment_Update
+  delete: CampApplicationsDocAccessFields_proofOfPayment_Delete
+}
+
+type CampApplicationsDocAccessFields_proofOfPayment_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_proofOfPayment_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_proofOfPayment_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_proofOfPayment_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_validAppication {
+  create: CampApplicationsDocAccessFields_validAppication_Create
+  read: CampApplicationsDocAccessFields_validAppication_Read
+  update: CampApplicationsDocAccessFields_validAppication_Update
+  delete: CampApplicationsDocAccessFields_validAppication_Delete
+}
+
+type CampApplicationsDocAccessFields_validAppication_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_validAppication_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_validAppication_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_validAppication_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_invalidApplicationReason {
+  create: CampApplicationsDocAccessFields_invalidApplicationReason_Create
+  read: CampApplicationsDocAccessFields_invalidApplicationReason_Read
+  update: CampApplicationsDocAccessFields_invalidApplicationReason_Update
+  delete: CampApplicationsDocAccessFields_invalidApplicationReason_Delete
+}
+
+type CampApplicationsDocAccessFields_invalidApplicationReason_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_invalidApplicationReason_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_invalidApplicationReason_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_invalidApplicationReason_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_user {
+  create: CampApplicationsDocAccessFields_user_Create
+  read: CampApplicationsDocAccessFields_user_Read
+  update: CampApplicationsDocAccessFields_user_Update
+  delete: CampApplicationsDocAccessFields_user_Delete
+}
+
+type CampApplicationsDocAccessFields_user_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_user_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_user_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_user_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_updatedAt {
+  create: CampApplicationsDocAccessFields_updatedAt_Create
+  read: CampApplicationsDocAccessFields_updatedAt_Read
+  update: CampApplicationsDocAccessFields_updatedAt_Update
+  delete: CampApplicationsDocAccessFields_updatedAt_Delete
+}
+
+type CampApplicationsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_createdAt {
+  create: CampApplicationsDocAccessFields_createdAt_Create
+  read: CampApplicationsDocAccessFields_createdAt_Read
+  update: CampApplicationsDocAccessFields_createdAt_Update
+  delete: CampApplicationsDocAccessFields_createdAt_Delete
+}
+
+type CampApplicationsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplicationsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplicationsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplicationsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreference {
+  id: Int
+  user: PayloadPreference_User_Relationship!
+  key: String
+  value: JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type PayloadPreference_User_Relationship {
+  relationTo: PayloadPreference_User_RelationTo
+  value: PayloadPreference_User
+}
+
+enum PayloadPreference_User_RelationTo {
+  users
+}
+
+union PayloadPreference_User = User
+
+type PayloadPreferences {
+  docs: [PayloadPreference]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input PayloadPreference_where {
+  user: PayloadPreference_user_Relation
+  key: PayloadPreference_key_operator
+  value: PayloadPreference_value_operator
+  updatedAt: PayloadPreference_updatedAt_operator
+  createdAt: PayloadPreference_createdAt_operator
+  id: PayloadPreference_id_operator
+  AND: [PayloadPreference_where_and]
+  OR: [PayloadPreference_where_or]
+}
+
+input PayloadPreference_user_Relation {
+  relationTo: PayloadPreference_user_Relation_RelationTo
+  value: JSON
+}
+
+enum PayloadPreference_user_Relation_RelationTo {
+  users
+}
+
+input PayloadPreference_key_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input PayloadPreference_value_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
+  exists: Boolean
+}
+
+input PayloadPreference_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input PayloadPreference_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input PayloadPreference_id_operator {
+  equals: Int
+  not_equals: Int
+  greater_than_equal: Int
+  greater_than: Int
+  less_than_equal: Int
+  less_than: Int
+  exists: Boolean
+}
+
+input PayloadPreference_where_and {
+  user: PayloadPreference_user_Relation
+  key: PayloadPreference_key_operator
+  value: PayloadPreference_value_operator
+  updatedAt: PayloadPreference_updatedAt_operator
+  createdAt: PayloadPreference_createdAt_operator
+  id: PayloadPreference_id_operator
+  AND: [PayloadPreference_where_and]
+  OR: [PayloadPreference_where_or]
+}
+
+input PayloadPreference_where_or {
+  user: PayloadPreference_user_Relation
+  key: PayloadPreference_key_operator
+  value: PayloadPreference_value_operator
+  updatedAt: PayloadPreference_updatedAt_operator
+  createdAt: PayloadPreference_createdAt_operator
+  id: PayloadPreference_id_operator
+  AND: [PayloadPreference_where_and]
+  OR: [PayloadPreference_where_or]
+}
+
+type countPayloadPreferences {
+  totalDocs: Int
+}
+
+type payload_preferencesDocAccess {
+  fields: PayloadPreferencesDocAccessFields
+  create: PayloadPreferencesCreateDocAccess
+  read: PayloadPreferencesReadDocAccess
+  update: PayloadPreferencesUpdateDocAccess
+  delete: PayloadPreferencesDeleteDocAccess
+}
+
+type PayloadPreferencesDocAccessFields {
+  user: PayloadPreferencesDocAccessFields_user
+  key: PayloadPreferencesDocAccessFields_key
+  value: PayloadPreferencesDocAccessFields_value
+  updatedAt: PayloadPreferencesDocAccessFields_updatedAt
+  createdAt: PayloadPreferencesDocAccessFields_createdAt
+}
+
+type PayloadPreferencesDocAccessFields_user {
+  create: PayloadPreferencesDocAccessFields_user_Create
+  read: PayloadPreferencesDocAccessFields_user_Read
+  update: PayloadPreferencesDocAccessFields_user_Update
+  delete: PayloadPreferencesDocAccessFields_user_Delete
+}
+
+type PayloadPreferencesDocAccessFields_user_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_user_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_user_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_user_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_key {
+  create: PayloadPreferencesDocAccessFields_key_Create
+  read: PayloadPreferencesDocAccessFields_key_Read
+  update: PayloadPreferencesDocAccessFields_key_Update
+  delete: PayloadPreferencesDocAccessFields_key_Delete
+}
+
+type PayloadPreferencesDocAccessFields_key_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_key_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_key_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_key_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_value {
+  create: PayloadPreferencesDocAccessFields_value_Create
+  read: PayloadPreferencesDocAccessFields_value_Read
+  update: PayloadPreferencesDocAccessFields_value_Update
+  delete: PayloadPreferencesDocAccessFields_value_Delete
+}
+
+type PayloadPreferencesDocAccessFields_value_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_value_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_value_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_value_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_updatedAt {
+  create: PayloadPreferencesDocAccessFields_updatedAt_Create
+  read: PayloadPreferencesDocAccessFields_updatedAt_Read
+  update: PayloadPreferencesDocAccessFields_updatedAt_Update
+  delete: PayloadPreferencesDocAccessFields_updatedAt_Delete
+}
+
+type PayloadPreferencesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_createdAt {
+  create: PayloadPreferencesDocAccessFields_createdAt_Create
+  read: PayloadPreferencesDocAccessFields_createdAt_Read
+  update: PayloadPreferencesDocAccessFields_createdAt_Update
+  delete: PayloadPreferencesDocAccessFields_createdAt_Delete
+}
+
+type PayloadPreferencesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreferencesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreferencesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreferencesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Access {
+  canAccessAdmin: Boolean!
+  users: usersAccess
+  media: mediaAccess
+  campApplications: campApplicationsAccess
+  payload_preferences: payload_preferencesAccess
+}
+
+type usersAccess {
+  fields: UsersFields
+  create: UsersCreateAccess
+  read: UsersReadAccess
+  update: UsersUpdateAccess
+  delete: UsersDeleteAccess
+  unlock: UsersUnlockAccess
+}
+
+type UsersFields {
+  fullName: UsersFields_fullName
+  role: UsersFields_role
+  phoneNumber: UsersFields_phoneNumber
+  gender: UsersFields_gender
+  updatedAt: UsersFields_updatedAt
+  createdAt: UsersFields_createdAt
+  email: UsersFields_email
+  password: UsersFields_password
+}
+
+type UsersFields_fullName {
+  create: UsersFields_fullName_Create
+  read: UsersFields_fullName_Read
+  update: UsersFields_fullName_Update
+  delete: UsersFields_fullName_Delete
+}
+
+type UsersFields_fullName_Create {
+  permission: Boolean!
+}
+
+type UsersFields_fullName_Read {
+  permission: Boolean!
+}
+
+type UsersFields_fullName_Update {
+  permission: Boolean!
+}
+
+type UsersFields_fullName_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_role {
+  create: UsersFields_role_Create
+  read: UsersFields_role_Read
+  update: UsersFields_role_Update
+  delete: UsersFields_role_Delete
+}
+
+type UsersFields_role_Create {
+  permission: Boolean!
+}
+
+type UsersFields_role_Read {
+  permission: Boolean!
+}
+
+type UsersFields_role_Update {
+  permission: Boolean!
+}
+
+type UsersFields_role_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_phoneNumber {
+  create: UsersFields_phoneNumber_Create
+  read: UsersFields_phoneNumber_Read
+  update: UsersFields_phoneNumber_Update
+  delete: UsersFields_phoneNumber_Delete
+}
+
+type UsersFields_phoneNumber_Create {
+  permission: Boolean!
+}
+
+type UsersFields_phoneNumber_Read {
+  permission: Boolean!
+}
+
+type UsersFields_phoneNumber_Update {
+  permission: Boolean!
+}
+
+type UsersFields_phoneNumber_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_gender {
+  create: UsersFields_gender_Create
+  read: UsersFields_gender_Read
+  update: UsersFields_gender_Update
+  delete: UsersFields_gender_Delete
+}
+
+type UsersFields_gender_Create {
+  permission: Boolean!
+}
+
+type UsersFields_gender_Read {
+  permission: Boolean!
+}
+
+type UsersFields_gender_Update {
+  permission: Boolean!
+}
+
+type UsersFields_gender_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt {
+  create: UsersFields_updatedAt_Create
+  read: UsersFields_updatedAt_Read
+  update: UsersFields_updatedAt_Update
+  delete: UsersFields_updatedAt_Delete
+}
+
+type UsersFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt {
+  create: UsersFields_createdAt_Create
+  read: UsersFields_createdAt_Read
+  update: UsersFields_createdAt_Update
+  delete: UsersFields_createdAt_Delete
+}
+
+type UsersFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_email {
+  create: UsersFields_email_Create
+  read: UsersFields_email_Read
+  update: UsersFields_email_Update
+  delete: UsersFields_email_Delete
+}
+
+type UsersFields_email_Create {
+  permission: Boolean!
+}
+
+type UsersFields_email_Read {
+  permission: Boolean!
+}
+
+type UsersFields_email_Update {
+  permission: Boolean!
+}
+
+type UsersFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_password {
+  create: UsersFields_password_Create
+  read: UsersFields_password_Read
+  update: UsersFields_password_Update
+  delete: UsersFields_password_Delete
+}
+
+type UsersFields_password_Create {
+  permission: Boolean!
+}
+
+type UsersFields_password_Read {
+  permission: Boolean!
+}
+
+type UsersFields_password_Update {
+  permission: Boolean!
+}
+
+type UsersFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsersCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUnlockAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type mediaAccess {
+  fields: MediaFields
+  create: MediaCreateAccess
+  read: MediaReadAccess
+  update: MediaUpdateAccess
+  delete: MediaDeleteAccess
+}
+
+type MediaFields {
+  alt: MediaFields_alt
+  updatedAt: MediaFields_updatedAt
+  createdAt: MediaFields_createdAt
+  url: MediaFields_url
+  filename: MediaFields_filename
+  mimeType: MediaFields_mimeType
+  filesize: MediaFields_filesize
+  width: MediaFields_width
+  height: MediaFields_height
+  focalX: MediaFields_focalX
+  focalY: MediaFields_focalY
+}
+
+type MediaFields_alt {
+  create: MediaFields_alt_Create
+  read: MediaFields_alt_Read
+  update: MediaFields_alt_Update
+  delete: MediaFields_alt_Delete
+}
+
+type MediaFields_alt_Create {
+  permission: Boolean!
+}
+
+type MediaFields_alt_Read {
+  permission: Boolean!
+}
+
+type MediaFields_alt_Update {
+  permission: Boolean!
+}
+
+type MediaFields_alt_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_updatedAt {
+  create: MediaFields_updatedAt_Create
+  read: MediaFields_updatedAt_Read
+  update: MediaFields_updatedAt_Update
+  delete: MediaFields_updatedAt_Delete
+}
+
+type MediaFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type MediaFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type MediaFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type MediaFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_createdAt {
+  create: MediaFields_createdAt_Create
+  read: MediaFields_createdAt_Read
+  update: MediaFields_createdAt_Update
+  delete: MediaFields_createdAt_Delete
+}
+
+type MediaFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type MediaFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type MediaFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type MediaFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_url {
+  create: MediaFields_url_Create
+  read: MediaFields_url_Read
+  update: MediaFields_url_Update
+  delete: MediaFields_url_Delete
+}
+
+type MediaFields_url_Create {
+  permission: Boolean!
+}
+
+type MediaFields_url_Read {
+  permission: Boolean!
+}
+
+type MediaFields_url_Update {
+  permission: Boolean!
+}
+
+type MediaFields_url_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_filename {
+  create: MediaFields_filename_Create
+  read: MediaFields_filename_Read
+  update: MediaFields_filename_Update
+  delete: MediaFields_filename_Delete
+}
+
+type MediaFields_filename_Create {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Read {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Update {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType {
+  create: MediaFields_mimeType_Create
+  read: MediaFields_mimeType_Read
+  update: MediaFields_mimeType_Update
+  delete: MediaFields_mimeType_Delete
+}
+
+type MediaFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_filesize {
+  create: MediaFields_filesize_Create
+  read: MediaFields_filesize_Read
+  update: MediaFields_filesize_Update
+  delete: MediaFields_filesize_Delete
+}
+
+type MediaFields_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_width {
+  create: MediaFields_width_Create
+  read: MediaFields_width_Read
+  update: MediaFields_width_Update
+  delete: MediaFields_width_Delete
+}
+
+type MediaFields_width_Create {
+  permission: Boolean!
+}
+
+type MediaFields_width_Read {
+  permission: Boolean!
+}
+
+type MediaFields_width_Update {
+  permission: Boolean!
+}
+
+type MediaFields_width_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_height {
+  create: MediaFields_height_Create
+  read: MediaFields_height_Read
+  update: MediaFields_height_Update
+  delete: MediaFields_height_Delete
+}
+
+type MediaFields_height_Create {
+  permission: Boolean!
+}
+
+type MediaFields_height_Read {
+  permission: Boolean!
+}
+
+type MediaFields_height_Update {
+  permission: Boolean!
+}
+
+type MediaFields_height_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_focalX {
+  create: MediaFields_focalX_Create
+  read: MediaFields_focalX_Read
+  update: MediaFields_focalX_Update
+  delete: MediaFields_focalX_Delete
+}
+
+type MediaFields_focalX_Create {
+  permission: Boolean!
+}
+
+type MediaFields_focalX_Read {
+  permission: Boolean!
+}
+
+type MediaFields_focalX_Update {
+  permission: Boolean!
+}
+
+type MediaFields_focalX_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_focalY {
+  create: MediaFields_focalY_Create
+  read: MediaFields_focalY_Read
+  update: MediaFields_focalY_Update
+  delete: MediaFields_focalY_Delete
+}
+
+type MediaFields_focalY_Create {
+  permission: Boolean!
+}
+
+type MediaFields_focalY_Read {
+  permission: Boolean!
+}
+
+type MediaFields_focalY_Update {
+  permission: Boolean!
+}
+
+type MediaFields_focalY_Delete {
+  permission: Boolean!
+}
+
+type MediaCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type campApplicationsAccess {
+  fields: CampApplicationsFields
+  create: CampApplicationsCreateAccess
+  read: CampApplicationsReadAccess
+  update: CampApplicationsUpdateAccess
+  delete: CampApplicationsDeleteAccess
+}
+
+type CampApplicationsFields {
+  targetGroup: CampApplicationsFields_targetGroup
+  nationality: CampApplicationsFields_nationality
+  churchOrganisationName: CampApplicationsFields_churchOrganisationName
+  churchLocation: CampApplicationsFields_churchLocation
+  otherDenomination: CampApplicationsFields_otherDenomination
+  howDidYouLearnAboutUs: CampApplicationsFields_howDidYouLearnAboutUs
+  expetationsFromConference: CampApplicationsFields_expetationsFromConference
+  additionalInformation: CampApplicationsFields_additionalInformation
+  arrivalDate: CampApplicationsFields_arrivalDate
+  departureDate: CampApplicationsFields_departureDate
+  participatesInSinging: CampApplicationsFields_participatesInSinging
+  typeOfGroup: CampApplicationsFields_typeOfGroup
+  preferredComunication: CampApplicationsFields_preferredComunication
+  proofOfPayment: CampApplicationsFields_proofOfPayment
+  validAppication: CampApplicationsFields_validAppication
+  invalidApplicationReason: CampApplicationsFields_invalidApplicationReason
+  user: CampApplicationsFields_user
+  updatedAt: CampApplicationsFields_updatedAt
+  createdAt: CampApplicationsFields_createdAt
+}
+
+type CampApplicationsFields_targetGroup {
+  create: CampApplicationsFields_targetGroup_Create
+  read: CampApplicationsFields_targetGroup_Read
+  update: CampApplicationsFields_targetGroup_Update
+  delete: CampApplicationsFields_targetGroup_Delete
+}
+
+type CampApplicationsFields_targetGroup_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_targetGroup_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_targetGroup_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_targetGroup_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_nationality {
+  create: CampApplicationsFields_nationality_Create
+  read: CampApplicationsFields_nationality_Read
+  update: CampApplicationsFields_nationality_Update
+  delete: CampApplicationsFields_nationality_Delete
+}
+
+type CampApplicationsFields_nationality_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_nationality_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_nationality_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_nationality_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchOrganisationName {
+  create: CampApplicationsFields_churchOrganisationName_Create
+  read: CampApplicationsFields_churchOrganisationName_Read
+  update: CampApplicationsFields_churchOrganisationName_Update
+  delete: CampApplicationsFields_churchOrganisationName_Delete
+}
+
+type CampApplicationsFields_churchOrganisationName_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchOrganisationName_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchOrganisationName_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchOrganisationName_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchLocation {
+  create: CampApplicationsFields_churchLocation_Create
+  read: CampApplicationsFields_churchLocation_Read
+  update: CampApplicationsFields_churchLocation_Update
+  delete: CampApplicationsFields_churchLocation_Delete
+}
+
+type CampApplicationsFields_churchLocation_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchLocation_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchLocation_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_churchLocation_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_otherDenomination {
+  create: CampApplicationsFields_otherDenomination_Create
+  read: CampApplicationsFields_otherDenomination_Read
+  update: CampApplicationsFields_otherDenomination_Update
+  delete: CampApplicationsFields_otherDenomination_Delete
+}
+
+type CampApplicationsFields_otherDenomination_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_otherDenomination_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_otherDenomination_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_otherDenomination_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_howDidYouLearnAboutUs {
+  create: CampApplicationsFields_howDidYouLearnAboutUs_Create
+  read: CampApplicationsFields_howDidYouLearnAboutUs_Read
+  update: CampApplicationsFields_howDidYouLearnAboutUs_Update
+  delete: CampApplicationsFields_howDidYouLearnAboutUs_Delete
+}
+
+type CampApplicationsFields_howDidYouLearnAboutUs_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_howDidYouLearnAboutUs_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_howDidYouLearnAboutUs_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_howDidYouLearnAboutUs_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_expetationsFromConference {
+  create: CampApplicationsFields_expetationsFromConference_Create
+  read: CampApplicationsFields_expetationsFromConference_Read
+  update: CampApplicationsFields_expetationsFromConference_Update
+  delete: CampApplicationsFields_expetationsFromConference_Delete
+}
+
+type CampApplicationsFields_expetationsFromConference_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_expetationsFromConference_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_expetationsFromConference_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_expetationsFromConference_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_additionalInformation {
+  create: CampApplicationsFields_additionalInformation_Create
+  read: CampApplicationsFields_additionalInformation_Read
+  update: CampApplicationsFields_additionalInformation_Update
+  delete: CampApplicationsFields_additionalInformation_Delete
+}
+
+type CampApplicationsFields_additionalInformation_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_additionalInformation_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_additionalInformation_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_additionalInformation_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_arrivalDate {
+  create: CampApplicationsFields_arrivalDate_Create
+  read: CampApplicationsFields_arrivalDate_Read
+  update: CampApplicationsFields_arrivalDate_Update
+  delete: CampApplicationsFields_arrivalDate_Delete
+}
+
+type CampApplicationsFields_arrivalDate_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_arrivalDate_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_arrivalDate_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_arrivalDate_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_departureDate {
+  create: CampApplicationsFields_departureDate_Create
+  read: CampApplicationsFields_departureDate_Read
+  update: CampApplicationsFields_departureDate_Update
+  delete: CampApplicationsFields_departureDate_Delete
+}
+
+type CampApplicationsFields_departureDate_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_departureDate_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_departureDate_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_departureDate_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_participatesInSinging {
+  create: CampApplicationsFields_participatesInSinging_Create
+  read: CampApplicationsFields_participatesInSinging_Read
+  update: CampApplicationsFields_participatesInSinging_Update
+  delete: CampApplicationsFields_participatesInSinging_Delete
+}
+
+type CampApplicationsFields_participatesInSinging_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_participatesInSinging_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_participatesInSinging_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_participatesInSinging_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_typeOfGroup {
+  create: CampApplicationsFields_typeOfGroup_Create
+  read: CampApplicationsFields_typeOfGroup_Read
+  update: CampApplicationsFields_typeOfGroup_Update
+  delete: CampApplicationsFields_typeOfGroup_Delete
+}
+
+type CampApplicationsFields_typeOfGroup_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_typeOfGroup_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_typeOfGroup_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_typeOfGroup_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_preferredComunication {
+  create: CampApplicationsFields_preferredComunication_Create
+  read: CampApplicationsFields_preferredComunication_Read
+  update: CampApplicationsFields_preferredComunication_Update
+  delete: CampApplicationsFields_preferredComunication_Delete
+}
+
+type CampApplicationsFields_preferredComunication_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_preferredComunication_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_preferredComunication_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_preferredComunication_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_proofOfPayment {
+  create: CampApplicationsFields_proofOfPayment_Create
+  read: CampApplicationsFields_proofOfPayment_Read
+  update: CampApplicationsFields_proofOfPayment_Update
+  delete: CampApplicationsFields_proofOfPayment_Delete
+}
+
+type CampApplicationsFields_proofOfPayment_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_proofOfPayment_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_proofOfPayment_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_proofOfPayment_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_validAppication {
+  create: CampApplicationsFields_validAppication_Create
+  read: CampApplicationsFields_validAppication_Read
+  update: CampApplicationsFields_validAppication_Update
+  delete: CampApplicationsFields_validAppication_Delete
+}
+
+type CampApplicationsFields_validAppication_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_validAppication_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_validAppication_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_validAppication_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_invalidApplicationReason {
+  create: CampApplicationsFields_invalidApplicationReason_Create
+  read: CampApplicationsFields_invalidApplicationReason_Read
+  update: CampApplicationsFields_invalidApplicationReason_Update
+  delete: CampApplicationsFields_invalidApplicationReason_Delete
+}
+
+type CampApplicationsFields_invalidApplicationReason_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_invalidApplicationReason_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_invalidApplicationReason_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_invalidApplicationReason_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_user {
+  create: CampApplicationsFields_user_Create
+  read: CampApplicationsFields_user_Read
+  update: CampApplicationsFields_user_Update
+  delete: CampApplicationsFields_user_Delete
+}
+
+type CampApplicationsFields_user_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_user_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_user_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_user_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_updatedAt {
+  create: CampApplicationsFields_updatedAt_Create
+  read: CampApplicationsFields_updatedAt_Read
+  update: CampApplicationsFields_updatedAt_Update
+  delete: CampApplicationsFields_updatedAt_Delete
+}
+
+type CampApplicationsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_createdAt {
+  create: CampApplicationsFields_createdAt_Create
+  read: CampApplicationsFields_createdAt_Read
+  update: CampApplicationsFields_createdAt_Update
+  delete: CampApplicationsFields_createdAt_Delete
+}
+
+type CampApplicationsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CampApplicationsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CampApplicationsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplicationsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplicationsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CampApplicationsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type payload_preferencesAccess {
+  fields: PayloadPreferencesFields
+  create: PayloadPreferencesCreateAccess
+  read: PayloadPreferencesReadAccess
+  update: PayloadPreferencesUpdateAccess
+  delete: PayloadPreferencesDeleteAccess
+}
+
+type PayloadPreferencesFields {
+  user: PayloadPreferencesFields_user
+  key: PayloadPreferencesFields_key
+  value: PayloadPreferencesFields_value
+  updatedAt: PayloadPreferencesFields_updatedAt
+  createdAt: PayloadPreferencesFields_createdAt
+}
+
+type PayloadPreferencesFields_user {
+  create: PayloadPreferencesFields_user_Create
+  read: PayloadPreferencesFields_user_Read
+  update: PayloadPreferencesFields_user_Update
+  delete: PayloadPreferencesFields_user_Delete
+}
+
+type PayloadPreferencesFields_user_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_user_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_user_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_user_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_key {
+  create: PayloadPreferencesFields_key_Create
+  read: PayloadPreferencesFields_key_Read
+  update: PayloadPreferencesFields_key_Update
+  delete: PayloadPreferencesFields_key_Delete
+}
+
+type PayloadPreferencesFields_key_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_key_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_key_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_key_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_value {
+  create: PayloadPreferencesFields_value_Create
+  read: PayloadPreferencesFields_value_Read
+  update: PayloadPreferencesFields_value_Update
+  delete: PayloadPreferencesFields_value_Delete
+}
+
+type PayloadPreferencesFields_value_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_value_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_value_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_value_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_updatedAt {
+  create: PayloadPreferencesFields_updatedAt_Create
+  read: PayloadPreferencesFields_updatedAt_Read
+  update: PayloadPreferencesFields_updatedAt_Update
+  delete: PayloadPreferencesFields_updatedAt_Delete
+}
+
+type PayloadPreferencesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_createdAt {
+  create: PayloadPreferencesFields_createdAt_Create
+  read: PayloadPreferencesFields_createdAt_Read
+  update: PayloadPreferencesFields_createdAt_Update
+  delete: PayloadPreferencesFields_createdAt_Delete
+}
+
+type PayloadPreferencesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type PayloadPreferencesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type PayloadPreferencesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreferencesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreferencesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type PayloadPreferencesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Mutation {
+  createUser(data: mutationUserInput!): User
+  updateUser(id: Int!, autosave: Boolean, data: mutationUserUpdateInput!): User
+  deleteUser(id: Int!): User
+  refreshTokenUser: usersRefreshedUser
+  logoutUser: String
+  unlockUser(email: String!): Boolean!
+  loginUser(email: String, password: String): usersLoginResult
+  forgotPasswordUser(disableEmail: Boolean, email: String!, expiration: Int): Boolean!
+  resetPasswordUser(password: String, token: String): usersResetPassword
+  verifyEmailUser(token: String): Boolean
+  createMedia(data: mutationMediaInput!): Media
+  updateMedia(id: Int!, autosave: Boolean, data: mutationMediaUpdateInput!): Media
+  deleteMedia(id: Int!): Media
+  createCampApplication(data: mutationCampApplicationInput!): CampApplication
+  updateCampApplication(id: Int!, autosave: Boolean, data: mutationCampApplicationUpdateInput!): CampApplication
+  deleteCampApplication(id: Int!): CampApplication
+  createPayloadPreference(data: mutationPayloadPreferenceInput!): PayloadPreference
+  updatePayloadPreference(id: Int!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!): PayloadPreference
+  deletePayloadPreference(id: Int!): PayloadPreference
+}
+
+input mutationUserInput {
+  fullName: String!
+  role: String
+  phoneNumber: String!
+  gender: User_gender_MutationInput!
+  updatedAt: String
+  createdAt: String
+  email: String!
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  salt: String
+  hash: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String!
+}
+
+enum User_gender_MutationInput {
+  female
+  male
+}
+
+input mutationUserUpdateInput {
+  fullName: String
+  role: String
+  phoneNumber: String
+  gender: UserUpdate_gender_MutationInput
+  updatedAt: String
+  createdAt: String
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  salt: String
+  hash: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String
+}
+
+enum UserUpdate_gender_MutationInput {
+  female
+  male
+}
+
+type usersRefreshedUser {
+  exp: Int
+  refreshedToken: String
+  strategy: String
+  user: usersJWT
+}
+
+type usersJWT {
+  email: EmailAddress!
+  collection: String!
+}
+
+type usersLoginResult {
+  exp: Int
+  token: String
+  user: User
+}
+
+type usersResetPassword {
+  token: String
+  user: User
+}
+
+input mutationMediaInput {
+  alt: String
+  updatedAt: String
+  createdAt: String
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  focalX: Float
+  focalY: Float
+}
+
+input mutationMediaUpdateInput {
+  alt: String
+  updatedAt: String
+  createdAt: String
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  focalX: Float
+  focalY: Float
+}
+
+input mutationCampApplicationInput {
+  targetGroup: CampApplication_targetGroup_MutationInput!
+  nationality: CampApplication_nationality_MutationInput!
+  churchOrganisationName: String!
+  churchLocation: String!
+  otherDenomination: String!
+  howDidYouLearnAboutUs: String!
+  expetationsFromConference: String!
+  additionalInformation: String!
+  arrivalDate: String!
+  departureDate: String!
+  participatesInSinging: String!
+  typeOfGroup: CampApplication_typeOfGroup_MutationInput
+  preferredComunication: String
+  proofOfPayment: Int
+  validAppication: Boolean
+  invalidApplicationReason: String
+  user: Int
+  updatedAt: String
+  createdAt: String
+}
+
+enum CampApplication_targetGroup_MutationInput {
+  child
+  _12_25
+  _26_35
+  _36_45
+  _46_55
+  _56_65
+  _65_
+}
+
+enum CampApplication_nationality_MutationInput {
+  AF
+  AL
+  DZ
+  AD
+  AO
+  AG
+  AR
+  AM
+  AU
+  AT
+  AZ
+  BS
+  BH
+  BD
+  BB
+  BY
+  BE
+  BZ
+  BJ
+  BT
+  BO
+  BA
+  BW
+  BR
+  BN
+  BG
+  BF
+  BI
+  KH
+  CM
+  CA
+  CF
+  TD
+  CL
+  CN
+  CO
+  KM
+  CG
+  CR
+  CI
+  HR
+  CU
+  CY
+  CZ
+  DK
+  DJ
+  DM
+  DO
+  EC
+  EG
+  SV
+  GQ
+  ER
+  EE
+  ET
+  FJ
+  FI
+  FR
+  GA
+  GM
+  GE
+  DE
+  GH
+  GR
+  GD
+  GT
+  GN
+  GW
+  GY
+  HT
+  HN
+  HU
+  IS
+  IN
+  ID
+  IR
+  IQ
+  IE
+  IL
+  IT
+  JM
+  JP
+  JO
+  KZ
+  KE
+  KI
+  KP
+  KR
+  KW
+  KG
+  LA
+  LV
+  LB
+  LS
+  LR
+  LY
+  LI
+  LT
+  LU
+  MK
+  MG
+  MW
+  MY
+  MV
+  ML
+  MT
+  MH
+  MR
+  MU
+  MX
+  FM
+  MD
+  MC
+  MN
+  ME
+  MA
+  MZ
+  MM
+  NA
+  NR
+  NP
+  NL
+  NZ
+  NI
+  NE
+  NG
+  NO
+  OM
+  PK
+  PW
+  PA
+  PG
+  PY
+  PE
+  PH
+  PL
+  PT
+  QA
+  RO
+  RU
+  RW
+  KN
+  LC
+  VC
+  WS
+  SM
+  ST
+  SA
+  SN
+  RS
+  SC
+  SL
+  SG
+  SX
+  SK
+  SI
+  SB
+  SO
+  ZA
+  SS
+  ES
+  LK
+  SD
+  SR
+  SZ
+  SE
+  CH
+  SY
+  TJ
+  TZ
+  TH
+  TL
+  TG
+  TO
+  TT
+  TN
+  TR
+  TM
+  TV
+  UG
+  UA
+  AE
+  GB
+  US
+  UY
+  UZ
+  VU
+  VA
+  VE
+  VN
+  YE
+  ZM
+  ZW
+}
+
+enum CampApplication_typeOfGroup_MutationInput {
+  Soloperformance
+  Groupperformance
+}
+
+input mutationCampApplicationUpdateInput {
+  targetGroup: CampApplicationUpdate_targetGroup_MutationInput
+  nationality: CampApplicationUpdate_nationality_MutationInput
+  churchOrganisationName: String
+  churchLocation: String
+  otherDenomination: String
+  howDidYouLearnAboutUs: String
+  expetationsFromConference: String
+  additionalInformation: String
+  arrivalDate: String
+  departureDate: String
+  participatesInSinging: String
+  typeOfGroup: CampApplicationUpdate_typeOfGroup_MutationInput
+  preferredComunication: String
+  proofOfPayment: Int
+  validAppication: Boolean
+  invalidApplicationReason: String
+  user: Int
+  updatedAt: String
+  createdAt: String
+}
+
+enum CampApplicationUpdate_targetGroup_MutationInput {
+  child
+  _12_25
+  _26_35
+  _36_45
+  _46_55
+  _56_65
+  _65_
+}
+
+enum CampApplicationUpdate_nationality_MutationInput {
+  AF
+  AL
+  DZ
+  AD
+  AO
+  AG
+  AR
+  AM
+  AU
+  AT
+  AZ
+  BS
+  BH
+  BD
+  BB
+  BY
+  BE
+  BZ
+  BJ
+  BT
+  BO
+  BA
+  BW
+  BR
+  BN
+  BG
+  BF
+  BI
+  KH
+  CM
+  CA
+  CF
+  TD
+  CL
+  CN
+  CO
+  KM
+  CG
+  CR
+  CI
+  HR
+  CU
+  CY
+  CZ
+  DK
+  DJ
+  DM
+  DO
+  EC
+  EG
+  SV
+  GQ
+  ER
+  EE
+  ET
+  FJ
+  FI
+  FR
+  GA
+  GM
+  GE
+  DE
+  GH
+  GR
+  GD
+  GT
+  GN
+  GW
+  GY
+  HT
+  HN
+  HU
+  IS
+  IN
+  ID
+  IR
+  IQ
+  IE
+  IL
+  IT
+  JM
+  JP
+  JO
+  KZ
+  KE
+  KI
+  KP
+  KR
+  KW
+  KG
+  LA
+  LV
+  LB
+  LS
+  LR
+  LY
+  LI
+  LT
+  LU
+  MK
+  MG
+  MW
+  MY
+  MV
+  ML
+  MT
+  MH
+  MR
+  MU
+  MX
+  FM
+  MD
+  MC
+  MN
+  ME
+  MA
+  MZ
+  MM
+  NA
+  NR
+  NP
+  NL
+  NZ
+  NI
+  NE
+  NG
+  NO
+  OM
+  PK
+  PW
+  PA
+  PG
+  PY
+  PE
+  PH
+  PL
+  PT
+  QA
+  RO
+  RU
+  RW
+  KN
+  LC
+  VC
+  WS
+  SM
+  ST
+  SA
+  SN
+  RS
+  SC
+  SL
+  SG
+  SX
+  SK
+  SI
+  SB
+  SO
+  ZA
+  SS
+  ES
+  LK
+  SD
+  SR
+  SZ
+  SE
+  CH
+  SY
+  TJ
+  TZ
+  TH
+  TL
+  TG
+  TO
+  TT
+  TN
+  TR
+  TM
+  TV
+  UG
+  UA
+  AE
+  GB
+  US
+  UY
+  UZ
+  VU
+  VA
+  VE
+  VN
+  YE
+  ZM
+  ZW
+}
+
+enum CampApplicationUpdate_typeOfGroup_MutationInput {
+  Soloperformance
+  Groupperformance
+}
+
+input mutationPayloadPreferenceInput {
+  user: PayloadPreference_UserRelationshipInput
+  key: String
+  value: JSON
+  updatedAt: String
+  createdAt: String
+}
+
+input PayloadPreference_UserRelationshipInput {
+  relationTo: PayloadPreference_UserRelationshipInputRelationTo
+  value: JSON
+}
+
+enum PayloadPreference_UserRelationshipInputRelationTo {
+  users
+}
+
+input mutationPayloadPreferenceUpdateInput {
+  user: PayloadPreferenceUpdate_UserRelationshipInput
+  key: String
+  value: JSON
+  updatedAt: String
+  createdAt: String
+}
+
+input PayloadPreferenceUpdate_UserRelationshipInput {
+  relationTo: PayloadPreferenceUpdate_UserRelationshipInputRelationTo
+  value: JSON
+}
+
+enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
+  users
+}
