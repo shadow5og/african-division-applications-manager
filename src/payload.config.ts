@@ -24,6 +24,7 @@ export default buildConfig({
   },
   plugins: [payloadCloud()],
   db: postgresAdapter({
+    push: false,
     pool: {
       connectionString: process.env.DATABASE_URI,
     },
