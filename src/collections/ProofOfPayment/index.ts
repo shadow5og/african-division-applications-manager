@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { adminsAndApplicant } from "../Users/access/adminsAndApplicant";
+import { adminsAndApplicant } from "../CampApplications/access/adminsAndApplicant";
 import { assignToApplicant } from "./hooks/assignToApplicant";
 import { user } from "../../fields/user";
 
