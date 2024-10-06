@@ -6,7 +6,7 @@ WORKDIR /home/node/app
 COPY package*.json ./
 
 COPY . .
-RUN yarn install
+RUN yarn install --strict-peer-dependencies false
 RUN yarn build
 
 FROM base as runtime
