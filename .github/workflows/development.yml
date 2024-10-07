@@ -47,7 +47,7 @@ jobs:
         run: |
           echo SERVICE_NAME ${{ secrets.SERVICE_NAME }}
           gcloud run deploy ${{ secrets.SERVICE_NAME }} \
-            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
+            --image ${{ secrets.DOCKER_IMAGE_URL }}:latest \
             --platform managed \
             --region ${{ secrets.REGION }} \
             --allow-unauthenticated
