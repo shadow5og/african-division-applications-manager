@@ -4,5 +4,6 @@ dist
 node_modules
 .DS_Store
 .env
+.env.extra
 proofOfPayment
 payload-cms-test-16b20181d0af.json

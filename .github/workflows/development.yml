@@ -26,17 +26,14 @@ jobs:
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: Create env file
-        run: |
-          echo ${{ secrets.ENVS }} >> .env
       - name: Configure Docker
         run: |
           gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
 
       - name: Build Docker Image
         run: |
-          echo ${{ secrets.ENVS }} > extra_env
-          docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest --build-arg EXTRA_ENV=$(grep -Ev '^(#|$)' extra_env | xargs) .
+          echo ${{ secrets.ENVS }} > .env.extra
+          docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest .
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_IMAGE_URL }}:latest

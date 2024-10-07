@@ -5,14 +5,14 @@ FROM base as builder
 WORKDIR /home/node/app
 COPY package*.json ./
 COPY .env ./
+COPY .env.extra ./
+RUN cat .env.extra >> .env
 COPY . .
 RUN yarn install --strict-peer-dependencies false
 RUN yarn build
 
 FROM base as runtime
 
-ARG EXTRA_ENV='FIVE=5'
-ENV $(echo $EXTRA_ENV)
 ENV NODE_ENV=production
 ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 
