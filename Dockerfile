@@ -4,10 +4,9 @@ FROM base as builder
 
 WORKDIR /home/node/app
 COPY package*.json ./
-COPY .env ./
 COPY .env.extra ./
-RUN cat .env.extra >> .env
 COPY . .
+RUN cat .env.extra >> .env
 RUN yarn install --strict-peer-dependencies false
 RUN yarn build
 
