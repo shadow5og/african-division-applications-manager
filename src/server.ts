@@ -2,6 +2,8 @@ import express from "express";
 import payload from "payload";
 import { seed } from "./seed";
 
+import { config } from "dotenv";
+config();
 const app = express();
 
 // Redirect root to Admin panel

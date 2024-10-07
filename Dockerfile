@@ -4,7 +4,7 @@ FROM base as builder
 
 WORKDIR /home/node/app
 COPY package*.json ./
-
+COPY .env ./
 COPY . .
 RUN yarn install --strict-peer-dependencies false
 RUN yarn build
@@ -16,6 +16,7 @@ ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 
 WORKDIR /home/node/app
 COPY package*.json  ./
+COPY .env ./
 COPY yarn.lock ./
 
 RUN yarn install --production
@@ -24,4 +25,4 @@ COPY --from=builder /home/node/app/build ./build
 
 EXPOSE 3000
 
-CMD ["node", "dist/server.js"]
+CMD ["yarn", "serve"]
