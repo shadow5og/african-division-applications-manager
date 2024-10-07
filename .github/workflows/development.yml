@@ -1,4 +1,4 @@
-name: Deploy to Cloud Run
+tname: Deploy to Cloud Run
 
 on:
   push:
@@ -32,8 +32,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
-          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
+          docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
+          docker push ${{ secrets.DOCKER_IMAGE_URL }}:latest
 
       - name: Deploy to Cloud Run
         run: |
