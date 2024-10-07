@@ -6,7 +6,7 @@ WORKDIR /home/node/app
 COPY package*.json ./
 COPY .env.extra ./
 COPY . .
-RUN cat .env.extra >> .env
+RUN cat .env.extra > .env
 RUN yarn install --strict-peer-dependencies false
 RUN yarn build
 
