@@ -35,7 +35,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
+          echo ${{ secrets.ENVS }} > extra_env
+          docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest --build-arg EXTRA_ENV=$(grep -Ev '^(#|$)' extra_env | xargs) .
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_IMAGE_URL }}:latest

@@ -11,6 +11,8 @@ RUN yarn build
 
 FROM base as runtime
 
+ARG EXTRA_ENV='FIVE=5'
+ENV $(echo $EXTRA_ENV)
 ENV NODE_ENV=production
 ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 
