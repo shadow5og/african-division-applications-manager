@@ -32,7 +32,7 @@ jobs:
       # - name: Set Google Cloud Project
       #   run: |
       #     gcloud config set project ${{ secrets.PROJECT_ID }}
-      # - name: Configure Docker
+      - name: Configure Docker
         run: |
           gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
 
