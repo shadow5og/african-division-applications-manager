@@ -7,7 +7,7 @@ export const ProofOfPayment: CollectionConfig = {
   slug: "proofOfPayment",
   upload: {
     adminThumbnail: "thumbnail",
-    staticDir: "media",
+    staticDir: "proofOfPayment",
   },
   access: {
     create: adminsAndApplicant,
@@ -17,10 +17,6 @@ export const ProofOfPayment: CollectionConfig = {
   },
   hooks: { beforeChange: [assignToApplicant] },
   fields: [
-    {
-      name: "alt",
-      type: "text",
-    },
     user,
   ],
 };

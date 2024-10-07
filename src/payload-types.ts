@@ -250,7 +250,7 @@ export interface CampApplication {
   participatesInSinging: 'Yes' | 'No';
   typeOfGroup?: ('Solo performance' | 'Group performance') | null;
   preferredComunication?: ('WhatsApp' | 'Email') | null;
-  proofPayment?: (number | null) | ProofOfPayment;
+  proofOfPayment?: (number | null) | ProofOfPayment;
   validAppication?: boolean | null;
   invalidApplicationReason?: string | null;
   user: number | User;
@@ -263,7 +263,6 @@ export interface CampApplication {
  */
 export interface ProofOfPayment {
   id: number;
-  alt?: string | null;
   user: number | User;
   updatedAt: string;
   createdAt: string;

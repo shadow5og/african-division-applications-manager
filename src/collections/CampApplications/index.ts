@@ -75,7 +75,11 @@ export const CampApplications: CollectionConfig = {
       defaultValue: "WhatsApp",
       options: ["WhatsApp", "Email"],
     },
-    proofOfPayment,
+    {
+      name: "proofOfPayment",
+      type: "relationship",
+      relationTo: "proofOfPayment",
+    },
     { name: "validAppication", type: "checkbox", defaultValue: "false" },
     { name: "invalidApplicationReason", type: "textarea" },
     user,

@@ -1,14 +1,13 @@
-import express from 'express'
-import payload from 'payload'
-import { seed } from './seed'
+import express from "express";
+import payload from "payload";
+import { seed } from "./seed";
 
-require('dotenv').config()
-const app = express()
+const app = express();
 
 // Redirect root to Admin panel
-app.get('/', (_, res) => {
-  res.redirect('/admin')
-})
+app.get("/", (_, res) => {
+  res.redirect("/admin");
+});
 
 const start = async () => {
   // Initialize Payload
@@ -16,18 +15,18 @@ const start = async () => {
     secret: process.env.PAYLOAD_SECRET,
     express: app,
     onInit: async () => {
-      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
     },
-  })
+  });
 
-  if (process.env.PAYLOAD_SEED === 'true') {
-    payload.logger.info('---- SEEDING DATABASE ----')
-    await seed(payload)
+  if (process.env.PAYLOAD_SEED === "true") {
+    payload.logger.info("---- SEEDING DATABASE ----");
+    await seed(payload);
   }
 
   // Add your own express routes here
 
-  app.listen(3000)
-}
+  app.listen(3000);
+};
 
-start()
+start();

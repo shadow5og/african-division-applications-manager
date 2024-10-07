@@ -1,7 +1,7 @@
 import { Field } from "payload/types";
 
 export const proofOfPayment: Field = {
-  name: "proofPayment",
+  name: "proofOfPayment",
   type: "relationship",
   relationTo: "proofOfPayment",
 };

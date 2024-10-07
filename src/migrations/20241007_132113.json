@@ -1,0 +1,1097 @@
+{
+  "id": "98d9e827-69c5-4e3c-bf7b-a5fc1a8cae2a",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "enum_users_role",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "name": "gender",
+          "type": "enum_users_gender",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reset_password_token": {
+          "name": "reset_password_token",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reset_password_expiration": {
+          "name": "reset_password_expiration",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salt": {
+          "name": "salt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hash": {
+          "name": "hash",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "login_attempts": {
+          "name": "login_attempts",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lock_until": {
+          "name": "lock_until",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "users_created_at_idx": {
+          "name": "users_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        },
+        "users_email_idx": {
+          "name": "users_email_idx",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "users_rels": {
+      "name": "users_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "camp_applications_id": {
+          "name": "camp_applications_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "users_rels_order_idx": {
+          "name": "users_rels_order_idx",
+          "columns": [
+            "order"
+          ],
+          "isUnique": false
+        },
+        "users_rels_parent_idx": {
+          "name": "users_rels_parent_idx",
+          "columns": [
+            "parent_id"
+          ],
+          "isUnique": false
+        },
+        "users_rels_path_idx": {
+          "name": "users_rels_path_idx",
+          "columns": [
+            "path"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "users_rels_parent_fk": {
+          "name": "users_rels_parent_fk",
+          "tableFrom": "users_rels",
+          "tableTo": "users",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "users_rels_camp_applications_fk": {
+          "name": "users_rels_camp_applications_fk",
+          "tableFrom": "users_rels",
+          "tableTo": "camp_applications",
+          "columnsFrom": [
+            "camp_applications_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "proof_of_payment": {
+      "name": "proof_of_payment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filename": {
+          "name": "filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mime_type": {
+          "name": "mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filesize": {
+          "name": "filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "width": {
+          "name": "width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "height": {
+          "name": "height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_x": {
+          "name": "focal_x",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_y": {
+          "name": "focal_y",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "proof_of_payment_created_at_idx": {
+          "name": "proof_of_payment_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        },
+        "proof_of_payment_filename_idx": {
+          "name": "proof_of_payment_filename_idx",
+          "columns": [
+            "filename"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "proof_of_payment_rels": {
+      "name": "proof_of_payment_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "users_id": {
+          "name": "users_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "proof_of_payment_rels_order_idx": {
+          "name": "proof_of_payment_rels_order_idx",
+          "columns": [
+            "order"
+          ],
+          "isUnique": false
+        },
+        "proof_of_payment_rels_parent_idx": {
+          "name": "proof_of_payment_rels_parent_idx",
+          "columns": [
+            "parent_id"
+          ],
+          "isUnique": false
+        },
+        "proof_of_payment_rels_path_idx": {
+          "name": "proof_of_payment_rels_path_idx",
+          "columns": [
+            "path"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "proof_of_payment_rels_parent_fk": {
+          "name": "proof_of_payment_rels_parent_fk",
+          "tableFrom": "proof_of_payment_rels",
+          "tableTo": "proof_of_payment",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "proof_of_payment_rels_users_fk": {
+          "name": "proof_of_payment_rels_users_fk",
+          "tableFrom": "proof_of_payment_rels",
+          "tableTo": "users",
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "camp_applications": {
+      "name": "camp_applications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "targetGroup": {
+          "name": "targetGroup",
+          "type": "enum_camp_applications_target_group",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nationality": {
+          "name": "nationality",
+          "type": "enum_camp_applications_nationality",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "church_organisation_name": {
+          "name": "church_organisation_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "church_location": {
+          "name": "church_location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "other_denomination": {
+          "name": "other_denomination",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "howDidYouLearnAboutUs": {
+          "name": "howDidYouLearnAboutUs",
+          "type": "enum_camp_applications_how_did_you_learn_about_us",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expetations_from_conference": {
+          "name": "expetations_from_conference",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "additional_information": {
+          "name": "additional_information",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "arrival_date": {
+          "name": "arrival_date",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "departure_date": {
+          "name": "departure_date",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "participatesInSinging": {
+          "name": "participatesInSinging",
+          "type": "enum_camp_applications_participates_in_singing",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typeOfGroup": {
+          "name": "typeOfGroup",
+          "type": "enum_camp_applications_type_of_group",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferredComunication": {
+          "name": "preferredComunication",
+          "type": "enum_camp_applications_preferred_comunication",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valid_appication": {
+          "name": "valid_appication",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "invalid_application_reason": {
+          "name": "invalid_application_reason",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "camp_applications_arrival_date_idx": {
+          "name": "camp_applications_arrival_date_idx",
+          "columns": [
+            "arrival_date"
+          ],
+          "isUnique": false
+        },
+        "camp_applications_departure_date_idx": {
+          "name": "camp_applications_departure_date_idx",
+          "columns": [
+            "departure_date"
+          ],
+          "isUnique": false
+        },
+        "camp_applications_created_at_idx": {
+          "name": "camp_applications_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "camp_applications_rels": {
+      "name": "camp_applications_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "proof_of_payment_id": {
+          "name": "proof_of_payment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "users_id": {
+          "name": "users_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "camp_applications_rels_order_idx": {
+          "name": "camp_applications_rels_order_idx",
+          "columns": [
+            "order"
+          ],
+          "isUnique": false
+        },
+        "camp_applications_rels_parent_idx": {
+          "name": "camp_applications_rels_parent_idx",
+          "columns": [
+            "parent_id"
+          ],
+          "isUnique": false
+        },
+        "camp_applications_rels_path_idx": {
+          "name": "camp_applications_rels_path_idx",
+          "columns": [
+            "path"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "camp_applications_rels_parent_fk": {
+          "name": "camp_applications_rels_parent_fk",
+          "tableFrom": "camp_applications_rels",
+          "tableTo": "camp_applications",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "camp_applications_rels_proof_of_payment_fk": {
+          "name": "camp_applications_rels_proof_of_payment_fk",
+          "tableFrom": "camp_applications_rels",
+          "tableTo": "proof_of_payment",
+          "columnsFrom": [
+            "proof_of_payment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "camp_applications_rels_users_fk": {
+          "name": "camp_applications_rels_users_fk",
+          "tableFrom": "camp_applications_rels",
+          "tableTo": "users",
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "payload_preferences": {
+      "name": "payload_preferences",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "value": {
+          "name": "value",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_preferences_key_idx": {
+          "name": "payload_preferences_key_idx",
+          "columns": [
+            "key"
+          ],
+          "isUnique": false
+        },
+        "payload_preferences_created_at_idx": {
+          "name": "payload_preferences_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "payload_preferences_rels": {
+      "name": "payload_preferences_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "users_id": {
+          "name": "users_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "payload_preferences_rels_order_idx": {
+          "name": "payload_preferences_rels_order_idx",
+          "columns": [
+            "order"
+          ],
+          "isUnique": false
+        },
+        "payload_preferences_rels_parent_idx": {
+          "name": "payload_preferences_rels_parent_idx",
+          "columns": [
+            "parent_id"
+          ],
+          "isUnique": false
+        },
+        "payload_preferences_rels_path_idx": {
+          "name": "payload_preferences_rels_path_idx",
+          "columns": [
+            "path"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "payload_preferences_rels_parent_fk": {
+          "name": "payload_preferences_rels_parent_fk",
+          "tableFrom": "payload_preferences_rels",
+          "tableTo": "payload_preferences",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_preferences_rels_users_fk": {
+          "name": "payload_preferences_rels_users_fk",
+          "tableFrom": "payload_preferences_rels",
+          "tableTo": "users",
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "payload_migrations": {
+      "name": "payload_migrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "batch": {
+          "name": "batch",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_migrations_created_at_idx": {
+          "name": "payload_migrations_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {
+    "enum_users_role": {
+      "name": "enum_users_role",
+      "values": {
+        "admin": "admin",
+        "user": "user"
+      }
+    },
+    "enum_users_gender": {
+      "name": "enum_users_gender",
+      "values": {
+        "female": "female",
+        "male": "male"
+      }
+    },
+    "enum_camp_applications_target_group": {
+      "name": "enum_camp_applications_target_group",
+      "values": {
+        "child": "child",
+        "12-25": "12-25",
+        "26-35": "26-35",
+        "36-45": "36-45",
+        "46-55": "46-55",
+        "56-65": "56-65",
+        "65+": "65+"
+      }
+    },
+    "enum_camp_applications_nationality": {
+      "name": "enum_camp_applications_nationality",
+      "values": {
+        "AF": "AF",
+        "AL": "AL",
+        "DZ": "DZ",
+        "AD": "AD",
+        "AO": "AO",
+        "AG": "AG",
+        "AR": "AR",
+        "AM": "AM",
+        "AU": "AU",
+        "AT": "AT",
+        "AZ": "AZ",
+        "BS": "BS",
+        "BH": "BH",
+        "BD": "BD",
+        "BB": "BB",
+        "BY": "BY",
+        "BE": "BE",
+        "BZ": "BZ",
+        "BJ": "BJ",
+        "BT": "BT",
+        "BO": "BO",
+        "BA": "BA",
+        "BW": "BW",
+        "BR": "BR",
+        "BN": "BN",
+        "BG": "BG",
+        "BF": "BF",
+        "BI": "BI",
+        "KH": "KH",
+        "CM": "CM",
+        "CA": "CA",
+        "CF": "CF",
+        "TD": "TD",
+        "CL": "CL",
+        "CN": "CN",
+        "CO": "CO",
+        "KM": "KM",
+        "CG": "CG",
+        "CR": "CR",
+        "CI": "CI",
+        "HR": "HR",
+        "CU": "CU",
+        "CY": "CY",
+        "CZ": "CZ",
+        "DK": "DK",
+        "DJ": "DJ",
+        "DM": "DM",
+        "DO": "DO",
+        "EC": "EC",
+        "EG": "EG",
+        "SV": "SV",
+        "GQ": "GQ",
+        "ER": "ER",
+        "EE": "EE",
+        "ET": "ET",
+        "FJ": "FJ",
+        "FI": "FI",
+        "FR": "FR",
+        "GA": "GA",
+        "GM": "GM",
+        "GE": "GE",
+        "DE": "DE",
+        "GH": "GH",
+        "GR": "GR",
+        "GD": "GD",
+        "GT": "GT",
+        "GN": "GN",
+        "GW": "GW",
+        "GY": "GY",
+        "HT": "HT",
+        "HN": "HN",
+        "HU": "HU",
+        "IS": "IS",
+        "IN": "IN",
+        "ID": "ID",
+        "IR": "IR",
+        "IQ": "IQ",
+        "IE": "IE",
+        "IL": "IL",
+        "IT": "IT",
+        "JM": "JM",
+        "JP": "JP",
+        "JO": "JO",
+        "KZ": "KZ",
+        "KE": "KE",
+        "KI": "KI",
+        "KP": "KP",
+        "KR": "KR",
+        "KW": "KW",
+        "KG": "KG",
+        "LA": "LA",
+        "LV": "LV",
+        "LB": "LB",
+        "LS": "LS",
+        "LR": "LR",
+        "LY": "LY",
+        "LI": "LI",
+        "LT": "LT",
+        "LU": "LU",
+        "MK": "MK",
+        "MG": "MG",
+        "MW": "MW",
+        "MY": "MY",
+        "MV": "MV",
+        "ML": "ML",
+        "MT": "MT",
+        "MH": "MH",
+        "MR": "MR",
+        "MU": "MU",
+        "MX": "MX",
+        "FM": "FM",
+        "MD": "MD",
+        "MC": "MC",
+        "MN": "MN",
+        "ME": "ME",
+        "MA": "MA",
+        "MZ": "MZ",
+        "MM": "MM",
+        "NA": "NA",
+        "NR": "NR",
+        "NP": "NP",
+        "NL": "NL",
+        "NZ": "NZ",
+        "NI": "NI",
+        "NE": "NE",
+        "NG": "NG",
+        "NO": "NO",
+        "OM": "OM",
+        "PK": "PK",
+        "PW": "PW",
+        "PA": "PA",
+        "PG": "PG",
+        "PY": "PY",
+        "PE": "PE",
+        "PH": "PH",
+        "PL": "PL",
+        "PT": "PT",
+        "QA": "QA",
+        "RO": "RO",
+        "RU": "RU",
+        "RW": "RW",
+        "KN": "KN",
+        "LC": "LC",
+        "VC": "VC",
+        "WS": "WS",
+        "SM": "SM",
+        "ST": "ST",
+        "SA": "SA",
+        "SN": "SN",
+        "RS": "RS",
+        "SC": "SC",
+        "SL": "SL",
+        "SG": "SG",
+        "SX": "SX",
+        "SK": "SK",
+        "SI": "SI",
+        "SB": "SB",
+        "SO": "SO",
+        "ZA": "ZA",
+        "SS": "SS",
+        "ES": "ES",
+        "LK": "LK",
+        "SD": "SD",
+        "SR": "SR",
+        "SZ": "SZ",
+        "SE": "SE",
+        "CH": "CH",
+        "SY": "SY",
+        "TJ": "TJ",
+        "TZ": "TZ",
+        "TH": "TH",
+        "TL": "TL",
+        "TG": "TG",
+        "TO": "TO",
+        "TT": "TT",
+        "TN": "TN",
+        "TR": "TR",
+        "TM": "TM",
+        "TV": "TV",
+        "UG": "UG",
+        "UA": "UA",
+        "AE": "AE",
+        "GB": "GB",
+        "US": "US",
+        "UY": "UY",
+        "UZ": "UZ",
+        "VU": "VU",
+        "VA": "VA",
+        "VE": "VE",
+        "VN": "VN",
+        "YE": "YE",
+        "ZM": "ZM",
+        "ZW": "ZW"
+      }
+    },
+    "enum_camp_applications_how_did_you_learn_about_us": {
+      "name": "enum_camp_applications_how_did_you_learn_about_us",
+      "values": {
+        "referral": "referral",
+        "social media": "social media",
+        "church announcements": "church announcements"
+      }
+    },
+    "enum_camp_applications_participates_in_singing": {
+      "name": "enum_camp_applications_participates_in_singing",
+      "values": {
+        "Yes": "Yes",
+        "No": "No"
+      }
+    },
+    "enum_camp_applications_type_of_group": {
+      "name": "enum_camp_applications_type_of_group",
+      "values": {
+        "Solo performance": "Solo performance",
+        "Group performance": "Group performance"
+      }
+    },
+    "enum_camp_applications_preferred_comunication": {
+      "name": "enum_camp_applications_preferred_comunication",
+      "values": {
+        "WhatsApp": "WhatsApp",
+        "Email": "Email"
+      }
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

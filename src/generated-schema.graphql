@@ -64,7 +64,7 @@ type CampApplication {
   participatesInSinging: CampApplication_participatesInSinging!
   typeOfGroup: CampApplication_typeOfGroup
   preferredComunication: CampApplication_preferredComunication
-  proofPayment: ProofOfPayment
+  proofOfPayment: ProofOfPayment
   validAppication: Boolean
   invalidApplicationReason: String
   user: User!
@@ -306,7 +306,6 @@ enum CampApplication_preferredComunication {
 
 type ProofOfPayment {
   id: Int
-  alt: String
   user: User!
   updatedAt: DateTime
   createdAt: DateTime
@@ -768,7 +767,6 @@ type ProofOfPayments {
 }
 
 input ProofOfPayment_where {
-  alt: ProofOfPayment_alt_operator
   user: ProofOfPayment_user_operator
   updatedAt: ProofOfPayment_updatedAt_operator
   createdAt: ProofOfPayment_createdAt_operator
@@ -783,17 +781,6 @@ input ProofOfPayment_where {
   id: ProofOfPayment_id_operator
   AND: [ProofOfPayment_where_and]
   OR: [ProofOfPayment_where_or]
-}
-
-input ProofOfPayment_alt_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
 }
 
 input ProofOfPayment_user_operator {
@@ -920,7 +907,6 @@ input ProofOfPayment_id_operator {
 }
 
 input ProofOfPayment_where_and {
-  alt: ProofOfPayment_alt_operator
   user: ProofOfPayment_user_operator
   updatedAt: ProofOfPayment_updatedAt_operator
   createdAt: ProofOfPayment_createdAt_operator
@@ -938,7 +924,6 @@ input ProofOfPayment_where_and {
 }
 
 input ProofOfPayment_where_or {
-  alt: ProofOfPayment_alt_operator
   user: ProofOfPayment_user_operator
   updatedAt: ProofOfPayment_updatedAt_operator
   createdAt: ProofOfPayment_createdAt_operator
@@ -968,7 +953,6 @@ type proofOfPaymentDocAccess {
 }
 
 type ProofOfPaymentDocAccessFields {
-  alt: ProofOfPaymentDocAccessFields_alt
   user: ProofOfPaymentDocAccessFields_user
   updatedAt: ProofOfPaymentDocAccessFields_updatedAt
   createdAt: ProofOfPaymentDocAccessFields_createdAt
@@ -980,29 +964,6 @@ type ProofOfPaymentDocAccessFields {
   height: ProofOfPaymentDocAccessFields_height
   focalX: ProofOfPaymentDocAccessFields_focalX
   focalY: ProofOfPaymentDocAccessFields_focalY
-}
-
-type ProofOfPaymentDocAccessFields_alt {
-  create: ProofOfPaymentDocAccessFields_alt_Create
-  read: ProofOfPaymentDocAccessFields_alt_Read
-  update: ProofOfPaymentDocAccessFields_alt_Update
-  delete: ProofOfPaymentDocAccessFields_alt_Delete
-}
-
-type ProofOfPaymentDocAccessFields_alt_Create {
-  permission: Boolean!
-}
-
-type ProofOfPaymentDocAccessFields_alt_Read {
-  permission: Boolean!
-}
-
-type ProofOfPaymentDocAccessFields_alt_Update {
-  permission: Boolean!
-}
-
-type ProofOfPaymentDocAccessFields_alt_Delete {
-  permission: Boolean!
 }
 
 type ProofOfPaymentDocAccessFields_user {
@@ -1306,7 +1267,7 @@ input CampApplication_where {
   participatesInSinging: CampApplication_participatesInSinging_operator
   typeOfGroup: CampApplication_typeOfGroup_operator
   preferredComunication: CampApplication_preferredComunication_operator
-  proofPayment: CampApplication_proofPayment_operator
+  proofOfPayment: CampApplication_proofOfPayment_operator
   validAppication: CampApplication_validAppication_operator
   invalidApplicationReason: CampApplication_invalidApplicationReason_operator
   user: CampApplication_user_operator
@@ -1655,7 +1616,7 @@ enum CampApplication_preferredComunication_Input {
   Email
 }
 
-input CampApplication_proofPayment_operator {
+input CampApplication_proofOfPayment_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -1732,7 +1693,7 @@ input CampApplication_where_and {
   participatesInSinging: CampApplication_participatesInSinging_operator
   typeOfGroup: CampApplication_typeOfGroup_operator
   preferredComunication: CampApplication_preferredComunication_operator
-  proofPayment: CampApplication_proofPayment_operator
+  proofOfPayment: CampApplication_proofOfPayment_operator
   validAppication: CampApplication_validAppication_operator
   invalidApplicationReason: CampApplication_invalidApplicationReason_operator
   user: CampApplication_user_operator
@@ -1757,7 +1718,7 @@ input CampApplication_where_or {
   participatesInSinging: CampApplication_participatesInSinging_operator
   typeOfGroup: CampApplication_typeOfGroup_operator
   preferredComunication: CampApplication_preferredComunication_operator
-  proofPayment: CampApplication_proofPayment_operator
+  proofOfPayment: CampApplication_proofOfPayment_operator
   validAppication: CampApplication_validAppication_operator
   invalidApplicationReason: CampApplication_invalidApplicationReason_operator
   user: CampApplication_user_operator
@@ -1794,7 +1755,7 @@ type CampApplicationsDocAccessFields {
   participatesInSinging: CampApplicationsDocAccessFields_participatesInSinging
   typeOfGroup: CampApplicationsDocAccessFields_typeOfGroup
   preferredComunication: CampApplicationsDocAccessFields_preferredComunication
-  proofPayment: CampApplicationsDocAccessFields_proofPayment
+  proofOfPayment: CampApplicationsDocAccessFields_proofOfPayment
   validAppication: CampApplicationsDocAccessFields_validAppication
   invalidApplicationReason: CampApplicationsDocAccessFields_invalidApplicationReason
   user: CampApplicationsDocAccessFields_user
@@ -2101,26 +2062,26 @@ type CampApplicationsDocAccessFields_preferredComunication_Delete {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofPayment {
-  create: CampApplicationsDocAccessFields_proofPayment_Create
-  read: CampApplicationsDocAccessFields_proofPayment_Read
-  update: CampApplicationsDocAccessFields_proofPayment_Update
-  delete: CampApplicationsDocAccessFields_proofPayment_Delete
+type CampApplicationsDocAccessFields_proofOfPayment {
+  create: CampApplicationsDocAccessFields_proofOfPayment_Create
+  read: CampApplicationsDocAccessFields_proofOfPayment_Read
+  update: CampApplicationsDocAccessFields_proofOfPayment_Update
+  delete: CampApplicationsDocAccessFields_proofOfPayment_Delete
 }
 
-type CampApplicationsDocAccessFields_proofPayment_Create {
+type CampApplicationsDocAccessFields_proofOfPayment_Create {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofPayment_Read {
+type CampApplicationsDocAccessFields_proofOfPayment_Read {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofPayment_Update {
+type CampApplicationsDocAccessFields_proofOfPayment_Update {
   permission: Boolean!
 }
 
-type CampApplicationsDocAccessFields_proofPayment_Delete {
+type CampApplicationsDocAccessFields_proofOfPayment_Delete {
   permission: Boolean!
 }
 
@@ -2813,7 +2774,6 @@ type proofOfPaymentAccess {
 }
 
 type ProofOfPaymentFields {
-  alt: ProofOfPaymentFields_alt
   user: ProofOfPaymentFields_user
   updatedAt: ProofOfPaymentFields_updatedAt
   createdAt: ProofOfPaymentFields_createdAt
@@ -2825,29 +2785,6 @@ type ProofOfPaymentFields {
   height: ProofOfPaymentFields_height
   focalX: ProofOfPaymentFields_focalX
   focalY: ProofOfPaymentFields_focalY
-}
-
-type ProofOfPaymentFields_alt {
-  create: ProofOfPaymentFields_alt_Create
-  read: ProofOfPaymentFields_alt_Read
-  update: ProofOfPaymentFields_alt_Update
-  delete: ProofOfPaymentFields_alt_Delete
-}
-
-type ProofOfPaymentFields_alt_Create {
-  permission: Boolean!
-}
-
-type ProofOfPaymentFields_alt_Read {
-  permission: Boolean!
-}
-
-type ProofOfPaymentFields_alt_Update {
-  permission: Boolean!
-}
-
-type ProofOfPaymentFields_alt_Delete {
-  permission: Boolean!
 }
 
 type ProofOfPaymentFields_user {
@@ -3145,7 +3082,7 @@ type CampApplicationsFields {
   participatesInSinging: CampApplicationsFields_participatesInSinging
   typeOfGroup: CampApplicationsFields_typeOfGroup
   preferredComunication: CampApplicationsFields_preferredComunication
-  proofPayment: CampApplicationsFields_proofPayment
+  proofOfPayment: CampApplicationsFields_proofOfPayment
   validAppication: CampApplicationsFields_validAppication
   invalidApplicationReason: CampApplicationsFields_invalidApplicationReason
   user: CampApplicationsFields_user
@@ -3452,26 +3389,26 @@ type CampApplicationsFields_preferredComunication_Delete {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofPayment {
-  create: CampApplicationsFields_proofPayment_Create
-  read: CampApplicationsFields_proofPayment_Read
-  update: CampApplicationsFields_proofPayment_Update
-  delete: CampApplicationsFields_proofPayment_Delete
+type CampApplicationsFields_proofOfPayment {
+  create: CampApplicationsFields_proofOfPayment_Create
+  read: CampApplicationsFields_proofOfPayment_Read
+  update: CampApplicationsFields_proofOfPayment_Update
+  delete: CampApplicationsFields_proofOfPayment_Delete
 }
 
-type CampApplicationsFields_proofPayment_Create {
+type CampApplicationsFields_proofOfPayment_Create {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofPayment_Read {
+type CampApplicationsFields_proofOfPayment_Read {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofPayment_Update {
+type CampApplicationsFields_proofOfPayment_Update {
   permission: Boolean!
 }
 
-type CampApplicationsFields_proofPayment_Delete {
+type CampApplicationsFields_proofOfPayment_Delete {
   permission: Boolean!
 }
 
@@ -3853,7 +3790,6 @@ type usersResetPassword {
 }
 
 input mutationProofOfPaymentInput {
-  alt: String
   user: Int
   updatedAt: String
   createdAt: String
@@ -3868,7 +3804,6 @@ input mutationProofOfPaymentInput {
 }
 
 input mutationProofOfPaymentUpdateInput {
-  alt: String
   user: Int
   updatedAt: String
   createdAt: String
@@ -3896,7 +3831,7 @@ input mutationCampApplicationInput {
   participatesInSinging: String!
   typeOfGroup: CampApplication_typeOfGroup_MutationInput
   preferredComunication: String
-  proofPayment: Int
+  proofOfPayment: Int
   validAppication: Boolean
   invalidApplicationReason: String
   user: Int
@@ -4129,7 +4064,7 @@ input mutationCampApplicationUpdateInput {
   participatesInSinging: String
   typeOfGroup: CampApplicationUpdate_typeOfGroup_MutationInput
   preferredComunication: String
-  proofPayment: Int
+  proofOfPayment: Int
   validAppication: Boolean
   invalidApplicationReason: String
   user: Int
