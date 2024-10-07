@@ -29,6 +29,9 @@ jobs:
       - name: Configure Docker
         run: |
           gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
+      - name: Create env file
+        run: |
+          echo ${{ secrets.ENVS }} > .env
 
       - name: Build and Push Docker Image
         run: |
