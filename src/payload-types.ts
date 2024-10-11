@@ -12,12 +12,14 @@ export interface Config {
   };
   collections: {
     users: User;
-    media: Media;
+    proofOfPayment: ProofOfPayment;
+    campApplications: CampApplication;
+    'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
   locale: null;
@@ -48,7 +50,12 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
+  fullName: string;
+  role?: ('admin' | 'user') | null;
+  phoneNumber: string;
+  gender: 'female' | 'male';
+  application?: (number | null) | CampApplication;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -62,11 +69,230 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "campApplications".
  */
-export interface Media {
-  id: string;
-  alt: string;
+export interface CampApplication {
+  id: number;
+  targetGroup: 'child' | '12-25' | '26-35' | '36-45' | '46-55' | '56-65' | '65+';
+  nationality:
+    | 'AF'
+    | 'AL'
+    | 'DZ'
+    | 'AD'
+    | 'AO'
+    | 'AG'
+    | 'AR'
+    | 'AM'
+    | 'AU'
+    | 'AT'
+    | 'AZ'
+    | 'BS'
+    | 'BH'
+    | 'BD'
+    | 'BB'
+    | 'BY'
+    | 'BE'
+    | 'BZ'
+    | 'BJ'
+    | 'BT'
+    | 'BO'
+    | 'BA'
+    | 'BW'
+    | 'BR'
+    | 'BN'
+    | 'BG'
+    | 'BF'
+    | 'BI'
+    | 'KH'
+    | 'CM'
+    | 'CA'
+    | 'CF'
+    | 'TD'
+    | 'CL'
+    | 'CN'
+    | 'CO'
+    | 'KM'
+    | 'CG'
+    | 'CR'
+    | 'CI'
+    | 'HR'
+    | 'CU'
+    | 'CY'
+    | 'CZ'
+    | 'DK'
+    | 'DJ'
+    | 'DM'
+    | 'DO'
+    | 'EC'
+    | 'EG'
+    | 'SV'
+    | 'GQ'
+    | 'ER'
+    | 'EE'
+    | 'ET'
+    | 'FJ'
+    | 'FI'
+    | 'FR'
+    | 'GA'
+    | 'GM'
+    | 'GE'
+    | 'DE'
+    | 'GH'
+    | 'GR'
+    | 'GD'
+    | 'GT'
+    | 'GN'
+    | 'GW'
+    | 'GY'
+    | 'HT'
+    | 'HN'
+    | 'HU'
+    | 'IS'
+    | 'IN'
+    | 'ID'
+    | 'IR'
+    | 'IQ'
+    | 'IE'
+    | 'IL'
+    | 'IT'
+    | 'JM'
+    | 'JP'
+    | 'JO'
+    | 'KZ'
+    | 'KE'
+    | 'KI'
+    | 'KP'
+    | 'KR'
+    | 'KW'
+    | 'KG'
+    | 'LA'
+    | 'LV'
+    | 'LB'
+    | 'LS'
+    | 'LR'
+    | 'LY'
+    | 'LI'
+    | 'LT'
+    | 'LU'
+    | 'MK'
+    | 'MG'
+    | 'MW'
+    | 'MY'
+    | 'MV'
+    | 'ML'
+    | 'MT'
+    | 'MH'
+    | 'MR'
+    | 'MU'
+    | 'MX'
+    | 'FM'
+    | 'MD'
+    | 'MC'
+    | 'MN'
+    | 'ME'
+    | 'MA'
+    | 'MZ'
+    | 'MM'
+    | 'NA'
+    | 'NR'
+    | 'NP'
+    | 'NL'
+    | 'NZ'
+    | 'NI'
+    | 'NE'
+    | 'NG'
+    | 'NO'
+    | 'OM'
+    | 'PK'
+    | 'PW'
+    | 'PA'
+    | 'PG'
+    | 'PY'
+    | 'PE'
+    | 'PH'
+    | 'PL'
+    | 'PT'
+    | 'QA'
+    | 'RO'
+    | 'RU'
+    | 'RW'
+    | 'KN'
+    | 'LC'
+    | 'VC'
+    | 'WS'
+    | 'SM'
+    | 'ST'
+    | 'SA'
+    | 'SN'
+    | 'RS'
+    | 'SC'
+    | 'SL'
+    | 'SG'
+    | 'SX'
+    | 'SK'
+    | 'SI'
+    | 'SB'
+    | 'SO'
+    | 'ZA'
+    | 'SS'
+    | 'ES'
+    | 'LK'
+    | 'SD'
+    | 'SR'
+    | 'SZ'
+    | 'SE'
+    | 'CH'
+    | 'SY'
+    | 'TJ'
+    | 'TZ'
+    | 'TH'
+    | 'TL'
+    | 'TG'
+    | 'TO'
+    | 'TT'
+    | 'TN'
+    | 'TR'
+    | 'TM'
+    | 'TV'
+    | 'UG'
+    | 'UA'
+    | 'AE'
+    | 'GB'
+    | 'US'
+    | 'UY'
+    | 'UZ'
+    | 'VU'
+    | 'VA'
+    | 'VE'
+    | 'VN'
+    | 'YE'
+    | 'ZM'
+    | 'ZW';
+  churchOrganisationName: string;
+  churchLocation: string;
+  otherDenomination: string;
+  howDidYouLearnAboutUs: 'referral' | 'social media' | 'church announcements';
+  expetationsFromConference: string;
+  additionalInformation: string;
+  arrivalDate: string;
+  departureDate: string;
+  participatesInSinging: 'Yes' | 'No';
+  typeOfGroup?: ('Solo performance' | 'Group performance') | null;
+  preferredComunication?: ('WhatsApp' | 'Email') | null;
+  proofOfPayment?: (number | null) | ProofOfPayment;
+  validAppication?: boolean | null;
+  invalidApplicationReason?: string | null;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "proofOfPayment".
+ */
+export interface ProofOfPayment {
+  id: number;
+  user: number | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -81,13 +307,40 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents".
+ */
+export interface PayloadLockedDocument {
+  id: number;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'proofOfPayment';
+        value: number | ProofOfPayment;
+      } | null)
+    | ({
+        relationTo: 'campApplications';
+        value: number | CampApplication;
+      } | null);
+  globalSlug?: string | null;
+  user: {
+    relationTo: 'users';
+    value: number | User;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -107,7 +360,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
