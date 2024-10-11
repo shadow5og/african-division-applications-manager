@@ -1,9 +1,8 @@
-import { CollectionConfig } from "payload/types";
-import { nationality } from "../../fields/nationality";
-import { proofOfPayment } from "../../fields/proof-of-payment";
+import { CollectionConfig } from "payload";
 import { admins } from "../../access";
-import { adminsAndApplicant } from "../Users/access/adminsAndApplicant";
+import { nationality } from "../../fields/nationality";
 import { user } from "../../fields/user";
+import { adminsAndApplicant } from "../Users/access/adminsAndApplicant";
 
 export const CampApplications: CollectionConfig = {
   slug: "campApplications",

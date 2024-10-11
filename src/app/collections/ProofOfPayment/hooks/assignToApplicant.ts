@@ -1,5 +1,5 @@
-import { ProofOfPayment } from "payload/generated-types";
-import { CollectionBeforeChangeHook } from "payload/types";
+import { ProofOfPayment } from "@/payload-types";
+import { CollectionBeforeChangeHook } from "payload";
 import { slugify } from "../../../utilities/string";
 
 export const assignToApplicant: CollectionBeforeChangeHook<
@@ -12,7 +12,7 @@ export const assignToApplicant: CollectionBeforeChangeHook<
   const newData = { ...data };
   let changed = false;
 
-  if (operation === "create" && !data.filename.includes("/")) {
+  if (operation === "create" && !data.filename?.includes("/")) {
     const { fullName } = await payload.findByID({
       collection: "users",
       id: data.user as number,

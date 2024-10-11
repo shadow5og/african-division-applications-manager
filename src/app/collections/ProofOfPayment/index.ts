@@ -1,7 +1,7 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
+import { user } from "../../fields/user";
 import { adminsAndApplicant } from "../CampApplications/access/adminsAndApplicant";
 import { assignToApplicant } from "./hooks/assignToApplicant";
-import { user } from "../../fields/user";
 
 export const ProofOfPayment: CollectionConfig = {
   slug: "proofOfPayment",
