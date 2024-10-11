@@ -5,17 +5,18 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "dev": "yarn generate:types && cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true next dev",
-    "devsafe": "yarn generate:types && rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
-    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "build": "yarn cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "yarn generate:types && yarn cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true next dev",
+    "devsafe": "yarn generate:types && rm -rf .next && yarn cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "yarn cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "yarn cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "yarn cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "payload": "yarn cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "yarn cross-env NODE_OPTIONS=--no-deprecation next start",
     "prepare": "husky"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "beta",
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-cloud": "beta",
     "@payloadcms/richtext-lexical": "beta",
@@ -25,8 +26,7 @@
     "payload": "beta",
     "react": "19.0.0-rc-3edc000d-20240926",
     "react-dom": "19.0.0-rc-3edc000d-20240926",
-    "sharp": "0.32.6",
-    "@payloadcms/db-postgres": "beta"
+    "sharp": "0.32.6"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",
@@ -34,8 +34,8 @@
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "eslint": "^8",
     "eslint-config-next": "15.0.0-canary.173",
-    "typescript": "5.6.2",
-    "husky": "^9.1.6"
+    "husky": "^9.1.6",
+    "typescript": "5.6.2"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0"
