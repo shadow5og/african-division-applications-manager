@@ -1,1 +1,1 @@
-yarn generate:types; yarn generate:graphQLSchema; yarn build
+yarn generate:types && yarn build

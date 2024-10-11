@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "dev": "npm run generate:types && cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true next dev",
-    "devsafe": "npm run generate:types && rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev": "yarn generate:types && cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true next dev",
+    "devsafe": "yarn generate:types && rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
