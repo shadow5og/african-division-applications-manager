@@ -30,7 +30,7 @@ export const assignToApplicant: CollectionBeforeChangeHook<
       depth: 0,
     });
 
-    newData.filename = `${sluggifiedName}-${newData.filename}`;
+    newData.filename = `${sluggifiedName}-${typeof data.user === 'number' ? data.user : data.user?.id}/${newData.filename}`;
     changed = true;
   }
 
