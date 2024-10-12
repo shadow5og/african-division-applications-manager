@@ -46,4 +46,4 @@ next-env.d.ts
 
 ## Google cloud auth stuff
 key.json
-application_default_credentials.json
+application_default_credentials*.json
