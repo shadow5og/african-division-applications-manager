@@ -43,3 +43,7 @@ next-env.d.ts
 /media
 
 /proofOfPayment
+
+## Google cloud auth stuff
+key.json
+application_default_credentials.json
