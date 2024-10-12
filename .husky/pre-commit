@@ -1,1 +1,4 @@
+# Updating the Development ENVS secrets
+gh secret set ENVS --body "$(cat .env)" --env development
+# Creating types and running a build
 yarn generate:types && yarn build
