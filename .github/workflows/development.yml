@@ -32,8 +32,6 @@ jobs:
 
       - name: Create env file
         run: echo "${{ secrets.ENVS }}" > .env
-      - name: Exporting envs
-        run: export $(grep -Ev '^(#|$)' .env | xargs)
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest .
