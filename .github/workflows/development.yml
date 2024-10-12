@@ -35,9 +35,9 @@ jobs:
       - name: Exporting envs
         run: export $(grep -Ev '^(#|$)' .env | xargs)
       - name: Create GCS credentials file
-        run: echo "${{ secrets.GCP_SA_KEY }}" > $(echo "$PAYLOAD_GCS_KEYS_FILE_NAME")
+        run: echo "${{ secrets.GCP_SA_KEY }}" > "${{ secrets.GCS_KEYS_FILE_NAME }}"
       - name: Create GCS ADC json file
-        run: echo "${{ secrets.GCS_ADC }}" > $(echo "$PAYLOAD_GCS_ADC_FILE_NAME")
+        run: echo "${{ secrets.GCS_ADC }}" > "${{ secrets.GCS_ADC_FILE_NAME }}"
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest .
