@@ -1,13 +1,13 @@
-import { CollectionConfig } from "payload";
-import { user } from "../../fields/user";
-import { adminsAndApplicant } from "../CampApplications/access/adminsAndApplicant";
-import { assignToApplicant } from "./hooks/assignToApplicant";
+import { CollectionConfig } from 'payload'
+import { user } from '../../fields/user'
+import { adminsAndApplicant } from '../CampApplications/access/adminsAndApplicant'
+import { assignToApplicant } from './hooks/assignToApplicant'
 
 export const ProofOfPayment: CollectionConfig = {
-  slug: "proofOfPayment",
+  slug: 'proofOfPayment',
   upload: {
-    adminThumbnail: "thumbnail",
-    staticDir: "proofOfPayment",
+    adminThumbnail: ({ doc }) => `${process.env.PAYLOAD_GCS_BUCKET_URL}/${doc.filename}`,
+    disableLocalStorage: true,
   },
   access: {
     create: adminsAndApplicant,
@@ -16,7 +16,5 @@ export const ProofOfPayment: CollectionConfig = {
     delete: adminsAndApplicant,
   },
   hooks: { beforeChange: [assignToApplicant] },
-  fields: [
-    user,
-  ],
-};
+  fields: [user],
+}
