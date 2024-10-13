@@ -22,7 +22,6 @@ RUN \
 FROM base AS builder
 WORKDIR /app
 COPY .env ./
-RUN export "$(grep -Ev '^(#|$)' .env | xargs)"
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.

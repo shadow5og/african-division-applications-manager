@@ -1,9 +1,7 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { gcsStorage } from '@payloadcms/storage-gcs'
 import { JWT } from 'google-auth-library'
-import fs from 'node:fs/promises'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -14,16 +12,9 @@ import Users from './app/collections/Users'
 
 const keys = JSON.parse(process.env.PAYLOAD_GCS_CREDENTIALS as string)
 
-;(async function () {
-  await fs.writeFile(
-    './' + process.env.PAYLOAD_GCS_ADC_FILE_NAME,
-    process.env.PAYLOAD_GCS_ADC as string,
-  )
-})()
-
 const authClient = new JWT({
   email: keys.client_email,
-  keyFile: process.env.PAYLOAD_GCS_ADC_FILE_NAME,
+  // keyFile: process.env.PAYLOAD_GCS_ADC_FILE_NAME,
   key: keys.private_key,
   scopes: [process.env.PAYLOAD_GCS_SCOPES as string],
 })

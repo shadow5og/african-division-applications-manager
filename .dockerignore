@@ -1,1 +1,4 @@
 node_modules
+## Google cloud auth stuff
+key.json
+application_default_credentials*.json
