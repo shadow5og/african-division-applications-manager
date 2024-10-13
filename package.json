@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^7.13.0",
+    "@googleapis/sheets": "^9.3.1",
     "@payloadcms/db-postgres": "beta",
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-cloud": "beta",
