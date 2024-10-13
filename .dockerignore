@@ -4,3 +4,7 @@ key.json
 application_default_credentials*.json
 # Local deply scrit
 deploy
+
+.env.local
+.env.development
+.env.production

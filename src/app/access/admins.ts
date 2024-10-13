@@ -1,5 +1,3 @@
-import { Access, User } from "payload";
+import { Access, User } from 'payload'
 
-
-export const admins: Access<any> = ({ req: { user } }) =>
-  user?.role === "admin";
+export const admins: Access<User> = ({ req: { user } }) => !!user?.roles?.includes('admin')

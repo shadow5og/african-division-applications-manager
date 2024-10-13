@@ -12,7 +12,7 @@ export const seed = async (payload: Payload): Promise<void> => {
         password: 'demo',
         gender: 'male',
         phoneNumber: '+27630924050',
-        role: 'admin',
+        roles: ['admin'],
       },
     }),
     await payload.create({
@@ -23,7 +23,7 @@ export const seed = async (payload: Payload): Promise<void> => {
         password: 'test',
         gender: 'female',
         phoneNumber: '+27000000000',
-        role: 'admin',
+        roles: ['admin'],
       },
     }),
   ])

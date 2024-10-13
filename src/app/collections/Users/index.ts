@@ -1,45 +1,46 @@
-import { CollectionConfig } from "payload";
-import { adminsAndApplicant } from "./access/adminsAndApplicant";
-import { admins } from "../../access";
+import { CollectionConfig } from 'payload'
+import { admins } from '../../access'
+import { adminsAndApplicant } from './access/adminsAndApplicant'
 
 const Users: CollectionConfig = {
-  slug: "users",
+  slug: 'users',
   auth: true,
   admin: {
-    useAsTitle: "fullName",
+    useAsTitle: 'fullName',
   },
   access: {
     create: admins,
     read: adminsAndApplicant,
     update: adminsAndApplicant,
-    delete: () => false,
+    delete: adminsAndApplicant,
   },
   fields: [
-    { name: "fullName", type: "text", required: true },
+    { name: 'fullName', type: 'text', required: true },
     {
-      name: "role",
-      type: "radio",
-      options: ["admin", "user"],
-      defaultValue: "user",
+      name: 'roles',
+      type: 'select',
+      hasMany: true,
+      options: ['admin', 'user'],
+      defaultValue: 'user',
     },
-    { name: "phoneNumber", type: "text", required: true },
+    { name: 'phoneNumber', type: 'text', required: true },
     {
-      name: "gender",
-      type: "select",
+      name: 'gender',
+      type: 'select',
       required: true,
-      defaultValue: "male",
+      defaultValue: 'male',
       options: [
-        { label: "Female", value: "female" },
-        { label: "Male", value: "male" },
+        { label: 'Female', value: 'female' },
+        { label: 'Male', value: 'male' },
       ],
     },
     {
-      name: "application",
-      type: "relationship",
-      relationTo: "campApplications",
-      admin: { position: "sidebar" },
+      name: 'application',
+      type: 'relationship',
+      relationTo: 'campApplications',
+      admin: { position: 'sidebar' },
     },
   ],
-};
+}
 
-export default Users;
+export default Users

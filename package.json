@@ -6,13 +6,15 @@
   "type": "module",
   "scripts": {
     "build": "yarn cross-env NODE_OPTIONS=--no-deprecation next build",
-    "dev": "yarn generate:types && yarn cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true next dev",
-    "devsafe": "yarn generate:types && rm -rf .next && yarn cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev:unsafe": "yarn generate:types && yarn cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true next dev",
+    "dev": "yarn generate:types && rm -rf .next && yarn cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "yarn cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "yarn cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "yarn cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "yarn cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "yarn cross-env NODE_OPTIONS=--no-deprecation next start",
+    "migrate:create": "yarn payload migrate:create",
+    "migrate": "yarn payload migrate",
     "prepare": "husky"
   },
   "dependencies": {
