@@ -22,6 +22,9 @@ RUN \
 FROM base AS builder
 WORKDIR /app
 COPY .env ./
+RUN export $(grep -Ev '^(#|$)' .env | xargs) && \
+  echo $PAYLOAD_ENCODED_CREDENTIALS | base64 -d > key.json && \
+  echo $PAYLOAD_ENCODED_GCS_ADC | base64 -d > application_default_credentials.json
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -49,6 +52,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/key.json ./
+COPY --from=builder /app/application_default_credentials.json ./
 
 # Set the correct permission for prerender cache
 RUN mkdir .next

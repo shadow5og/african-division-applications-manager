@@ -15,7 +15,7 @@ import Users from './app/collections/Users'
 
 const authClient = new JWT({
   email: keys.client_email,
-  // keyFile: process.env.PAYLOAD_GCS_ADC_FILE_NAME,
+  keyFile: process.env.PAYLOAD_GCS_ADC_FILE_NAME,
   key: keys.private_key,
   scopes: [process.env.PAYLOAD_GCS_SCOPES as string],
 })
