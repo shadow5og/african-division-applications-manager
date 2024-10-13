@@ -32,10 +32,10 @@ jobs:
 
       - name: Create env file
         run: echo "${{ secrets.ENVS }}" > .env
-      - name: export env variables
+      - name: Export env variables
         run: export $(grep -Ev '^(#|$) .env | xargs')
       - name: Create key.json file
-        run: echo '$PAYLOAD_GCS_CREDENTIALS' > key.json
+        run: echo $PAYLOAD_GCS_CREDENTIALS > key.json
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_IMAGE_URL }}:latest .
