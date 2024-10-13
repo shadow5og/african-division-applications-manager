@@ -1,8 +1,9 @@
-import { Payload } from "payload"
+import { Payload } from 'payload'
 
 export const seed = async (payload: Payload): Promise<void> => {
-    payload.logger.info('Seeding data...')
-  
+  payload.logger.info('Seeding data...')
+
+  await Promise.all([
     await payload.create({
       collection: 'users',
       data: {
@@ -11,9 +12,21 @@ export const seed = async (payload: Payload): Promise<void> => {
         password: 'demo',
         gender: 'male',
         phoneNumber: '+27630924050',
-        role: 'admin'
+        role: 'admin',
       },
-    })
-  
-    // Add additional seed data here
-  }
+    }),
+    await payload.create({
+      collection: 'users',
+      data: {
+        fullName: 'Test Admin',
+        email: 'admin@email.com',
+        password: 'test',
+        gender: 'female',
+        phoneNumber: '+27000000000',
+        role: 'admin',
+      },
+    }),
+  ])
+
+  // Add additional seed data here
+}
