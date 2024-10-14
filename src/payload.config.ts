@@ -1,3 +1,4 @@
+import endpoints from '@/app/endpoints'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { gcsStorage } from '@payloadcms/storage-gcs'
@@ -8,7 +9,6 @@ import { fileURLToPath } from 'url'
 import { CampApplications } from './app/collections/CampApplications'
 import { ProofOfPayment } from './app/collections/ProofOfPayment'
 import Users from './app/collections/Users'
-import endpoints from './endpoints'
 import authClient from './gcs_auth'
 
 const filename = fileURLToPath(import.meta.url)

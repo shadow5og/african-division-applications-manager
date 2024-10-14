@@ -18,7 +18,7 @@ export const CampApplications: CollectionConfig = {
       type: 'select',
       required: true,
       defaultValue: '26-35',
-      options: ['child', '12-25', '26-35', '36-45', '46-55', '56-65', '65+'],
+      options: ['17-', '18-25', '26-35', '36-45', '46-55', '56-65', '65+'],
     },
     nationality,
     { name: 'churchOrganisationName', type: 'text', required: true },
@@ -34,14 +34,20 @@ export const CampApplications: CollectionConfig = {
         { label: 'Church announcements', value: 'Church Announcements' },
       ],
     },
-    { name: 'expetationsFromConference', type: 'textarea', required: true },
-    { name: 'additionalInformation', type: 'textarea', required: true },
+    { name: 'expetationsFromConference', type: 'textarea' },
+    { name: 'additionalInformation', type: 'textarea' },
     {
       name: 'arrivalDate',
       type: 'date',
       required: true,
       label: 'Expected date of arrival at the meeting venue.',
       index: true,
+      admin: {
+        date: {
+          pickerAppearance: 'dayOnly',
+          displayFormat: 'dd/MMM/yyyy',
+        },
+      },
     },
     {
       name: 'departureDate',
@@ -49,21 +55,26 @@ export const CampApplications: CollectionConfig = {
       required: true,
       label: 'Expected date of departure from the meeting venue.',
       index: true,
+      admin: {
+        date: {
+          pickerAppearance: 'dayOnly',
+          displayFormat: 'dd/MMM/yyyy',
+        },
+      },
     },
     {
       name: 'participatesInSinging',
       label: 'Would you like to participate in singing? / Any performance?',
       type: 'radio',
-      required: true,
       defaultValue: 'No',
-      options: ['Yes', 'No'],
+      options: ['Yes', 'No', 'Undecided'],
     },
     {
       name: 'typeOfGroup',
       label: 'Is it a solo or group performance?',
       type: 'select',
       defaultValue: 'Solo performance',
-      options: ['Solo performance', 'Group performance'],
+      options: ['Solo performance', 'Group performance', ''],
     },
     {
       name: 'preferredComunication',

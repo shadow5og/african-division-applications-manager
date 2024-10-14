@@ -73,7 +73,7 @@ export interface User {
  */
 export interface CampApplication {
   id: number;
-  targetGroup: 'child' | '12-25' | '26-35' | '36-45' | '46-55' | '56-65' | '65+';
+  targetGroup: '17-' | '18-25' | '26-35' | '36-45' | '46-55' | '56-65' | '65+';
   nationality:
     | 'Afghanistan'
     | 'Albania'
@@ -119,6 +119,7 @@ export interface CampApplication {
     | 'Cuba'
     | 'Cyprus'
     | 'Czech Republic'
+    | 'Democratic Republic of the Congo'
     | 'Denmark'
     | 'Djibouti'
     | 'Dominica'
@@ -271,12 +272,12 @@ export interface CampApplication {
   churchLocation: string;
   otherDenomination?: string | null;
   howDidYouLearnAboutUs?: ('Referral from others' | 'Social media' | 'Church Announcements') | null;
-  expetationsFromConference: string;
-  additionalInformation: string;
+  expetationsFromConference?: string | null;
+  additionalInformation?: string | null;
   arrivalDate: string;
   departureDate: string;
-  participatesInSinging: 'Yes' | 'No';
-  typeOfGroup?: ('Solo performance' | 'Group performance') | null;
+  participatesInSinging?: ('Yes' | 'No' | 'Undecided') | null;
+  typeOfGroup?: ('Solo performance' | 'Group performance' | '') | null;
   preferredComunication?: ('WhatsApp' | 'Email') | null;
   proofOfPayment?: (number | null) | ProofOfPayment;
   validAppication?: boolean | null;

@@ -48,7 +48,6 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
           collection: 'users',
           req: { ...req, transactionID },
           data: {
-            // createdAt: record[0],
             email: record[1],
             fullName: record[2],
             phoneNumber: record[3],
@@ -75,8 +74,13 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
             additionalInformation: record[15],
             arrivalDate: record[16],
             departureDate: record[17],
-            participatesInSinging: record[18],
-            typeOfGroup: record[19],
+            participatesInSinging:
+              record?.at(18).replace(' (Ndiyo)', '').replace(' (Hapana)', '') ?? 'Undecided',
+            typeOfGroup:
+              record
+                ?.at(19)
+                ?.replace(' (Uimbaji/programu ya kikundi)', '')
+                .replace(' (Uimbaji/programu kutoka kwa mtu mmoja)', '') ?? '',
             preferredComunication: record[20],
             user: newUser.id,
             validAppication: false,
@@ -87,6 +91,7 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
       } catch (error: any) {
         const errorLogger = logger.child(error)
         errorLogger.error(`An error occurred while creating an account for ${record[2]}`)
+        console.error(record ?? [])
       }
     }
 
