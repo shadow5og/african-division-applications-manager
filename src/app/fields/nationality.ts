@@ -45,7 +45,7 @@ export const nationality: Field = {
     'Comoros',
     'Congo',
     'Costa Rica',
-    'Côte d Ivoire',
+    'Ivory Coast',
     'Croatia',
     'Cuba',
     'Cyprus',

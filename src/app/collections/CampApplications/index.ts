@@ -66,15 +66,14 @@ export const CampApplications: CollectionConfig = {
       name: 'participatesInSinging',
       label: 'Would you like to participate in singing? / Any performance?',
       type: 'radio',
-      defaultValue: 'No',
+      defaultValue: 'Undecided',
       options: ['Yes', 'No', 'Undecided'],
     },
     {
       name: 'typeOfGroup',
       label: 'Is it a solo or group performance?',
       type: 'select',
-      defaultValue: 'Solo performance',
-      options: ['Solo performance', 'Group performance', ''],
+      options: ['Solo performance', 'Group performance'],
     },
     {
       name: 'preferredComunication',

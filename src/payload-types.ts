@@ -55,7 +55,6 @@ export interface User {
   roles?: ('admin' | 'user')[] | null;
   phoneNumber: string;
   gender: 'female' | 'male';
-  application?: (number | null) | CampApplication;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -66,6 +65,25 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "proofOfPayment".
+ */
+export interface ProofOfPayment {
+  id: number;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -114,7 +132,7 @@ export interface CampApplication {
     | 'Comoros'
     | 'Congo'
     | 'Costa Rica'
-    | 'Côte d Ivoire'
+    | 'Ivory Coast'
     | 'Croatia'
     | 'Cuba'
     | 'Cyprus'
@@ -277,7 +295,7 @@ export interface CampApplication {
   arrivalDate: string;
   departureDate: string;
   participatesInSinging?: ('Yes' | 'No' | 'Undecided') | null;
-  typeOfGroup?: ('Solo performance' | 'Group performance' | '') | null;
+  typeOfGroup?: ('Solo performance' | 'Group performance') | null;
   preferredComunication?: ('WhatsApp' | 'Email') | null;
   proofOfPayment?: (number | null) | ProofOfPayment;
   validAppication?: boolean | null;
@@ -285,25 +303,6 @@ export interface CampApplication {
   user: number | User;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "proofOfPayment".
- */
-export interface ProofOfPayment {
-  id: number;
-  user: number | User;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
