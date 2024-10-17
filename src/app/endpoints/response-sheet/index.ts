@@ -19,7 +19,7 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
     const auth = new JWT({
       ...jwtConfig,
       scopes: [
-        'https://www.googleapis.com/auth/spreadsheets.readonly',
+        'https://www.googleapis.com/auth/spreadsheets',
         'https://www.googleapis.com/auth/drive.readonly',
       ],
     })
@@ -27,12 +27,12 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
     // google sheet instance
     const sheetInstance = await sheets({ version: 'v4', auth })
 
-    const { data: values, data } = await sheetInstance.spreadsheets.values.get({
+    const { data } = await sheetInstance.spreadsheets.values.get({
         auth,
         spreadsheetId: process.env.PAYLOAD_GOOGLE_SHEET_ID,
         range: `${process.env.PAYLOAD_SHEET_NAME}!A:AB`,
       }),
-      { values: records } = values
+      { values: records } = data
 
     const schema = records?.at(0) ?? []
 
@@ -54,6 +54,39 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
         ).docs?.at(0)
 
         if (potentialUser) {
+          // Find the row index based on the matching valuevalueToMatch
+          const rowIndex = records?.findIndex((row) => row[2] === potentialUser.fullName) ?? -1
+
+          if (rowIndex === -1) {
+            logger.info('No matching row found.')
+            await payload.db.rollbackTransaction(transactionID)
+            continue
+          }
+
+          // Create the request body to delete the row
+          const requestBody = {
+            requests: [
+              {
+                deleteDimension: {
+                  range: {
+                    dimension: 'ROWS',
+                    startIndex: rowIndex,
+                    endIndex: rowIndex + 1,
+                    sheetId: 1,
+                  },
+                },
+              },
+            ],
+          }
+
+          // Execute the batch update request
+          await sheetInstance.spreadsheets.batchUpdate({
+            spreadsheetId: process.env.PAYLOAD_GOOGLE_SHEET_ID,
+            requestBody,
+          })
+
+          logger.info('Row deleted successfully.')
+
           await payload.db.rollbackTransaction(transactionID)
           continue
         }
