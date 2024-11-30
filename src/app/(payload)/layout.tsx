@@ -2,18 +2,28 @@
 /* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
 import configPromise from '@payload-config'
 import '@payloadcms/next/css'
-import { RootLayout } from '@payloadcms/next/layouts'
+import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import React from 'react'
 
-import './custom.scss'
+import { ServerFunctionClient } from 'payload'
 import { importMap } from './admin/importMap'
+import './custom.scss'
 
 type Args = {
   children: React.ReactNode
 }
 
+const serverFunction: ServerFunctionClient = async function (args) {
+  'use server'
+  return handleServerFunctions({
+    ...args,
+    config: configPromise,
+    importMap,
+  })
+}
+
 const Layout = ({ children }: Args) => (
-  <RootLayout importMap={importMap} config={configPromise}>
+  <RootLayout importMap={importMap} config={configPromise} serverFunction={serverFunction}>
     {children}
   </RootLayout>
 )

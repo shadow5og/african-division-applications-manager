@@ -10,7 +10,7 @@ export const CampApplications: CollectionConfig = {
     create: admins,
     read: adminsAndApplicant,
     update: adminsAndApplicant,
-    delete: () => false,
+    delete: admins,
   },
   fields: [
     {
@@ -45,7 +45,7 @@ export const CampApplications: CollectionConfig = {
       admin: {
         date: {
           pickerAppearance: 'dayOnly',
-          displayFormat: 'dd/MMM/yyyy',
+          displayFormat: 'dd MMM yyyy',
         },
       },
     },
@@ -58,7 +58,7 @@ export const CampApplications: CollectionConfig = {
       admin: {
         date: {
           pickerAppearance: 'dayOnly',
-          displayFormat: 'dd/MMM/yyyy',
+          displayFormat: 'dd MMM yyyy',
         },
       },
     },

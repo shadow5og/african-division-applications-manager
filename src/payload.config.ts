@@ -20,6 +20,15 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: '- TRBL Design',
+    },
+    components: {
+      graphics: {
+        Logo: 'src/app/components/logo.tsx',
+        Icon: 'src/app/components/logo.tsx',
+      },
+    },
   },
   collections: [Users, ProofOfPayment, CampApplications],
   editor: lexicalEditor(),

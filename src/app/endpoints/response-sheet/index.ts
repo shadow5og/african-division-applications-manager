@@ -1,9 +1,16 @@
 import { jwtConfig } from '@/gcs_auth'
+import { drive } from '@googleapis/drive'
 import { sheets } from '@googleapis/sheets'
 import { JWT } from 'google-auth-library'
-import { Endpoint, PayloadHandler, PayloadRequest } from 'payload'
+import {
+  Endpoint,
+  PayloadRequest,
+  commitTransaction,
+  initTransaction,
+  killTransaction,
+} from 'payload'
 
-const handler: PayloadHandler = async (req: PayloadRequest) => {
+const handler = async (req: PayloadRequest) => {
   if (
     req.headers.get(process.env.PAYLOAD_ENDPOINTS_HEADER as string) !==
     process.env.PAYLOAD_ENDPOINTS_VALUE
@@ -13,7 +20,6 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
   const {
     payload,
     payload: { logger },
-    user,
   } = req
   try {
     const auth = new JWT({
@@ -24,8 +30,9 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
       ],
     })
 
-    // google sheet instance
-    const sheetInstance = await sheets({ version: 'v4', auth })
+    const sheetInstance = await sheets({ version: 'v4', auth }),
+      driveInstance = drive({ version: 'v3', auth }),
+      driveLinkPrefix = 'https://drive.google.com/open?id='
 
     const { data: values, data } = await sheetInstance.spreadsheets.values.get({
         auth,
@@ -42,11 +49,11 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
     logger.info('About to sync google form responses with user data.')
 
     for (const record of records?.slice(1) ?? []) {
-      const transactionID = (await payload.db.beginTransaction()) ?? ''
+      await initTransaction(req)
       try {
         const potentialUser = (
           await payload.find({
-            req: { ...req, transactionID },
+            req: req,
             collection: 'users',
             where: { email: { equals: record[1] } },
             depth: 0,
@@ -54,19 +61,19 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
         ).docs?.at(0)
 
         if (potentialUser) {
-          await payload.db.rollbackTransaction(transactionID)
+          await killTransaction(req)
           continue
         }
 
         logger.info(`Syncing data for ${record[2]}.`)
         const newUser = await payload.create({
           collection: 'users',
-          req: { ...req, transactionID },
+          req,
           data: {
             email: record[1],
             fullName: record[2],
             phoneNumber: record[3],
-            gender: record[6].toLowerCase().replace(' (mwanaume)', ''),
+            gender: record[6].toLowerCase().replace(' (mwanaume)', '').replace(' (mwanamke)', ''),
             roles: ['user'],
             password: 'test',
           },
@@ -74,7 +81,7 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
         })
 
         await payload.create({
-          req: { ...req, transactionID },
+          req,
           collection: 'campApplications',
           data: {
             targetGroup: record[5],
@@ -91,8 +98,8 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
                     .replace(' (Mitandao ya kijamii)', ''),
             expetationsFromConference: record[13],
             additionalInformation: record[15],
-            arrivalDate: record[16],
-            departureDate: record[17],
+            arrivalDate: formatDateString(record[16]),
+            departureDate: formatDateString(record[17]),
             participatesInSinging:
               record[18].replace(' (Ndiyo)', '').replace(' (Hapana)', '') ?? 'Undecided',
             typeOfGroup:
@@ -108,15 +115,82 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
           depth: 0,
         })
 
-        await payload.db.commitTransaction(transactionID)
+        // if (record.at(21)?.length) {
+        //   const fileId = record[21].replace(driveLinkPrefix, '')
+        //   logger.info(`The file ID: ${fileId}`)
+        //   const response = await driveInstance.files.get(
+        //     {
+        //       fileId,
+        //       alt: 'media',
+        //       acknowledgeAbuse: true,
+        //     },
+        //     { responseType: 'stream' },
+        //   )
+
+        //   const fileBuffer = await streamToBuffer(response.data as NodeJS.ReadStream)
+
+        //   const proofOfPayment = await payload.create({
+        //     collection: 'proofOfPayment',
+        //     req,
+        //     file: {
+        //       data: fileBuffer,
+        //       mimetype: response.headers['content-type'],
+        //       size: fileBuffer.length,
+        //       name: newUser.fullName + '-proof of payment',
+        //     },
+        //     data: { user: newUser.id },
+        //   })
+
+        //   await Promise.all([
+        //     // @ts-expect-error
+        //     await payload.update({
+        //       collections: 'users',
+        //       where: { id: newUser.id },
+        //       data: { proofOfPayment: proofOfPayment.id },
+        //       req,
+        //     }),
+        //     // @ts-expect-error
+        //     await payload.update({
+        //       collections: 'campApplications',
+        //       where: { user: newUser.id },
+        //       data: { proofOfPayment: proofOfPayment.id },
+        //       req,
+        //     }),
+        //     ,
+        //   ])
+
+        //   // const downloadedFilepath = await new Promise((resolve, reject) => {
+        //   //   response.data
+        //   //     .on('end', () => {
+        //   //       logger.info('Done downloading file.')
+        //   //       resolve(filePath)
+        //   //     })
+        //   //     .on('error', (err) => {
+        //   //       logger.error('Error downloading file.')
+        //   //       reject(err)
+        //   //     })
+        //   //     .on('data', (d) => {
+        //   //       progress += d.length
+        //   //       if (process.stdout.isTTY) {
+        //   //         process.stdout.clearLine(1)
+        //   //         process.stdout.cursorTo(0)
+        //   //         process.stdout.write(`Downloaded ${progress} bytes`)
+        //   //       }
+        //   //     })
+        //   //     .pipe(dest)
+        //   // })
+        // }
+
+        await commitTransaction(req)
 
         logger.info(`Successfully synced data for ${record[2]}.`)
       } catch (error: any) {
         const errorLogger = logger.child(error)
+        console.error(error)
         errorLogger.error(`An error occurred while creating an account for ${record[2]}`)
-        logger.error(record)
+        logger.info(record)
 
-        await payload.db.rollbackTransaction(transactionID)
+        await killTransaction(req)
       }
     }
 
@@ -125,6 +199,8 @@ const handler: PayloadHandler = async (req: PayloadRequest) => {
     return Response.json({ message: 'Success' })
   } catch (err) {
     logger.error(err)
+    console.error(err)
+    killTransaction(req)
     return Response.json({ message: 'Something went wrong' }, { status: 500 })
   }
 }
@@ -133,4 +209,35 @@ export const syncResponses: Endpoint = {
   path: '/sync-responses',
   method: 'get',
   handler,
+}
+
+async function streamToBuffer(readableStream: NodeJS.ReadStream): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: any[] = []
+    readableStream.on('data', (data) => {
+      if (typeof data === 'string') {
+        // Convert string to Buffer assuming UTF-8 encoding
+        chunks.push(Buffer.from(data, 'utf-8'))
+      } else if (data instanceof Buffer) {
+        chunks.push(data)
+      } else {
+        // Convert other data types to JSON and then to a Buffer
+        const jsonData = JSON.stringify(data)
+        chunks.push(Buffer.from(jsonData, 'utf-8'))
+      }
+    })
+    readableStream.on('end', () => {
+      resolve(Buffer.concat(chunks))
+    })
+    readableStream.on('error', reject)
+  })
+}
+
+function formatDateString(dateString: string) {
+  if (dateString.includes('/')) {
+    let dateArray = dateString.split('/')
+    dateString = dateArray.reverse().join('-')
+  }
+
+  return dateString
 }
