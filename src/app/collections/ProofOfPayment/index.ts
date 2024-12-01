@@ -7,7 +7,7 @@ export const ProofOfPayment: CollectionConfig = {
   slug: 'proofOfPayment',
   upload: {
     adminThumbnail: ({ doc }) => `${process.env.PAYLOAD_GCS_BUCKET_URL}/${doc.filename}`,
-    disableLocalStorage: true,
+    // disableLocalStorage: true,
   },
   access: {
     create: adminsAndApplicant,

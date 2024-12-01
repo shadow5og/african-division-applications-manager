@@ -21,7 +21,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      titleSuffix: '- TRBL Design',
+      titleSuffix: '- IMS African Division Youth Camp Application Manager',
     },
     components: {
       graphics: {

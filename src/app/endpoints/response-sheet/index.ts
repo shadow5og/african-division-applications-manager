@@ -1,4 +1,5 @@
 import { jwtConfig } from '@/gcs_auth'
+import { ProofOfPayment } from '@/payload-types'
 import { drive } from '@googleapis/drive'
 import { sheets } from '@googleapis/sheets'
 import { JWT } from 'google-auth-library'
@@ -25,8 +26,9 @@ const handler = async (req: PayloadRequest) => {
     const auth = new JWT({
       ...jwtConfig,
       scopes: [
+        process.env.PAYLOAD_GCS_SCOPES ?? '',
         'https://www.googleapis.com/auth/spreadsheets.readonly',
-        'https://www.googleapis.com/auth/drive.readonly',
+        'https://www.googleapis.com/auth/drive',
       ],
     })
 
@@ -50,6 +52,7 @@ const handler = async (req: PayloadRequest) => {
 
     for (const record of records?.slice(1) ?? []) {
       await initTransaction(req)
+      let proofOfPayment: ProofOfPayment | undefined = undefined
       try {
         const potentialUser = (
           await payload.find({
@@ -60,7 +63,7 @@ const handler = async (req: PayloadRequest) => {
           })
         ).docs?.at(0)
 
-        if (potentialUser) {
+        if (!!potentialUser) {
           await killTransaction(req)
           continue
         }
@@ -80,7 +83,35 @@ const handler = async (req: PayloadRequest) => {
           depth: 0,
         })
 
-        await payload.create({
+        if (record.at(21)?.length) {
+          const fileId = record[21].replace(driveLinkPrefix, '')
+          logger.info(`The file ID: ${fileId}`)
+          const response = await driveInstance.files.get(
+            {
+              fileId,
+              alt: 'media',
+              fields: '*',
+              supportsAllDrives: true,
+              acknowledgeAbuse: true,
+            },
+            { responseType: 'stream' },
+          )
+          const fileBuffer = await streamToBuffer(response.data as NodeJS.ReadStream)
+
+          proofOfPayment = await payload.create({
+            collection: 'proofOfPayment',
+            req,
+            file: {
+              data: fileBuffer,
+              mimetype: response.headers['content-type'],
+              size: response.headers['content-length'],
+              name: newUser.fullName + '-proof of payment',
+            },
+            data: { user: newUser.id },
+          })
+        }
+
+        const application = await payload.create({
           req,
           collection: 'campApplications',
           data: {
@@ -110,76 +141,11 @@ const handler = async (req: PayloadRequest) => {
                     .replace(' (Uimbaji/programu kutoka kwa mtu mmoja)', ''),
             preferredComunication: record[20],
             user: newUser.id,
+            proofOfPayment,
             validAppication: false,
           },
           depth: 0,
         })
-
-        // if (record.at(21)?.length) {
-        //   const fileId = record[21].replace(driveLinkPrefix, '')
-        //   logger.info(`The file ID: ${fileId}`)
-        //   const response = await driveInstance.files.get(
-        //     {
-        //       fileId,
-        //       alt: 'media',
-        //       acknowledgeAbuse: true,
-        //     },
-        //     { responseType: 'stream' },
-        //   )
-
-        //   const fileBuffer = await streamToBuffer(response.data as NodeJS.ReadStream)
-
-        //   const proofOfPayment = await payload.create({
-        //     collection: 'proofOfPayment',
-        //     req,
-        //     file: {
-        //       data: fileBuffer,
-        //       mimetype: response.headers['content-type'],
-        //       size: fileBuffer.length,
-        //       name: newUser.fullName + '-proof of payment',
-        //     },
-        //     data: { user: newUser.id },
-        //   })
-
-        //   await Promise.all([
-        //     // @ts-expect-error
-        //     await payload.update({
-        //       collections: 'users',
-        //       where: { id: newUser.id },
-        //       data: { proofOfPayment: proofOfPayment.id },
-        //       req,
-        //     }),
-        //     // @ts-expect-error
-        //     await payload.update({
-        //       collections: 'campApplications',
-        //       where: { user: newUser.id },
-        //       data: { proofOfPayment: proofOfPayment.id },
-        //       req,
-        //     }),
-        //     ,
-        //   ])
-
-        //   // const downloadedFilepath = await new Promise((resolve, reject) => {
-        //   //   response.data
-        //   //     .on('end', () => {
-        //   //       logger.info('Done downloading file.')
-        //   //       resolve(filePath)
-        //   //     })
-        //   //     .on('error', (err) => {
-        //   //       logger.error('Error downloading file.')
-        //   //       reject(err)
-        //   //     })
-        //   //     .on('data', (d) => {
-        //   //       progress += d.length
-        //   //       if (process.stdout.isTTY) {
-        //   //         process.stdout.clearLine(1)
-        //   //         process.stdout.cursorTo(0)
-        //   //         process.stdout.write(`Downloaded ${progress} bytes`)
-        //   //       }
-        //   //     })
-        //   //     .pipe(dest)
-        //   // })
-        // }
 
         await commitTransaction(req)
 
@@ -232,6 +198,15 @@ async function streamToBuffer(readableStream: NodeJS.ReadStream): Promise<Buffer
     readableStream.on('error', reject)
   })
 }
+
+// async function streamToBuffer(readableStream): Promise<Buffer> {
+//   return new Promise((resolve, reject) => {
+//     const chunks = []
+//     readableStream.on('data', (chunk) => chunks.push(chunk))
+//     readableStream.on('end', () => resolve(Buffer.concat(chunks)))
+//     readableStream.on('error', reject)
+//   })
+// }
 
 function formatDateString(dateString: string) {
   if (dateString.includes('/')) {

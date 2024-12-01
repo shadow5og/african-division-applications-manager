@@ -4,13 +4,14 @@ import { slugify } from '../../../utilities/string'
 
 export const assignToApplicant: CollectionBeforeChangeHook<ProofOfPayment> = async ({
   data, // incoming data to update or create with
-  req: { user, payload }, // full express request
+  req: { user, payload },
+  req, // full express request
   operation, // name of the operation ie. 'create', 'update'
 }) => {
   const newData = { ...data }
   let changed = false
 
-  if (operation === 'create' && !data.filename?.includes('/')) {
+  if (operation === 'create' && !data.filename?.includes('/') && !!user) {
     const { fullName } = await payload.findByID({
       collection: 'users',
       id: data.user as number,
